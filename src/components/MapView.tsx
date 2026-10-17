@@ -29,6 +29,8 @@ interface Props {
   /** Dopasuj początkowy widok do tych punktów (zamiast center/zoom) */
   fitPoints?: LngLat[]
   fitPadding?: { top: number; bottom: number; left: number; right: number }
+  /** Prawy margines przy przelocie (np. gdy panel szczegółów zasłania prawą część mapy) */
+  flyPadRight?: number
   showControls?: boolean
   className?: string
   ariaLabel?: string
@@ -103,6 +105,7 @@ export function MapView({
   flyTo,
   fitPoints,
   fitPadding = { top: 60, bottom: 50, left: 30, right: 30 },
+  flyPadRight = 0,
   showControls = false,
   className = '',
   ariaLabel,
@@ -144,16 +147,16 @@ export function MapView({
       usingFallback = true
       map.setStyle(RASTER_STYLE)
     }
-    map.on('load', () => {
+    // „loaded” = sam styl wczytany; błędy pojedynczych kafelków nie przełączają podkładu
+    map.on('style.load', () => {
       loaded = true
     })
-    // błąd przed załadowaniem stylu = podkład wektorowy niedostępny
     map.on('error', () => {
-      if (!loaded) fallback()
+      if (!loaded && !map.isStyleLoaded()) fallback()
     })
     const timer = window.setTimeout(() => {
       if (!loaded) fallback()
-    }, 6000)
+    }, 8000)
     map.on('click', (e) => {
       if (pinRef.current && pinChangeRef.current) {
         pinRef.current.setLngLat(e.lngLat)
@@ -237,8 +240,14 @@ export function MapView({
 
   useEffect(() => {
     if (flyTo && mapRef.current) {
-      mapRef.current.flyTo({ center: [flyTo.lng, flyTo.lat], zoom: Math.max(mapRef.current.getZoom(), 16), duration: 900 })
+      mapRef.current.flyTo({
+        center: [flyTo.lng, flyTo.lat],
+        zoom: Math.max(mapRef.current.getZoom(), 16),
+        duration: 900,
+        padding: { top: 0, bottom: 0, left: 0, right: flyPadRight },
+      })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flyTo])
 
   return (

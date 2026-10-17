@@ -71,13 +71,14 @@ export function draftInterpellation(c: Case, reports: Report[], docs: CityDocume
 
   const priorInterp = ds.find((d) => d.kind === 'interpelacja')
   if (lc) {
-    const commitRef = cite(`${DOC_KIND_LABEL[lc.doc.kind]}: „${lc.doc.title}”, ${formatDate(lc.doc.date)}, BIP Toruń`, lc.doc.url)
     let sentence = ''
     if (priorInterp && priorInterp.id !== lc.doc.id) {
       const pRef = cite(`Interpelacja: „${priorInterp.title}”, ${formatDate(priorInterp.date)}, BIP Toruń`, priorInterp.url)
+      const commitRef = cite(`${DOC_KIND_LABEL[lc.doc.kind]}: „${lc.doc.title}”, ${formatDate(lc.doc.date)}, BIP Toruń`, lc.doc.url)
       sentence = `W odpowiedzi na interpelację z ${formatDate(priorInterp.date)} ${pRef} zapowiedziano: ${lowerFirst(lc.commitment.text)} do ${romanMonth(lc.commitment.deadline)} ${commitRef}.`
     } else {
-      sentence = `Miasto zapowiedziało: ${lowerFirst(lc.commitment.text)} do ${romanMonth(lc.commitment.deadline)} ${commitRef}.`
+      const commitRef = cite(`${DOC_KIND_LABEL[lc.doc.kind]}: „${lc.doc.title}”, ${formatDate(lc.doc.date)}, BIP Toruń`, lc.doc.url)
+      sentence = `Miasto zapowiedziało:${lowerFirst(lc.commitment.text)} do ${romanMonth(lc.commitment.deadline)} ${commitRef}.`
     }
     if (status === 'overdue') {
       const m = monthsOverdue(lc.commitment.deadline, now)

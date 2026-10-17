@@ -1,6 +1,6 @@
 import type { Case, CaseStatus, CityDocument, Commitment, Report, Unit } from './types'
 import unitsData from '../data/demo/units.json'
-import { countLabel, REPORT_FORMS, romanMonth } from './format'
+import { countLabel, plural, REPORT_FORMS, romanMonth } from './format'
 
 export const units = unitsData as Unit[]
 
@@ -46,7 +46,8 @@ export function caseStatus(c: Case, docs: CityDocument[], now = new Date()): Cas
   const keyEvents = c.events.filter((e) => e.type === 'done' || e.type === 'resolved' || e.type === 'reopened')
   const lastKey = keyEvents[keyEvents.length - 1]
   if (lastKey?.type === 'resolved') return 'resolved'
-  if (lastKey?.type === 'done') return 'done'
+  // „reopened”: remont wykonany, ale problem wrócił — śledzimy go w nowej, powiązanej sprawie
+  if (lastKey?.type === 'done' || lastKey?.type === 'reopened') return 'done'
   const lc = latestCommitment(c, docs)
   if (lc) return isOverdue(lc.commitment, now) ? 'overdue' : 'planned'
   return 'new'
@@ -79,9 +80,9 @@ export function caseUrgency(c: Case, reports: Report[], docs: CityDocument[], no
   let score = c.factors.severity
 
   if (c.type === 'idea') {
-    tags.push({ label: `${n} ${n === 1 ? 'osoba prosi' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 'osoby proszą' : 'osób prosi'} o to samo`, tone: 'neutral' })
+    tags.push({ label: `${n} ${plural(n, ['osoba prosi', 'osoby proszą', 'osób prosi'])} o to samo`, tone: 'neutral' })
     const v = rs.filter((r) => r.verified).length
-    if (v) tags.push({ label: `${v} ${v === 1 ? 'zweryfikowana' : 'zweryfikowanych'}`, tone: 'success' })
+    if (v) tags.push({ label: `${v} ${plural(v, ['zweryfikowana', 'zweryfikowane', 'zweryfikowanych'])}`, tone: 'success' })
     if (c.bigIdea) tags.push({ label: 'pasuje do budżetu obywatelskiego', tone: 'info' })
     return { score: Math.min(99, score + n * 4), tags }
   }

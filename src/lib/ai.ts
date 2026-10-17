@@ -49,13 +49,13 @@ const RULES: Rule[] = [
   { rx: /(plac zabaw|siłowni|boisk|skatepark|tężni|wybieg dla ps)/i, type: 'idea', category: 'Rekreacja', title: 'Pomysł na rekreację', ideaTitle: 'Nowe miejsce rekreacji', unitId: 'wgk', reason: 'Większe inwestycje osiedlowe realizuje Wydział Gospodarki Komunalnej, także z budżetu obywatelskiego.', severity: 6, bigIdea: true },
   { rx: /ławk/i, category: 'Mała architektura', title: 'Zniszczona ławka', ideaTitle: 'Nowa ławka', unitId: 'wgk', reason: 'Ławki przy miejskich chodnikach i placach należą do Wydziału Gospodarki Komunalnej Urzędu Miasta.', severity: 14 },
   { rx: /(stojak|rower)/i, category: 'Infrastruktura rowerowa', title: 'Problem z infrastrukturą rowerową', ideaTitle: 'Stojak na rowery', unitId: 'mzd', reason: 'Stojaki i drogi rowerowe w pasie drogowym utrzymuje Miejski Zarząd Dróg.', severity: 8 },
+  { rx: /(parkuj|zastawi|hałas|pijan|zakłóca|awantur)/i, type: 'problem', category: 'Porządek publiczny', title: 'Naruszenie porządku', unitId: 'sm', reason: 'Sprawy porządku publicznego przyjmuje Straż Miejska.', severity: 14 },
   { rx: /(chodnik|płyt|krawężnik|schod)/i, category: 'Chodnik', title: 'Uszkodzony chodnik', unitId: 'mzd', reason: 'Chodnik leży w pasie drogi miejskiej, więc odpowiada Miejski Zarząd Dróg.', severity: 20 },
   { rx: /(dziur|wyrw|ubyt|asfalt|jezdni|nawierzchn|kolein)/i, category: 'Nawierzchnia jezdni', title: 'Dziura w jezdni', unitId: 'mzd', reason: 'To droga miejska, więc za nawierzchnię odpowiada Miejski Zarząd Dróg.', severity: 32 },
   { rx: /(latarni|lamp|oświetl|ciemno|nie świeci)/i, category: 'Oświetlenie', title: 'Nie działa oświetlenie', ideaTitle: 'Dodatkowe oświetlenie', unitId: 'mzd', reason: 'Oświetlenie ulic i przejść należy do Miejskiego Zarządu Dróg.', severity: 26 },
   { rx: /(graffiti|pomalow|spray|bazgr|dewast|zniszcz|wybit)/i, type: 'problem', category: 'Graffiti i dewastacja', title: 'Dewastacja', unitId: 'sm', reason: 'Akty wandalizmu przyjmuje Straż Miejska, a usunięcie szkód zleca właściciel obiektu.', severity: 10 },
   { rx: /(kosz|śmie|odpad|brud|butelk|zaśmiec)/i, category: 'Czystość', title: 'Śmieci i przepełnione kosze', ideaTitle: 'Nowy kosz na śmieci', unitId: 'mpo', reason: 'Opróżnianie i ustawianie miejskich koszy zleca się Miejskiemu Przedsiębiorstwu Oczyszczania.', severity: 12 },
   { rx: /(studzien|kanaliz|zalan|kałuż|wylewa|woda)/i, category: 'Kanalizacja', title: 'Problem z kanalizacją', unitId: 'wod', reason: 'Studzienki i kanalizacja należą do Toruńskich Wodociągów.', severity: 24 },
-  { rx: /(parkuj|zastawi|hałas|pijan|zakłóca|awantur)/i, type: 'problem', category: 'Porządek publiczny', title: 'Naruszenie porządku', unitId: 'sm', reason: 'Sprawy porządku publicznego przyjmuje Straż Miejska.', severity: 14 },
   { rx: /(drzew|gałę|gałąź|trawa|krzew|trawnik|zieleń)/i, category: 'Zieleń', title: 'Problem z zielenią', ideaTitle: 'Więcej zieleni', unitId: 'wsie', reason: 'Zieleń miejską utrzymuje Wydział Środowiska i Ekologii Urzędu Miasta.', severity: 12 },
 ]
 
@@ -94,14 +94,16 @@ export function analyzeReport(description: string, location: LngLat, s: DemoStat
     }
   }
 
+  // przy dołączaniu do sprawy adresat jest ten sam co w sprawie
+  const finalUnit = target ? unitById(target.unitId) : unit
   const base = {
     spam,
     type,
     category: rule.category,
     title,
-    unitId: unit.id,
-    unitShort: unit.short,
-    unitName: unit.name,
+    unitId: finalUnit.id,
+    unitShort: finalUnit.short,
+    unitName: finalUnit.name,
     unitReason: target?.unitReason ?? rule.reason,
     severity: rule.severity,
     bigIdea: !!(rule.bigIdea || target?.bigIdea),
@@ -119,7 +121,7 @@ function composeAnswer(
   s: DemoState,
   now: Date,
 ): Analysis['answer'] {
-  const forward = `Twoje zgłoszenie trafia do: ${a.unitName} i radnych okręgu.`
+  const forward = `Adresat: ${a.unitName}. Sprawę widzą też radni okręgu.`
 
   if (a.type === 'idea') {
     const n = a.similarCount + 1
@@ -132,7 +134,7 @@ function composeAnswer(
     const head = n > 1 ? people : 'To pierwszy taki pomysł w tym miejscu.'
     return {
       tone: 'idea',
-      text: `${head}${priorText} Prośba trafia do: ${a.unitName}.${bo}`,
+      text: `${head}${priorText} Adresat prośby: ${a.unitName}.${bo}`,
       docId: prior?.id ?? (a.bigIdea ? 'd-bo-2027' : undefined),
     }
   }
@@ -163,9 +165,11 @@ function composeAnswer(
     }
   }
 
-  // dokumenty z terminem w pobliżu, nawet spoza sprawy
+  // dokumenty z terminem w pobliżu, nawet spoza sprawy — tylko na ten sam temat
+  const docCategory = (d: DemoState['documents'][number]) =>
+    s.cases.find((c) => c.documentIds.includes(d.id))?.category ?? RULES.find((r) => r.rx.test(`${d.title} ${d.summary}`))?.category
   const near = visibleDocs(s.documents)
-    .filter((d) => d.commitment && distanceM(location, d.location) < NEARBY_DOC_RADIUS_M)
+    .filter((d) => d.commitment && distanceM(location, d.location) < NEARBY_DOC_RADIUS_M && docCategory(d) === a.category)
     .sort((x, y) => distanceM(location, x.location) - distanceM(location, y.location))[0]
   if (near?.commitment) {
     const over = isOverdue(near.commitment, now)

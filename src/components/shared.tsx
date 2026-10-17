@@ -2,7 +2,7 @@ import type { Case, CaseEvent, CityDocument, EventType } from '../lib/types'
 import type { DemoState } from '../lib/store'
 import type { MapMarker } from './MapView'
 import { caseReports, caseStatus, DOC_KIND_LABEL, isOverdue, latestCommitment, visibleDocs } from '../lib/domain'
-import { formatDate, lowerFirst, romanMonth } from '../lib/format'
+import { countLabel, formatDate, lowerFirst, REPORT_FORMS, romanMonth } from '../lib/format'
 import {
   IconAlert,
   IconBuilding,
@@ -31,7 +31,7 @@ export function caseMarkers(s: DemoState, opts: { selectedId?: string | null; pr
         location: c.location,
         kind: st === 'resolved' ? 'resolved' : c.type === 'idea' ? 'idea' : 'problem',
         label: st === 'resolved' ? '✓' : n,
-        title: `${c.title}, ${c.place}: ${n} zgłoszeń`,
+        title: `${c.title}, ${c.place}: ${countLabel(n, REPORT_FORMS)}`,
         selected: opts.selectedId === c.id,
       } satisfies MapMarker
     })
@@ -130,6 +130,8 @@ export function cityKnowledge(c: Case, s: DemoState): { status: ReturnType<typeo
   const docs = visibleDocs(s.documents).filter((d) => c.documentIds.includes(d.id))
   const lastDoc = docs.sort((a, b) => a.date.localeCompare(b.date))[docs.length - 1]
   if (st === 'resolved') return { status: st, text: 'Sprawa rozwiązana i potwierdzona przez mieszkańców.', doc: lastDoc }
+  if (st === 'done' && c.events[c.events.length - 1]?.type === 'reopened')
+    return { status: st, text: 'Remont wykonano, ale mieszkaniec zgłosił, że problem wrócił. Utworzono powiązane zgłoszenie z sygnałem o gwarancji.', doc: lastDoc }
   if (st === 'done') return { status: st, text: 'Remont został wykonany. Czekamy na potwierdzenie mieszkańców, że problem zniknął.', doc: lastDoc }
   if (lc && st === 'overdue')
     return { status: st, text: `Miasto zapowiedziało: ${lowerFirst(lc.commitment.text)} do ${romanMonth(lc.commitment.deadline)}. Termin minął.`, doc: lc.doc }

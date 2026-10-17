@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { answerResolved, markNotificationsRead, useDemo, type ResolveResult } from '../lib/store'
 import { caseReports, unitById } from '../lib/domain'
 import { countLabel, plural, REPORT_FORMS } from '../lib/format'
@@ -20,6 +20,20 @@ export function CaseScreen({ caseId, onBack, onOpenCase }: { caseId: string; onB
     }
   }, [hasUnread, caseId])
 
+  // nowe zdarzenie w otwartej sprawie: pokaż je (po remoncie — pytanie na górze, inaczej oś zdarzeń)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const timelineRef = useRef<HTMLHeadingElement>(null)
+  const eventCount = c?.events.length ?? 0
+  const lastType = c?.events[eventCount - 1]?.type
+  const prevCount = useRef(eventCount)
+  useEffect(() => {
+    if (eventCount > prevCount.current) {
+      if (lastType === 'done' || lastType === 'reopened' || lastType === 'resolved') scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+      else timelineRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+    prevCount.current = eventCount
+  }, [eventCount, lastType])
+
   if (!c) {
     return (
       <div className="flex h-full flex-col">
@@ -34,7 +48,8 @@ export function CaseScreen({ caseId, onBack, onOpenCase }: { caseId: string; onB
   const mine = s.reports.some((r) => r.caseId === c.id && r.mine)
   const unit = unitById(c.unitId)
   const lastEvent = c.events[c.events.length - 1]
-  const askResolved = mine && knowledge.status === 'done' && !answer
+  const lastKeyType = [...c.events].reverse().find((e) => e.type === 'done' || e.type === 'resolved' || e.type === 'reopened')?.type
+  const askResolved = mine && lastKeyType === 'done' && !answer
   const linked = c.linkedCaseId ? s.cases.find((x) => x.id === c.linkedCaseId) : null
 
   const respond = (solved: boolean) => setAnswer({ solved, result: answerResolved(c.id, solved) })
@@ -42,8 +57,8 @@ export function CaseScreen({ caseId, onBack, onOpenCase }: { caseId: string; onB
   return (
     <div className="flex h-full flex-col">
       <ScreenHeader title={mine ? 'Twoja sprawa' : 'Sprawa w okolicy'} onBack={onBack} />
-      <div className="min-h-0 flex-1 overflow-y-auto">
-        <Photo src={c.photo} alt={`Zdjęcie: ${c.title}`} className="h-40 w-full" />
+      <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto">
+        <Photo src={c.photo} alt={`Zdjęcie: ${c.title}`} className="h-32 w-full" />
         <div className="flex flex-col gap-3 px-4 py-4">
           <div className="flex flex-wrap gap-1.5">
             <TypeBadge type={c.type} small />
@@ -118,6 +133,11 @@ export function CaseScreen({ caseId, onBack, onOpenCase }: { caseId: string; onB
             {knowledge.doc && <DocLink doc={knowledge.doc} />}
           </div>
 
+          <h2 ref={timelineRef} className="mt-2 scroll-mt-3 text-h2 font-bold">
+            Co się dzieje
+          </h2>
+          <Timeline events={c.events} documents={s.documents} highlightId={lastEvent?.id} />
+
           <div className="rounded-card border border-line bg-surface px-4 py-1">
             <div className="flex gap-3 border-b border-[#eef0f3] py-3">
               <IconUsers size={22} className="mt-0.5 shrink-0" />
@@ -132,9 +152,6 @@ export function CaseScreen({ caseId, onBack, onOpenCase }: { caseId: string; onB
               </div>
             </div>
           </div>
-
-          <h2 className="mt-2 text-h2 font-bold">Co się dzieje</h2>
-          <Timeline events={c.events} documents={s.documents} highlightId={lastEvent?.id} />
         </div>
       </div>
     </div>

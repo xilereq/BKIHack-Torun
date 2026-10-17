@@ -23,7 +23,8 @@ type Screen =
 
 function useNotificationToast() {
   const s = useDemo()
-  const seen = useRef(new Set(s.notifications.map((n) => n.id)))
+  // świeże, nieprzeczytane powiadomienia (np. interpelacja wysłana w panelu radnego) pokażemy po wejściu
+  const seen = useRef(new Set(s.notifications.filter((n) => n.read || Date.now() - new Date(n.date).getTime() > 120000).map((n) => n.id)))
   const [toast, setToast] = useState<Notification | null>(null)
   useEffect(() => {
     const fresh = s.notifications.find((n) => !seen.current.has(n.id))
@@ -101,7 +102,7 @@ export function ResidentApp() {
 
   return (
     <PhoneFrame>
-      <div key={stack.length + screen.name} className="h-full animate-fade-up">
+      <div key={stack.length + screen.name} className="h-full animate-screen-in">
         {content}
       </div>
       {toast && (
