@@ -3,6 +3,5 @@
   { "id": "mpo", "name": "Miejskie Przedsiębiorstwo Oczyszczania", "short": "MPO" },
   { "id": "wgk", "name": "Wydział Gospodarki Komunalnej UMT", "short": "WGK" },
   { "id": "wod", "name": "Toruńskie Wodociągi", "short": "Wodociągi" },
-  { "id": "sm", "name": "Straż Miejska", "short": "Straż Miejska" },
   { "id": "wsie", "name": "Wydział Środowiska i Ekologii UMT", "short": "WŚiE" }
 ]

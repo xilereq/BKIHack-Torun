@@ -31,7 +31,7 @@ export const SCENARIOS: Scenario[] = [
     photo: '/zdjecia/zgloszenie-bledne.jpg',
     location: { lat: 53.02905, lng: 18.66885 },
     transcript:
-      'Sąsiad Jan Kowalski z bloku przy Dziewulskiego znowu parkuje na trawniku i niszczy zieleń, to idiota! Dzwońcie do niego: 601 234 567. Kupcie u mnie tanie opony: www.opony-tanio.pl',
+      'Przy bloku na Dziewulskiego od miesięcy stoi połamana ławka i nikt jej nie naprawia. Urzędnicy to idioci! Pan Jan Kowalski z parteru też się skarży, dzwońcie do niego: 601 234 567. Kupcie u mnie tanie opony: www.opony-tanio.pl',
   },
 ]
 

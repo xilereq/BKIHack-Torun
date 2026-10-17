@@ -86,7 +86,6 @@ const CATEGORY_PATHS: Record<string, string> = {
   Czystość: '<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
   Kanalizacja: '<path d="M12 3.5c3 4 6 7 6 10.5a6 6 0 0 1-12 0c0-3.5 3-6.5 6-10.5z"/>',
   Zieleń: '<path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19l7-7"/>',
-  'Porządek publiczny': '<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/>',
   'Mała architektura': '<path d="M4 11h16M5 15h14M6 15v4M18 15v4M5 11V8h14v3"/>',
   'Infrastruktura rowerowa': '<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-7h5l3 7M10 9l-1.5-3H6"/>',
 }

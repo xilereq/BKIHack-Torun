@@ -75,12 +75,20 @@ Co mówimy: „Weryfikacja przez mObywatel jest gotowa architektonicznie. Zapisu
 ## Scenariusz 3a: zgłoszenie z błędem (AI wskazuje, co poprawić, ok. 30 s)
 
 1. Panel demo → **Z błędem** (zgłoszenie przy ul. Dziewulskiego).
-2. **Powiedz** → podyktowany tekst zawiera imię i nazwisko, numer telefonu, obraźliwe słowo i reklamę z linkiem.
+2. **Powiedz** → podyktowany tekst o połamanej ławce zawiera imię i nazwisko, numer telefonu, obraźliwe słowo i reklamę z linkiem.
 3. **Wyślij zgłoszenie** → „AI analizuje…”, etap **Sprawdzenie treści**: „Do poprawy: dane osobowe, obraźliwe słowa, reklama”.
-4. Ekran **Popraw zgłoszenie**: zaznaczone fragmenty w opisie, przy każdej uwadze krótkie wyjaśnienie (RODO, uprzejmość, brak reklam) i **Proponowana wersja**: „Ktoś z bloku przy Dziewulskiego znowu parkuje na trawniku i niszczy zieleń.”
-5. **Wyślij poprawioną wersję** → zgłoszenie przechodzi normalnie (porządek publiczny, Straż Miejska, „Sprawdzenie treści: bez uwag”). Albo **Popraw samodzielnie** → wraca do edycji z tym samym opisem i miejscem.
+4. Ekran **Popraw zgłoszenie**: zaznaczone fragmenty w opisie, przy każdej uwadze krótkie wyjaśnienie (RODO, uprzejmość, brak reklam) i **Proponowana wersja**: „Przy bloku na Dziewulskiego od miesięcy stoi połamana ławka i nikt jej nie naprawia. Ktoś z parteru też się skarży.”
+5. **Wyślij poprawioną wersję** → zgłoszenie przechodzi normalnie (zniszczona ławka, Wydział Gospodarki Komunalnej, „Sprawdzenie treści: bez uwag”). Albo **Popraw samodzielnie** → wraca do edycji z tym samym opisem i miejscem.
 
 Co mówimy: „AI nie tylko porządkuje zgłoszenia, ale też dba, żeby do urzędu nie trafiały dane innych osób ani obraźliwe treści. Pomaga to poprawić jednym kliknięciem.”
+
+---
+
+## Scenariusz 3b: sprawa nie dla aplikacji (opcjonalnie, 10 s)
+
+Wpisz np. „Samochód znowu parkuje na trawniku pod blokiem”. Po analizie aplikacja nie przyjmuje zgłoszenia, tylko życzliwie wyjaśnia: „Z tym szybciej pomoże ktoś inny” (straż miejska 986, w nagłej sytuacji 112), i pokazuje, w czym pomaga Głos Osiedla.
+
+Co mówimy: „To nie jest aplikacja do donoszenia. Służy sprawom, które razem z radnymi i urzędem zmieniają okolicę.”
 
 ---
 

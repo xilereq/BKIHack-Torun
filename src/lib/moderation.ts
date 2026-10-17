@@ -40,7 +40,7 @@ const RX: { kind: ViolationKind; rx: RegExp; check?: (m: string) => boolean }[] 
   { kind: 'personal', rx: /\b[\w.+-]+@[\w-]+\.[\w.]+\b/g },
   { kind: 'personal', rx: /\b\d{11}\b/g },
   { kind: 'plate', rx: /\b[A-Z]{2,3}\s?\d[0-9A-Z]{3,4}\b/g, check: (m) => !/^[IVXLC]+\s/.test(m) },
-  { kind: 'insult', rx: /\b(?:idiot\w*|debil\w*|kretyn\w*|głup(?:ek|ia|i|ol)\w*|bydl\w*|złodzie\w*|łajda\w*|patol\w*|cham(?:y|em|stwo)?\b|kurw\w*|chuj\w*|pierdol\w*|jeba\w*|spierdal\w*|dupek|frajer\w*|nieroby?\w*)/gi },
+  { kind: 'insult', rx: /\b(?:idio[tc]\w*|debil\w*|kretyn\w*|głup(?:ek|ia|i|ol)\w*|bydl\w*|złodzie\w*|łajda\w*|patol\w*|cham(?:y|em|stwo)?\b|kurw\w*|chuj\w*|pierdol\w*|jeba\w*|spierdal\w*|dupek|frajer\w*|nieroby?\w*)/gi },
   { kind: 'threat', rx: /\b(?:zabij\w*|pobij\w*|podpal\w*|dam mu\s+\w+|policzę się|zemsz\w*|pożałuj\w*)/gi },
   { kind: 'ad', rx: /(?:https?:\/\/\S+|\bwww\.\S+|\bpromocj\w*|\bkup(?:cie|uj)?\s+(?:u mnie|teraz|tanio)|\bkredyt\w*|\bzniżk\w*|\boferta\b)/gi },
 ]
@@ -71,7 +71,9 @@ function clean(text: string, found: Map<ViolationKind, Set<string>>): string {
   for (const raw of sentences) {
     if (has(raw, 'ad') || has(raw, 'threat')) continue
     let s = raw
-    const hadContact = [...(found.get('personal') ?? [])].some((f) => /\d|@/.test(f) && s.includes(f))
+    const contacts = [...(found.get('personal') ?? [])].filter((f) => /\d|@/.test(f))
+    const hadContact = contacts.some((f) => s.includes(f))
+    if (hadContact) s = s.split(/,\s*/).filter((part) => !contacts.some((f) => part.includes(f))).join(', ')
     for (const f of found.get('personal') ?? []) s = s.split(f).join(/\d|@/.test(f) ? '' : 'Ktoś')
     for (const f of found.get('plate') ?? []) s = s.split(f).join('')
     // obraźliwe słowo razem z „to …” / „jak …” przed nim
@@ -84,6 +86,7 @@ function clean(text: string, found: Map<ViolationKind, Set<string>>): string {
       .trim()
     if (hadContact && s.split(/\s+/).length < 5) continue
     if (s.split(/\s+/).length < 3) continue
+    if (!/[.!?]$/.test(s)) s += '.'
     out.push(s.charAt(0).toUpperCase() + s.slice(1))
   }
   return out.join(' ').replace(/\bKtoś\s+Ktoś\b/g, 'Ktoś')

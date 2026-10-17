@@ -16,12 +16,14 @@ import { VerifyModal } from './VerifyModal'
 import { TabBar } from './TabBar'
 import { CaptureSheet } from './CaptureSheet'
 import { ModerationScreen } from './ModerationScreen'
+import { RedirectScreen } from './RedirectScreen'
 
 type Screen =
   | { name: 'home' }
   | { name: 'cases' }
   | { name: 'report'; preset?: 'pothole' | 'bench' | 'violation'; photo?: string; initial?: ReportDraft; key: number }
   | { name: 'moderation'; draft: ReportDraft; analysis: Analysis }
+  | { name: 'redirect' }
   | { name: 'analyzing'; draft: ReportDraft }
   | { name: 'result'; draft: ReportDraft; analysis: Analysis; trace: TraceStep[]; caseId: string | null }
   | { name: 'case'; caseId: string }
@@ -84,6 +86,9 @@ export function ResidentApp() {
     case 'home':
       content = <HomeScreen onNotifications={() => tab('cases')} onOpenCase={openCase} />
       break
+    case 'redirect':
+      content = <RedirectScreen onNewReport={() => replace({ name: 'report', key: Date.now() })} onHome={() => go('back', [{ name: 'home' }])} />
+      break
     case 'moderation':
       content = (
         <ModerationScreen
@@ -106,6 +111,11 @@ export function ResidentApp() {
         <AnalyzingScreen
           draft={screen.draft}
           onDone={(analysis, trace) => {
+            // sprawa interwencyjna (parkowanie, hałas…): nie przyjmujemy, kierujemy życzliwie we właściwe miejsce
+            if (analysis.outOfScope) {
+              replace({ name: 'redirect' })
+              return
+            }
             // AI znalazło rzeczy do poprawy (dane osobowe, obraźliwe słowa…): nie wysyłamy, pokazujemy co poprawić
             if (analysis.moderation.violations.length && analysis.moderation.cleaned) {
               replace({ name: 'moderation', draft: screen.draft, analysis })

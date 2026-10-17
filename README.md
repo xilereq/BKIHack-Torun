@@ -57,7 +57,7 @@ Wszystkie dane są **przykładowe** i trzymane w osobnych plikach JSON w `src/da
 | `reports.json` | Zgłoszenia mieszkańców przypisane do spraw (`caseId`) |
 | `documents.json` | Dokumenty miasta: interpelacje, odpowiedzi, plany, protokoły; `commitment` = zobowiązanie z terminem `RRRR-MM`; `hidden: true` = dokument odsłaniany przyciskiem w panelu demo |
 | `places.json` | Nazwane miejsca (przystanki, szkoły) do opisu lokalizacji pinezki |
-| `units.json` | Jednostki miejskie (MZD, MPO, Straż Miejska…) |
+| `units.json` | Jednostki miejskie (MZD, MPO, WGK, Wodociągi…) |
 
 - Współrzędne przystanków, szkół i przychodni pochodzą z OpenStreetMap.
 - Nazwiska radnych są fikcyjne (Anna Przykładowa, Piotr Testowy). Przed pokazem zespół podmienia dokumenty na prawdziwe przypadki z BIP.
@@ -101,6 +101,10 @@ Każdy dostawca zwraca `{ pesel, address }`. Funkcja `toVerification()` zostawia
 ## Lokalizacja zgłoszenia
 
 Aplikacja prosi o lokalizację telefonu. Gdy jej nie ma (brak zgody, brak GPS albo użytkownik poza Toruniem), pinezka staje na środku osiedla. Adres można wpisać ręcznie: najpierw szukamy w znanych miejscach (`places.json`), potem w OpenStreetMap (Nominatim, tylko w granicach Torunia). Kod: `src/lib/geocode.ts`.
+
+## Zakres aplikacji
+
+Głos Osiedla służy sprawom, które do załatwienia potrzebują radnych i urzędu (drogi, chodniki, oświetlenie, zieleń, ławki, przystanki, pomysły na okolicę). Sprawy interwencyjne (parkowanie, hałas, zakłócanie spokoju, kradzieże) nie są przyjmowane: AI rozpoznaje je (`outOfScope` w `src/lib/ai.ts`) i pokazuje życzliwy ekran z informacją, gdzie szybciej pomogą (`src/resident/RedirectScreen.tsx`).
 
 ## Sprawdzenie treści (moderacja)
 

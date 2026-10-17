@@ -94,7 +94,11 @@ export function reportTrace(input: TraceInput, a: Analysis, s: DemoState): Trace
     id: 'llm',
     title: 'Zrozumienie opisu',
     tech: ['llm'],
-    short: a.type === 'idea' ? `To pomysł na okolicę: ${a.category.toLowerCase()}.` : `To problem: ${a.category.toLowerCase()}.`,
+    short: a.outOfScope
+      ? 'To sprawa do szybkiej interwencji na miejscu, nie do urzędu.'
+      : a.type === 'idea'
+        ? `To pomysł na okolicę: ${a.category.toLowerCase()}.`
+        : `To problem: ${a.category.toLowerCase()}.`,
     ms: Math.round(rnd(600, 900)),
   })
 
