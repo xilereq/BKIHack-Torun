@@ -8,7 +8,7 @@ Do nagrania filmu (2 min) i demo na żywo (4 min). Panel demo otwiera **Ctrl+Shi
 2. Otwórz panel demo, kliknij **Reset demo** dwa razy i zamknij panel (Esc).
 3. Na projektor: przeglądarka na pełnym ekranie (F11), zoom 100%.
 4. Opcjonalnie: druga karta z `#/radny`. Obie karty widzą zmiany na bieżąco.
-5. Zdjęcia: wrzuć prawdziwe zdjęcie dziury jako `public/zdjecia/zgloszenie-dziura.jpg` (i ławki jako `zgloszenie-lawka.jpg`). Szybki start z panelu dołączy je sam. Bez tego pliku wybierasz zdjęcie z galerii laptopa.
+5. Zdjęcia: szybki start z panelu (**Dziura**, **Z błędem**) sam dołącza prawdziwe zdjęcie z `public/zdjecia/` (dziura z wodą, połamana ławka). Źródła: `public/zdjecia/ZRODLA.md`. Dla **Ławki** zdjęcie wybierasz z galerii albo wrzucasz `zgloszenie-lawka.jpg`.
 
 > Wskazówka: panel demo przykrywa lewy dolny róg. Ramka telefonu jest na środku, więc widz go nie widzi, o ile zamkniesz panel przed przełączeniem widoku.
 
@@ -22,7 +22,7 @@ Do nagrania filmu (2 min) i demo na żywo (4 min). Panel demo otwiera **Ctrl+Shi
 | 2 | Przycisk **aparatu** na dole | Arkusz „Coś jest nie tak albo czegoś brakuje?”: Zrób zdjęcie / Wybierz z galerii | |
 | 3 | **Zrób zdjęcie** (telefon) albo **Wybierz z galerii** (laptop) → prawdziwe zdjęcie dziury | Ekran zgłoszenia ze zdjęciem i pinezką przy przystanku Rubinkowo Centrum | „Zdjęcie i lokalizacja, bez logowania.” |
 
-> Na scenie szybciej: panel demo → **Dziura**. Otwiera zgłoszenie z miejscem przy przystanku i (jeśli jest plik `zgloszenie-dziura.jpg`) od razu ze zdjęciem.
+> Na scenie szybciej: panel demo → **Dziura**. Otwiera zgłoszenie z miejscem przy przystanku i od razu ze zdjęciem dziury.
 
 | # | Kliknięcie | Co widzi widz | Co mówimy |
 |---|---|---|---|
@@ -74,7 +74,7 @@ Co mówimy: „Weryfikacja przez mObywatel jest gotowa architektonicznie. Zapisu
 
 ## Scenariusz 3a: zgłoszenie z błędem (AI wskazuje, co poprawić, ok. 30 s)
 
-1. Panel demo → **Z błędem** (zgłoszenie przy ul. Dziewulskiego).
+1. Panel demo → **Z błędem** (zgłoszenie przy ul. Dziewulskiego, ze zdjęciem połamanej ławki).
 2. **Powiedz** → podyktowany tekst o połamanej ławce zawiera imię i nazwisko, numer telefonu, obraźliwe słowo i reklamę z linkiem.
 3. **Wyślij zgłoszenie** → „AI analizuje…”, etap **Sprawdzenie treści**: „Do poprawy: dane osobowe, obraźliwe słowa, reklama”.
 4. Ekran **Popraw zgłoszenie**: zaznaczone fragmenty w opisie, przy każdej uwadze krótkie wyjaśnienie (RODO, uprzejmość, brak reklam) i **Proponowana wersja**: „Przy bloku na Dziewulskiego od miesięcy stoi połamana ławka i nikt jej nie naprawia. Ktoś z parteru też się skarży.”

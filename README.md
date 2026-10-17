@@ -62,7 +62,7 @@ Wszystkie dane są **przykładowe** i trzymane w osobnych plikach JSON w `src/da
 - Współrzędne przystanków, szkół i przychodni pochodzą z OpenStreetMap.
 - Nazwiska radnych są fikcyjne (Anna Przykładowa, Piotr Testowy). Przed pokazem zespół podmienia dokumenty na prawdziwe przypadki z BIP.
 - Linki źródłowe prowadzą do https://bip.torun.pl/interpelacje/29500. Podmień `url` na konkretny dokument.
-- **Zdjęcia: tylko prawdziwe.** Dane wskazują na pliki w `public/zdjecia/`. Dopóki ich nie ma, aplikacja pokazuje ilustrację zastępczą z `public/demo/<nazwa>.svg`. Wrzuć zdjęcia pod tymi nazwami:
+- **Zdjęcia: tylko prawdziwe.** Dane wskazują na pliki w `public/zdjecia/`. Gdy pliku brak, aplikacja pokazuje ilustrację zastępczą z `public/demo/<nazwa>.svg`. Zdjęcia do obu ścieżek filmu (dziura, zgłoszenie z błędem) już są, z Wikimedia Commons. Autorzy i licencje: `public/zdjecia/ZRODLA.md`. Pozostałe wrzuć pod tymi nazwami:
 
   | Plik | Do czego |
   |---|---|
@@ -70,7 +70,7 @@ Wszystkie dane są **przykładowe** i trzymane w osobnych plikach JSON w `src/da
   | `trawnik.jpg`, `trawnik-2.jpg` | Trawnik przed blokiem (ławka, siłownia) |
   | `latarnia.jpg`, `latarnia-2.jpg` | Ciemne przejścia |
   | `chodnik.jpg`, `graffiti.jpg`, `kosz.jpg`, `studzienka.jpg`, `stojak.jpg`, `lawka.jpg` | Pozostałe sprawy |
-  | `zgloszenie-dziura.jpg`, `zgloszenie-lawka.jpg` | Zdjęcie dołączane samo w scenariuszach z panelu demo (opcjonalne) |
+  | `zgloszenie-dziura.jpg`, `zgloszenie-bledne.jpg`, `zgloszenie-lawka.jpg` | Zdjęcie dołączane samo w scenariuszach z panelu demo (dziura i z błędem już są) |
 
   Format JPG, poziomo, ok. 1200 px szerokości. Bez twarzy i tablic rejestracyjnych.
 - **Podbijanie spraw:** pole `supporters` w `cases.json` to liczba podbić od zweryfikowanych mieszkańców. Podbicie zwiększa pilność i pojawia się jako etykieta w panelu radnego.

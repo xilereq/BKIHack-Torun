@@ -3,7 +3,7 @@ import type { LngLat } from '../lib/types'
 /**
  * Scenariusze pokazu (panel demo → „Dziura” / „Ławka”). Ustawiają miejsce i tekst,
  * który pojawia się po naciśnięciu mikrofonu (symulowana transkrypcja).
- * Zdjęcie: prawdziwe zdjęcie zespołu z public/zdjecia/ (jeśli jest), inaczej mieszkaniec robi je sam.
+ * Zdjęcie: prawdziwe zdjęcie z public/zdjecia/ (źródła w ZRODLA.md), a gdy pliku brak, mieszkaniec robi je sam.
  */
 export interface Scenario {
   id: 'pothole' | 'bench' | 'violation'
