@@ -17,10 +17,15 @@ function base({ size = 24, strokeWidth = 2, ...rest }: IconProps) {
   }
 }
 
-export const IconLogo = (p: IconProps) => (
-  <svg {...base(p)}>
-    <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z" />
-    <path d="M9.5 10h5M9.5 7.5h5" />
+// znak marki: dymek (głos) z trzema słupkami (bloki osiedla); kopia w public/logo/znak.svg i public/favicon.svg
+export const IconLogo = ({ size = 24, ...rest }: IconProps) => (
+  <svg width={size} height={size} viewBox="0 0 48 48" aria-hidden="true" {...rest}>
+    <path fill="currentColor" d="M13 6H35A9 9 0 0 1 44 15V27A9 9 0 0 1 35 36H22L13 43V36A9 9 0 0 1 4 27V15A9 9 0 0 1 13 6Z" />
+    <g fill="var(--color-surface)">
+      <rect x="13" y="20" width="6" height="9" rx="1" />
+      <rect x="21" y="13" width="6" height="16" rx="1" />
+      <rect x="29" y="17" width="6" height="12" rx="1" />
+    </g>
   </svg>
 )
 export const IconCamera = (p: IconProps) => (

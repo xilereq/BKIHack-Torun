@@ -11,6 +11,14 @@
 Czerwono-biały, uniwersalny, spokojny. Dużo bieli, płaskie karty, cienkie ramki, bez gradientów i ozdobników.
 Ma wyglądać jak usługa publiczna, z której bez trudu skorzysta senior.
 
+## Logo
+
+Czerwony dymek (głos mieszkańca) z trzema białymi słupkami (bloki osiedla, a zarazem poziom głosu). Obok napis „Głos Osiedla” w kolorze `ink`, Atkinson Hyperlegible Bold.
+
+- Pliki: `public/logo/znak.svg` (czerwony), `znak-czarny.svg` (jednobarwny), `znak-bialy.svg` (na czerwone tło), favicon `public/favicon.svg`. W kodzie: komponent `Logo` (`src/components/ui.tsx`).
+- Porównanie wariantów i rozmiarów: `/logo/podglad.html` na serwerze deweloperskim.
+- Znak bez kafelka i ramki; nie obracamy, nie zmieniamy proporcji ani kolorów słupków.
+
 ## Paleta
 
 | Token | Hex | Do czego |

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Głos Osiedla">
+  <!-- dymek = głos; trzy słupki = bloki osiedla i poziom głosu -->
+  <path fill="#16191D" d="M13 6H35A9 9 0 0 1 44 15V27A9 9 0 0 1 35 36H22L13 43V36A9 9 0 0 1 4 27V15A9 9 0 0 1 13 6Z"/>
+  <g fill="#FFFFFF">
+    <rect x="13" y="20" width="6" height="9" rx="1"/>
+    <rect x="21" y="13" width="6" height="16" rx="1"/>
+    <rect x="29" y="17" width="6" height="12" rx="1"/>
+  </g>
+</svg>

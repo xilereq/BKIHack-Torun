@@ -113,9 +113,7 @@ export function SectionLabel({ children }: { children: ReactNode }) {
 
 export function Logo({ size = 40 }: { size?: number }) {
   return (
-    <div className="flex shrink-0 items-center justify-center rounded-[10px] bg-brand text-white" style={{ width: size, height: size }}>
-      <IconLogo size={Math.round(size * 0.56)} strokeWidth={2.2} />
-    </div>
+    <IconLogo size={size} className="shrink-0 text-brand" />
   )
 }
 
