@@ -49,7 +49,7 @@ function FakeQr({ payload }: { payload: string }) {
 
 type Step = 'intro' | 'qr' | 'done'
 
-export function VerifyModal({ onClose }: { onClose: () => void }) {
+export function VerifyModal({ onClose, reason }: { onClose: () => void; reason?: string }) {
   const [step, setStep] = useState<Step>('intro')
   const payload = useMemo(() => verificationProvider.qrPayload(), [])
 
@@ -68,8 +68,9 @@ export function VerifyModal({ onClose }: { onClose: () => void }) {
   }, [step])
 
   return (
-    <div className="absolute inset-0 z-40 flex items-end bg-ink/45 animate-[fade-up_200ms_ease-out_both]" role="dialog" aria-modal="true" aria-labelledby="verify-title">
-      <div className="w-full rounded-t-[24px] bg-surface px-5 pt-5 pb-7 animate-fade-up">
+    <div className="absolute inset-0 z-40 flex items-end bg-ink/45 " role="dialog" aria-modal="true" aria-labelledby="verify-title">
+      <div className="w-full rounded-t-[28px] bg-surface px-5 pt-2.5 pb-7 animate-slide-up">
+        <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-line-strong" aria-hidden="true" />
         <div className="mb-3 flex items-center justify-between">
           <h2 id="verify-title" className="flex items-center gap-2 text-h2 font-bold">
             <IconShield size={26} className="text-st-done" strokeWidth={2.2} />
@@ -82,6 +83,7 @@ export function VerifyModal({ onClose }: { onClose: () => void }) {
 
         {step === 'intro' && (
           <div className="flex flex-col gap-4">
+            {reason && <p className="rounded-btn bg-st-planned-bg px-3.5 py-2.5 text-[16px] font-bold leading-6 text-st-planned">{reason}</p>}
             <p className="text-body">Potwierdź raz, że mieszkasz w Toruniu. Twoje zgłoszenia dostaną znaczek, a radni będą wiedzieć, że piszą prawdziwi mieszkańcy.</p>
             <ul className="flex flex-col gap-2 text-[16px] leading-6 text-ink-2">
               <li>• Zapisujemy tylko: „zweryfikowany” i „mieszka w Toruniu”.</li>

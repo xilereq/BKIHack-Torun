@@ -8,6 +8,7 @@ Do nagrania filmu (2 min) i demo na żywo (4 min). Panel demo otwiera **Ctrl+Shi
 2. Otwórz panel demo, kliknij **Reset demo** dwa razy i zamknij panel (Esc).
 3. Na projektor: przeglądarka na pełnym ekranie (F11), zoom 100%.
 4. Opcjonalnie: druga karta z `#/radny`. Obie karty widzą zmiany na bieżąco.
+5. Zdjęcia: wrzuć prawdziwe zdjęcie dziury jako `public/zdjecia/zgloszenie-dziura.jpg` (i ławki jako `zgloszenie-lawka.jpg`). Szybki start z panelu dołączy je sam. Bez tego pliku wybierasz zdjęcie z galerii laptopa.
 
 > Wskazówka: panel demo przykrywa lewy dolny róg. Ramka telefonu jest na środku, więc widz go nie widzi, o ile zamkniesz panel przed przełączeniem widoku.
 
@@ -17,14 +18,19 @@ Do nagrania filmu (2 min) i demo na żywo (4 min). Panel demo otwiera **Ctrl+Shi
 
 | # | Kliknięcie | Co widzi widz | Co mówimy |
 |---|---|---|---|
-| 1 | Start mieszkańca | Mapa Rubinkowa ze zgłoszeniami, duży przycisk „Zgłoś” | „Mieszkanka widzi dziurę przy przystanku.” |
-| 2 | **Zgłoś** | Ekran zgłoszenia | |
-| 3 | Zdjęcie **„Dziura przy przystanku”** | Zdjęcie dodane, pinezka przeskakuje na przystanek Rubinkowo Centrum („Lokalizacja odczytana ze zdjęcia”) | „Zdjęcie i lokalizacja, bez logowania.” |
+| 1 | Start mieszkańca | Mapa Rubinkowa na cały ekran, ikonki spraw, dolny pasek z czerwonym przyciskiem aparatu | „Mieszkanka widzi dziurę przy przystanku.” |
+| 2 | Przycisk **aparatu** na dole | Arkusz „Coś jest nie tak albo czegoś brakuje?”: Zrób zdjęcie / Wybierz z galerii | |
+| 3 | **Zrób zdjęcie** (telefon) albo **Wybierz z galerii** (laptop) → prawdziwe zdjęcie dziury | Ekran zgłoszenia ze zdjęciem i pinezką przy przystanku Rubinkowo Centrum | „Zdjęcie i lokalizacja, bez logowania.” |
+
+> Na scenie szybciej: panel demo → **Dziura**. Otwiera zgłoszenie z miejscem przy przystanku i (jeśli jest plik `zgloszenie-dziura.jpg`) od razu ze zdjęciem.
+
+| # | Kliknięcie | Co widzi widz | Co mówimy |
+|---|---|---|---|
 | 4 | Przycisk **Powiedz** (mikrofon) | „Słucham…”, potem tekst pisze się sam | „Jedno zdanie, mówione.” |
 | 5 | **Wyślij zgłoszenie** | „AI analizuje…”, 5 kroków odhaczanych po kolei (~3 s) | |
 | 6 | (automatycznie) | Wynik: **Termin minął**, „Miasto zapowiedziało tu remont… do VI 2026”, link do BIP, MZD, „Połączono z 6 podobnymi zgłoszeniami” | „Od razu wie, że miasto to obiecało i termin minął.” |
 | 7 | Panel demo → **Radny** | Panel radnego: sprawa na górze listy z pilnością 99 i etykietami „obietnica przeterminowana o 4 mies.”, „214 kursów autobusów dziennie”, „w pobliżu: Zespół Szkół nr 8” | „Radna widzi sprawy według pilności, z uzasadnieniem.” |
-| 8 | Klik w sprawę „Dziura w jezdni przy przystanku” | Historia miejsca: zdjęcia, zgłoszenia, dokumenty, przeterminowane zobowiązanie | |
+| 8 | Klik w sprawę na liście (albo w znacznik na mapie → dymek ze zdjęciami → **Historia miejsca**) | Historia miejsca: zdjęcia, zgłoszenia, dokumenty, przeterminowane zobowiązanie, podbicia od zweryfikowanych | |
 | 9 | **Przygotuj interpelację** | Tekst pisze się na oczach widza, z przypisami [1]–[4] i listą źródeł | „Jedno kliknięcie, szkic ze źródłami. Radna poprawia i wysyła sama.” |
 | 10 | **Wyślij** | „Wysłano do Biura Rady Miasta (symulacja)” | |
 | 11 | **Zamknij**, panel demo → **Mieszkaniec** | Powiadomienie u góry telefonu: „Interpelacja w Twojej sprawie” | „Mieszkanka dostaje informację.” |
@@ -41,7 +47,7 @@ Skrót do filmu: w kroku 11 można pominąć przełączanie widoków i dodać zd
 
 ## Scenariusz 2: ławka przed blokiem (pomysł, ok. 15 s na żywo)
 
-1. Panel demo → **Ławka** (otwiera zgłoszenie ze zdjęciem trawnika przed blokiem przy przystanku Manhattan).
+1. Panel demo → **Ławka** (otwiera zgłoszenie z miejscem przed blokiem przy przystanku Manhattan; zdjęcie z `zgloszenie-lawka.jpg` albo z galerii).
 2. **Powiedz** → „Przydałaby się tu ławka dla seniorów…”.
 3. **Wyślij zgłoszenie**.
 4. Wynik: etykieta **Pomysł** (nie usterka), „12 osób prosi o to samo”, „Radny okręgu pytał o to już w XI 2024, ale urząd nie podał terminu”, adresat: Wydział Gospodarki Komunalnej.
@@ -59,6 +65,14 @@ Większy pomysł (budżet obywatelski): w zgłoszeniu wpisz np. „Przydałby si
 4. Panel radnego → sprawa mieszkańca: przy zgłoszeniu znaczek „Zweryfikowany mieszkaniec”. Przełącznik **Tylko zweryfikowani mieszkańcy** w nagłówku filtruje listę i mapę.
 
 Co mówimy: „Weryfikacja przez mObywatel jest gotowa architektonicznie. Zapisujemy tylko pseudonim i flagę »mieszka w Toruniu«. Prawdziwe podłączenie to umowa z integratorem, a docelowo europejski portfel tożsamości.”
+
+---
+
+## Scenariusz 4: podbij sprawę (opcjonalnie, 10 s)
+
+1. Mieszkaniec na mapie klika ikonkę cudzej sprawy, np. „Ciemne przejście przy szkole”, a potem kartę podglądu.
+2. **Podbij**. Bez weryfikacji otwiera się mObywatel, po weryfikacji podbicie od razu: „Twoje podbicie się liczy”, licznik rośnie.
+3. W panelu radnego sprawa ma etykietę „N podbić od zweryfikowanych” i wyższą pilność.
 
 ---
 

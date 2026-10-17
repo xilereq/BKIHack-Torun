@@ -7,17 +7,54 @@
     "unitId": "mzd",
     "unitReason": "To droga miejska, więc za nawierzchnię odpowiada Miejski Zarząd Dróg.",
     "place": "przystanek Rubinkowo Centrum",
-    "location": { "lat": 53.02852, "lng": 18.65795 },
-    "photo": "/demo/dziura.svg",
+    "location": {
+      "lat": 53.02852,
+      "lng": 18.65795
+    },
+    "photo": "/zdjecia/dziura.jpg",
     "createdAt": "2025-03-03",
-    "documentIds": ["d-int-rc-2025", "d-odp-rc-2025"],
-    "factors": { "severity": 38, "transit": { "trips": 214, "mode": "autobusów" }, "nearby": "Zespół Szkół nr 8 (200 m)" },
+    "documentIds": [
+      "d-int-rc-2025",
+      "d-odp-rc-2025"
+    ],
+    "factors": {
+      "severity": 38,
+      "transit": {
+        "trips": 214,
+        "mode": "autobusów"
+      },
+      "nearby": "Zespół Szkół nr 8 (200 m)"
+    },
     "events": [
-      { "id": "e-rc-1", "type": "reported", "date": "2025-03-03", "title": "Pierwsze zgłoszenie mieszkańca", "text": "Ubytek w jezdni przy zatoce autobusowej." },
-      { "id": "e-rc-2", "type": "interpellation", "date": "2025-03-18", "title": "Radna okręgu złożyła interpelację", "docId": "d-int-rc-2025" },
-      { "id": "e-rc-3", "type": "response", "date": "2025-04-22", "title": "Odpowiedź urzędu: remont do VI 2026", "docId": "d-odp-rc-2025" },
-      { "id": "e-rc-4", "type": "merged", "date": "2026-09-14", "title": "Połączono 6 zgłoszeń w jedną sprawę" }
-    ]
+      {
+        "id": "e-rc-1",
+        "type": "reported",
+        "date": "2025-03-03",
+        "title": "Pierwsze zgłoszenie mieszkańca",
+        "text": "Ubytek w jezdni przy zatoce autobusowej."
+      },
+      {
+        "id": "e-rc-2",
+        "type": "interpellation",
+        "date": "2025-03-18",
+        "title": "Radna okręgu złożyła interpelację",
+        "docId": "d-int-rc-2025"
+      },
+      {
+        "id": "e-rc-3",
+        "type": "response",
+        "date": "2025-04-22",
+        "title": "Odpowiedź urzędu: remont do VI 2026",
+        "docId": "d-odp-rc-2025"
+      },
+      {
+        "id": "e-rc-4",
+        "type": "merged",
+        "date": "2026-09-14",
+        "title": "Połączono 6 zgłoszeń w jedną sprawę"
+      }
+    ],
+    "supporters": 9
   },
   {
     "id": "c-lawka-manhattan",
@@ -27,17 +64,49 @@
     "unitId": "wgk",
     "unitReason": "Ławki przy miejskich chodnikach zamawia Wydział Gospodarki Komunalnej Urzędu Miasta.",
     "place": "okolice przystanku Manhattan",
-    "location": { "lat": 53.02735, "lng": 18.6642 },
-    "photo": "/demo/trawnik.svg",
+    "location": {
+      "lat": 53.02735,
+      "lng": 18.6642
+    },
+    "photo": "/zdjecia/trawnik.jpg",
     "createdAt": "2024-10-21",
-    "documentIds": ["d-int-lawki-2024", "d-odp-lawki-2024"],
-    "factors": { "severity": 10, "nearby": "przychodnia Rubinmed (60 m)" },
+    "documentIds": [
+      "d-int-lawki-2024",
+      "d-odp-lawki-2024"
+    ],
+    "factors": {
+      "severity": 10,
+      "nearby": "przychodnia Rubinmed (60 m)"
+    },
     "events": [
-      { "id": "e-lm-1", "type": "reported", "date": "2024-10-21", "title": "Pierwsza prośba mieszkanki" },
-      { "id": "e-lm-2", "type": "interpellation", "date": "2024-11-05", "title": "Radny okręgu przekazał prośby seniorów", "docId": "d-int-lawki-2024" },
-      { "id": "e-lm-3", "type": "response", "date": "2024-12-03", "title": "Odpowiedź urzędu bez terminu", "docId": "d-odp-lawki-2024" },
-      { "id": "e-lm-4", "type": "merged", "date": "2026-10-02", "title": "Pogrupowano 11 próśb sąsiadów" }
-    ]
+      {
+        "id": "e-lm-1",
+        "type": "reported",
+        "date": "2024-10-21",
+        "title": "Pierwsza prośba mieszkanki"
+      },
+      {
+        "id": "e-lm-2",
+        "type": "interpellation",
+        "date": "2024-11-05",
+        "title": "Radny okręgu przekazał prośby seniorów",
+        "docId": "d-int-lawki-2024"
+      },
+      {
+        "id": "e-lm-3",
+        "type": "response",
+        "date": "2024-12-03",
+        "title": "Odpowiedź urzędu bez terminu",
+        "docId": "d-odp-lawki-2024"
+      },
+      {
+        "id": "e-lm-4",
+        "type": "merged",
+        "date": "2026-10-02",
+        "title": "Pogrupowano 11 próśb sąsiadów"
+      }
+    ],
+    "supporters": 5
   },
   {
     "id": "c-latarnia-skarpa",
@@ -47,15 +116,36 @@
     "unitId": "mzd",
     "unitReason": "Oświetlenie ulic i przejść należy do Miejskiego Zarządu Dróg.",
     "place": "ul. Przy Skarpie, przystanek tramwajowy",
-    "location": { "lat": 53.02398, "lng": 18.66692 },
-    "photo": "/demo/latarnia.svg",
+    "location": {
+      "lat": 53.02398,
+      "lng": 18.66692
+    },
+    "photo": "/zdjecia/latarnia.jpg",
     "createdAt": "2026-09-25",
     "documentIds": [],
-    "factors": { "severity": 30, "transit": { "trips": 186, "mode": "tramwajów" }, "nearby": "przejście dla pieszych" },
+    "factors": {
+      "severity": 30,
+      "transit": {
+        "trips": 186,
+        "mode": "tramwajów"
+      },
+      "nearby": "przejście dla pieszych"
+    },
     "events": [
-      { "id": "e-ls-1", "type": "reported", "date": "2026-09-25", "title": "Pierwsze zgłoszenie mieszkańca" },
-      { "id": "e-ls-2", "type": "forwarded", "date": "2026-09-25", "title": "Przekazano do MZD i radnych okręgu" }
-    ]
+      {
+        "id": "e-ls-1",
+        "type": "reported",
+        "date": "2026-09-25",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-ls-2",
+        "type": "forwarded",
+        "date": "2026-09-25",
+        "title": "Przekazano do MZD i radnych okręgu"
+      }
+    ],
+    "supporters": 3
   },
   {
     "id": "c-chodnik-przychodnia",
@@ -65,15 +155,35 @@
     "unitId": "mzd",
     "unitReason": "Chodnik leży w pasie drogi miejskiej, więc odpowiada Miejski Zarząd Dróg.",
     "place": "przy Przychodni Rodzinnej na Skarpie",
-    "location": { "lat": 53.0242, "lng": 18.67212 },
-    "photo": "/demo/chodnik.svg",
+    "location": {
+      "lat": 53.0242,
+      "lng": 18.67212
+    },
+    "photo": "/zdjecia/chodnik.jpg",
     "createdAt": "2026-01-15",
-    "documentIds": ["d-plan-chodniki-2026"],
-    "factors": { "severity": 22, "nearby": "Przychodnia Rodzinna na Skarpie (30 m)" },
+    "documentIds": [
+      "d-plan-chodniki-2026"
+    ],
+    "factors": {
+      "severity": 22,
+      "nearby": "Przychodnia Rodzinna na Skarpie (30 m)"
+    },
     "events": [
-      { "id": "e-cp-1", "type": "reported", "date": "2026-01-15", "title": "Pierwsze zgłoszenie mieszkańca" },
-      { "id": "e-cp-2", "type": "planned", "date": "2026-02-10", "title": "Remont w planie MZD na IV kw. 2026", "docId": "d-plan-chodniki-2026" }
-    ]
+      {
+        "id": "e-cp-1",
+        "type": "reported",
+        "date": "2026-01-15",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-cp-2",
+        "type": "planned",
+        "date": "2026-02-10",
+        "title": "Remont w planie MZD na IV kw. 2026",
+        "docId": "d-plan-chodniki-2026"
+      }
+    ],
+    "supporters": 2
   },
   {
     "id": "c-przejscie-sp16",
@@ -83,16 +193,43 @@
     "unitId": "mzd",
     "unitReason": "Oznakowanie i oświetlenie przejść należy do Miejskiego Zarządu Dróg.",
     "place": "przy Szkole Podstawowej nr 16",
-    "location": { "lat": 53.0288, "lng": 18.6693 },
-    "photo": "/demo/latarnia.svg",
+    "location": {
+      "lat": 53.0288,
+      "lng": 18.6693
+    },
+    "photo": "/zdjecia/latarnia.jpg",
     "createdAt": "2025-08-28",
-    "documentIds": ["d-int-sp16-2025", "d-odp-sp16-2025"],
-    "factors": { "severity": 34, "nearby": "Szkoła Podstawowa nr 16 (50 m)" },
+    "documentIds": [
+      "d-int-sp16-2025",
+      "d-odp-sp16-2025"
+    ],
+    "factors": {
+      "severity": 34,
+      "nearby": "Szkoła Podstawowa nr 16 (50 m)"
+    },
     "events": [
-      { "id": "e-sp-1", "type": "reported", "date": "2025-08-28", "title": "Pierwsze zgłoszenie rodzica" },
-      { "id": "e-sp-2", "type": "interpellation", "date": "2025-09-09", "title": "Radny okręgu złożył interpelację", "docId": "d-int-sp16-2025" },
-      { "id": "e-sp-3", "type": "response", "date": "2025-10-07", "title": "Odpowiedź urzędu: oświetlenie do XII 2025", "docId": "d-odp-sp16-2025" }
-    ]
+      {
+        "id": "e-sp-1",
+        "type": "reported",
+        "date": "2025-08-28",
+        "title": "Pierwsze zgłoszenie rodzica"
+      },
+      {
+        "id": "e-sp-2",
+        "type": "interpellation",
+        "date": "2025-09-09",
+        "title": "Radny okręgu złożył interpelację",
+        "docId": "d-int-sp16-2025"
+      },
+      {
+        "id": "e-sp-3",
+        "type": "response",
+        "date": "2025-10-07",
+        "title": "Odpowiedź urzędu: oświetlenie do XII 2025",
+        "docId": "d-odp-sp16-2025"
+      }
+    ],
+    "supporters": 6
   },
   {
     "id": "c-schody-skarpa",
@@ -102,16 +239,43 @@
     "unitId": "mzd",
     "unitReason": "Schody są częścią ciągu pieszego przy drodze miejskiej, którym zarządza MZD.",
     "place": "ul. Przy Skarpie, schody do przystanku",
-    "location": { "lat": 53.023, "lng": 18.6695 },
-    "photo": "/demo/chodnik.svg",
+    "location": {
+      "lat": 53.023,
+      "lng": 18.6695
+    },
+    "photo": "/zdjecia/chodnik.jpg",
     "createdAt": "2024-12-10",
-    "documentIds": ["d-int-schody-2025", "d-odp-schody-2025"],
-    "factors": { "severity": 28, "nearby": "przystanek Przy Skarpie" },
+    "documentIds": [
+      "d-int-schody-2025",
+      "d-odp-schody-2025"
+    ],
+    "factors": {
+      "severity": 28,
+      "nearby": "przystanek Przy Skarpie"
+    },
     "events": [
-      { "id": "e-sc-1", "type": "reported", "date": "2024-12-10", "title": "Pierwsze zgłoszenie mieszkańca" },
-      { "id": "e-sc-2", "type": "interpellation", "date": "2025-01-20", "title": "Radna okręgu złożyła interpelację", "docId": "d-int-schody-2025" },
-      { "id": "e-sc-3", "type": "response", "date": "2025-02-14", "title": "Odpowiedź urzędu: remont do IX 2025", "docId": "d-odp-schody-2025" }
-    ]
+      {
+        "id": "e-sc-1",
+        "type": "reported",
+        "date": "2024-12-10",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-sc-2",
+        "type": "interpellation",
+        "date": "2025-01-20",
+        "title": "Radna okręgu złożyła interpelację",
+        "docId": "d-int-schody-2025"
+      },
+      {
+        "id": "e-sc-3",
+        "type": "response",
+        "date": "2025-02-14",
+        "title": "Odpowiedź urzędu: remont do IX 2025",
+        "docId": "d-odp-schody-2025"
+      }
+    ],
+    "supporters": 4
   },
   {
     "id": "c-graffiti-jamontta",
@@ -121,14 +285,33 @@
     "unitId": "mzd",
     "unitReason": "Wiaty przystankowe utrzymuje Miejski Zarząd Dróg.",
     "place": "przystanek Jamontta",
-    "location": { "lat": 53.02548, "lng": 18.67222 },
-    "photo": "/demo/graffiti.svg",
+    "location": {
+      "lat": 53.02548,
+      "lng": 18.67222
+    },
+    "photo": "/zdjecia/graffiti.jpg",
     "createdAt": "2026-10-06",
     "documentIds": [],
-    "factors": { "severity": 8, "transit": { "trips": 162, "mode": "tramwajów" } },
+    "factors": {
+      "severity": 8,
+      "transit": {
+        "trips": 162,
+        "mode": "tramwajów"
+      }
+    },
     "events": [
-      { "id": "e-gj-1", "type": "reported", "date": "2026-10-06", "title": "Zgłoszenie mieszkańca" },
-      { "id": "e-gj-2", "type": "forwarded", "date": "2026-10-06", "title": "Przekazano do MZD" }
+      {
+        "id": "e-gj-1",
+        "type": "reported",
+        "date": "2026-10-06",
+        "title": "Zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-gj-2",
+        "type": "forwarded",
+        "date": "2026-10-06",
+        "title": "Przekazano do MZD"
+      }
     ]
   },
   {
@@ -139,15 +322,36 @@
     "unitId": "mpo",
     "unitReason": "Opróżnianie miejskich koszy zleca się Miejskiemu Przedsiębiorstwu Oczyszczania.",
     "place": "plac zabaw Zaczarowany las",
-    "location": { "lat": 53.02786, "lng": 18.67108 },
-    "photo": "/demo/kosz.svg",
+    "location": {
+      "lat": 53.02786,
+      "lng": 18.67108
+    },
+    "photo": "/zdjecia/kosz.jpg",
     "createdAt": "2026-10-01",
     "documentIds": [],
-    "factors": { "severity": 12, "nearby": "plac zabaw" },
+    "factors": {
+      "severity": 12,
+      "nearby": "plac zabaw"
+    },
     "events": [
-      { "id": "e-kp-1", "type": "reported", "date": "2026-10-01", "title": "Twoje zgłoszenie" },
-      { "id": "e-kp-2", "type": "forwarded", "date": "2026-10-01", "title": "Przekazano do MPO" },
-      { "id": "e-kp-3", "type": "merged", "date": "2026-10-08", "title": "Sąsiad zgłosił to samo miejsce" }
+      {
+        "id": "e-kp-1",
+        "type": "reported",
+        "date": "2026-10-01",
+        "title": "Twoje zgłoszenie"
+      },
+      {
+        "id": "e-kp-2",
+        "type": "forwarded",
+        "date": "2026-10-01",
+        "title": "Przekazano do MPO"
+      },
+      {
+        "id": "e-kp-3",
+        "type": "merged",
+        "date": "2026-10-08",
+        "title": "Sąsiad zgłosił to samo miejsce"
+      }
     ]
   },
   {
@@ -158,14 +362,29 @@
     "unitId": "wod",
     "unitReason": "Studzienki kanalizacyjne należą do Toruńskich Wodociągów.",
     "place": "ul. Janiny i Eugeniusza Przybyłów",
-    "location": { "lat": 53.02968, "lng": 18.67132 },
-    "photo": "/demo/studzienka.svg",
+    "location": {
+      "lat": 53.02968,
+      "lng": 18.67132
+    },
+    "photo": "/zdjecia/studzienka.jpg",
     "createdAt": "2026-10-11",
     "documentIds": [],
-    "factors": { "severity": 26 },
+    "factors": {
+      "severity": 26
+    },
     "events": [
-      { "id": "e-st-1", "type": "reported", "date": "2026-10-11", "title": "Zgłoszenie mieszkańca" },
-      { "id": "e-st-2", "type": "forwarded", "date": "2026-10-11", "title": "Przekazano do Toruńskich Wodociągów" }
+      {
+        "id": "e-st-1",
+        "type": "reported",
+        "date": "2026-10-11",
+        "title": "Zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-st-2",
+        "type": "forwarded",
+        "date": "2026-10-11",
+        "title": "Przekazano do Toruńskich Wodociągów"
+      }
     ]
   },
   {
@@ -176,14 +395,29 @@
     "unitId": "mzd",
     "unitReason": "Stojaki rowerowe w pasie drogowym ustawia Miejski Zarząd Dróg.",
     "place": "Rubinkowo Centrum, przy sklepach",
-    "location": { "lat": 53.02905, "lng": 18.65952 },
-    "photo": "/demo/stojak.svg",
+    "location": {
+      "lat": 53.02905,
+      "lng": 18.65952
+    },
+    "photo": "/zdjecia/stojak.jpg",
     "createdAt": "2026-06-04",
     "documentIds": [],
-    "factors": { "severity": 6 },
+    "factors": {
+      "severity": 6
+    },
     "events": [
-      { "id": "e-sr-1", "type": "reported", "date": "2026-06-04", "title": "Pierwsza prośba mieszkańca" },
-      { "id": "e-sr-2", "type": "forwarded", "date": "2026-06-04", "title": "Przekazano do MZD jako prośbę" }
+      {
+        "id": "e-sr-1",
+        "type": "reported",
+        "date": "2026-06-04",
+        "title": "Pierwsza prośba mieszkańca"
+      },
+      {
+        "id": "e-sr-2",
+        "type": "forwarded",
+        "date": "2026-06-04",
+        "title": "Przekazano do MZD jako prośbę"
+      }
     ]
   },
   {
@@ -194,16 +428,35 @@
     "unitId": "wgk",
     "unitReason": "Większe inwestycje osiedlowe realizuje Wydział Gospodarki Komunalnej, m.in. z budżetu obywatelskiego.",
     "place": "ul. Tymona Niesiołowskiego",
-    "location": { "lat": 53.0306, "lng": 18.6742 },
-    "photo": "/demo/trawnik.svg",
+    "location": {
+      "lat": 53.0306,
+      "lng": 18.6742
+    },
+    "photo": "/zdjecia/trawnik.jpg",
     "createdAt": "2026-05-19",
-    "documentIds": ["d-bo-2027"],
-    "factors": { "severity": 6 },
+    "documentIds": [
+      "d-bo-2027"
+    ],
+    "factors": {
+      "severity": 6
+    },
     "bigIdea": true,
     "events": [
-      { "id": "e-sn-1", "type": "reported", "date": "2026-05-19", "title": "Pierwszy pomysł mieszkańca" },
-      { "id": "e-sn-2", "type": "forwarded", "date": "2026-09-01", "title": "Podpowiedź: nabór do budżetu obywatelskiego 2027", "docId": "d-bo-2027" }
-    ]
+      {
+        "id": "e-sn-1",
+        "type": "reported",
+        "date": "2026-05-19",
+        "title": "Pierwszy pomysł mieszkańca"
+      },
+      {
+        "id": "e-sn-2",
+        "type": "forwarded",
+        "date": "2026-09-01",
+        "title": "Podpowiedź: nabór do budżetu obywatelskiego 2027",
+        "docId": "d-bo-2027"
+      }
+    ],
+    "supporters": 8
   },
   {
     "id": "c-lawka-sybirakow",
@@ -213,17 +466,45 @@
     "unitId": "wgk",
     "unitReason": "Ławki na placach miejskich utrzymuje Wydział Gospodarki Komunalnej.",
     "place": "Plac Sybiraków",
-    "location": { "lat": 53.02449, "lng": 18.66775 },
-    "photo": "/demo/lawka.svg",
+    "location": {
+      "lat": 53.02449,
+      "lng": 18.66775
+    },
+    "photo": "/zdjecia/lawka.jpg",
     "createdAt": "2026-05-06",
-    "documentIds": ["d-prot-sybirakow-2026"],
-    "factors": { "severity": 14 },
+    "documentIds": [
+      "d-prot-sybirakow-2026"
+    ],
+    "factors": {
+      "severity": 14
+    },
     "statusOverride": "resolved",
     "events": [
-      { "id": "e-ly-1", "type": "reported", "date": "2026-05-06", "title": "Pierwsze zgłoszenie mieszkanki" },
-      { "id": "e-ly-2", "type": "planned", "date": "2026-06-15", "title": "Wymiana ławek zlecona" },
-      { "id": "e-ly-3", "type": "done", "date": "2026-08-21", "title": "Ławki wymienione", "docId": "d-prot-sybirakow-2026" },
-      { "id": "e-ly-4", "type": "resolved", "date": "2026-08-24", "title": "Mieszkańcy potwierdzili: rozwiązane" }
+      {
+        "id": "e-ly-1",
+        "type": "reported",
+        "date": "2026-05-06",
+        "title": "Pierwsze zgłoszenie mieszkanki"
+      },
+      {
+        "id": "e-ly-2",
+        "type": "planned",
+        "date": "2026-06-15",
+        "title": "Wymiana ławek zlecona"
+      },
+      {
+        "id": "e-ly-3",
+        "type": "done",
+        "date": "2026-08-21",
+        "title": "Ławki wymienione",
+        "docId": "d-prot-sybirakow-2026"
+      },
+      {
+        "id": "e-ly-4",
+        "type": "resolved",
+        "date": "2026-08-24",
+        "title": "Mieszkańcy potwierdzili: rozwiązane"
+      }
     ]
   },
   {
@@ -234,14 +515,29 @@
     "unitId": "mzd",
     "unitReason": "Chodnik leży w pasie drogi miejskiej, więc odpowiada Miejski Zarząd Dróg.",
     "place": "ul. Ludwika Ślaskiego",
-    "location": { "lat": 53.02375, "lng": 18.67487 },
-    "photo": "/demo/chodnik.svg",
+    "location": {
+      "lat": 53.02375,
+      "lng": 18.67487
+    },
+    "photo": "/zdjecia/chodnik.jpg",
     "createdAt": "2026-10-13",
     "documentIds": [],
-    "factors": { "severity": 18 },
+    "factors": {
+      "severity": 18
+    },
     "events": [
-      { "id": "e-cs-1", "type": "reported", "date": "2026-10-13", "title": "Zgłoszenie mieszkańca" },
-      { "id": "e-cs-2", "type": "forwarded", "date": "2026-10-13", "title": "Przekazano do MZD" }
+      {
+        "id": "e-cs-1",
+        "type": "reported",
+        "date": "2026-10-13",
+        "title": "Zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-cs-2",
+        "type": "forwarded",
+        "date": "2026-10-13",
+        "title": "Przekazano do MZD"
+      }
     ]
   }
 ]

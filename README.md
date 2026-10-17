@@ -40,7 +40,7 @@ Esc zamyka panel.
 W panelu:
 
 - przełączanie widoku: mieszkaniec / radny,
-- szybki start zgłoszenia ze zdjęciem demo: „Dziura” albo „Ławka”,
+- szybki start zgłoszenia: „Dziura” albo „Ławka”. Ustawia miejsce i tekst mikrofonu, a zdjęcie dołącza z `public/zdjecia/zgloszenie-*.jpg`, jeśli istnieje,
 - zdarzenia w sprawie: interpelacja, odpowiedź urzędu, remont zaplanowany, remont wykonany. Dotyczą ostatniej sprawy mieszkańca, a gdy jej nie ma, sprawy „Dziura przy Rubinkowo Centrum”,
 - „Pokaż tę sprawę u mieszkańca”, „Zweryfikuj od razu” (pomija kod QR),
 - **Reset demo**: kliknij dwa razy, wraca stan początkowy.
@@ -62,7 +62,18 @@ Wszystkie dane są **przykładowe** i trzymane w osobnych plikach JSON w `src/da
 - Współrzędne przystanków, szkół i przychodni pochodzą z OpenStreetMap.
 - Nazwiska radnych są fikcyjne (Anna Przykładowa, Piotr Testowy). Przed pokazem zespół podmienia dokumenty na prawdziwe przypadki z BIP.
 - Linki źródłowe prowadzą do https://bip.torun.pl/interpelacje/29500. Podmień `url` na konkretny dokument.
-- Zdjęcia demo to ilustracje w `public/demo/*.svg`. Można je zastąpić prawdziwymi zdjęciami pod tymi samymi nazwami albo zmienić ścieżki w JSON i w `src/resident/demoPhotos.ts`.
+- **Zdjęcia: tylko prawdziwe.** Dane wskazują na pliki w `public/zdjecia/`. Dopóki ich nie ma, aplikacja pokazuje ilustrację zastępczą z `public/demo/<nazwa>.svg`. Wrzuć zdjęcia pod tymi nazwami:
+
+  | Plik | Do czego |
+  |---|---|
+  | `dziura.jpg`, `dziura-2.jpg`, `dziura-3.jpg` | Dziura przy przystanku Rubinkowo Centrum (karuzela 3 zdjęć) |
+  | `trawnik.jpg`, `trawnik-2.jpg` | Trawnik przed blokiem (ławka, siłownia) |
+  | `latarnia.jpg`, `latarnia-2.jpg` | Ciemne przejścia |
+  | `chodnik.jpg`, `graffiti.jpg`, `kosz.jpg`, `studzienka.jpg`, `stojak.jpg`, `lawka.jpg` | Pozostałe sprawy |
+  | `zgloszenie-dziura.jpg`, `zgloszenie-lawka.jpg` | Zdjęcie dołączane samo w scenariuszach z panelu demo (opcjonalne) |
+
+  Format JPG, poziomo, ok. 1200 px szerokości. Bez twarzy i tablic rejestracyjnych.
+- **Podbijanie spraw:** pole `supporters` w `cases.json` to liczba podbić od zweryfikowanych mieszkańców. Podbicie zwiększa pilność i pojawia się jako etykieta w panelu radnego.
 - Status sprawy (przeterminowana, zaplanowana) liczy się sam z terminów w `documents.json` i bieżącej daty.
 
 Po zmianie plików JSON kliknij **Reset demo**, bo przeglądarka trzyma poprzedni stan.

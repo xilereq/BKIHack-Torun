@@ -20,10 +20,12 @@ export interface DemoState {
   verification: Verification | null
   /** Sprawa, której dotyczą przyciski panelu demo (ostatnie zgłoszenie mieszkańca) */
   lastCaseId: string | null
+  /** Sprawy podbite przez tego mieszkańca */
+  boosts: string[]
 }
 
 const STORAGE_KEY = 'glos-osiedla-demo-v1'
-const VERSION = 1
+const VERSION = 2
 export const MAIN_CASE_ID = 'c-rubinkowo-centrum'
 
 function seed(): DemoState {
@@ -35,6 +37,7 @@ function seed(): DemoState {
     notifications: [],
     verification: null,
     lastCaseId: null,
+    boosts: [],
   }
 }
 
@@ -298,7 +301,7 @@ export function answerResolved(caseId: string, solved: boolean): ResolveResult {
         ...s,
         cases: updateCase(s, caseId, (x) => ({
           ...x,
-          events: [...x.events, { id: uid('e'), type: 'resolved', date, title: 'Potwierdziłeś: problem rozwiązany' }],
+          events: [...x.events, { id: uid('e'), type: 'resolved', date, title: 'Mieszkaniec potwierdził: problem rozwiązany' }],
         })),
       }
     }
@@ -354,6 +357,17 @@ export function setVerified(v: Verification) {
     verification: v,
     reports: s.reports.map((r) => (r.mine ? { ...r, verified: true } : r)),
   }))
+}
+
+/** Podbicie sprawy przez zweryfikowanego mieszkańca (raz na sprawę). Zwraca false, gdy brak weryfikacji. */
+export function boostCase(caseId: string): boolean {
+  if (!state.verification || state.boosts.includes(caseId)) return false
+  setState((s) => ({
+    ...s,
+    boosts: [...s.boosts, caseId],
+    cases: updateCase(s, caseId, (c) => ({ ...c, supporters: (c.supporters ?? 0) + 1 })),
+  }))
+  return true
 }
 
 export function markNotificationsRead(caseId?: string) {

@@ -1,13 +1,24 @@
 import { useEffect, useRef, useState } from 'react'
-import { answerResolved, markNotificationsRead, useDemo, type ResolveResult } from '../lib/store'
+import { answerResolved, boostCase, markNotificationsRead, useDemo, type ResolveResult } from '../lib/store'
 import { caseReports, unitById } from '../lib/domain'
 import { countLabel, plural, REPORT_FORMS } from '../lib/format'
 import { Button, StatusBadge, TypeBadge } from '../components/ui'
-import { IconBuilding, IconCheckCircle, IconRefresh, IconUsers, IconWrench } from '../components/icons'
-import { cityKnowledge, DocLink, Photo, Timeline } from '../components/shared'
+import { IconArrowUp, IconBuilding, IconCheck, IconCheckCircle, IconRefresh, IconShield, IconUsers, IconWrench } from '../components/icons'
+import { Carousel } from '../components/Carousel'
+import { caseSlides, cityKnowledge, DocLink, Timeline } from '../components/shared'
 import { ScreenHeader } from './ScreenHeader'
 
-export function CaseScreen({ caseId, onBack, onOpenCase }: { caseId: string; onBack: () => void; onOpenCase: (id: string) => void }) {
+export function CaseScreen({
+  caseId,
+  onBack,
+  onOpenCase,
+  onRequestVerify,
+}: {
+  caseId: string
+  onBack: () => void
+  onOpenCase: (id: string) => void
+  onRequestVerify: () => void
+}) {
   const s = useDemo()
   const c = s.cases.find((x) => x.id === caseId)
   const [answer, setAnswer] = useState<{ solved: boolean; result: ResolveResult } | null>(null)
@@ -52,13 +63,15 @@ export function CaseScreen({ caseId, onBack, onOpenCase }: { caseId: string; onB
   const askResolved = mine && lastKeyType === 'done' && !answer
   const linked = c.linkedCaseId ? s.cases.find((x) => x.id === c.linkedCaseId) : null
 
+  const supporters = c.supporters ?? 0
+  const boosted = s.boosts.includes(c.id)
   const respond = (solved: boolean) => setAnswer({ solved, result: answerResolved(c.id, solved) })
 
   return (
     <div className="flex h-full flex-col">
       <ScreenHeader title={mine ? 'Twoja sprawa' : 'Sprawa w okolicy'} onBack={onBack} />
       <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto">
-        <Photo src={c.photo} alt={`Zdjęcie: ${c.title}`} className="h-32 w-full" />
+        <Carousel slides={caseSlides(c, s)} height={180} />
         <div className="flex flex-col gap-3 px-4 py-4">
           <div className="flex flex-wrap gap-1.5">
             <TypeBadge type={c.type} small />
@@ -132,6 +145,34 @@ export function CaseScreen({ caseId, onBack, onOpenCase }: { caseId: string; onB
             <p className="text-[17px] leading-[26px]">{knowledge.text}</p>
             {knowledge.doc && <DocLink doc={knowledge.doc} />}
           </div>
+
+          {!mine && knowledge.status !== 'resolved' && (
+            <div className="flex items-center gap-3 rounded-card border border-line bg-surface p-4">
+              <div className="min-w-0 flex-1">
+                <div className="text-[17px] font-bold leading-6">{boosted ? 'Twoje podbicie się liczy' : 'Ciebie też to dotyczy?'}</div>
+                <div className="text-[14px] leading-5 text-ink-2">
+                  {supporters > 0 ? `${supporters} ${plural(supporters, ['podbicie', 'podbicia', 'podbić'])} od zweryfikowanych mieszkańców` : 'Podbij, żeby radni widzieli, że to ważne.'}
+                </div>
+              </div>
+              {boosted ? (
+                <span className="inline-flex min-h-12 shrink-0 items-center gap-1.5 rounded-full bg-st-done-bg px-4 text-[16px] font-bold text-st-done">
+                  <IconCheck size={18} strokeWidth={2.6} /> Podbite
+                </span>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => (s.verification ? boostCase(c.id) : onRequestVerify())}
+                  className="inline-flex min-h-12 shrink-0 items-center gap-1.5 rounded-full border-2 border-brand px-4 text-[16px] font-bold text-brand hover:bg-brand-tint active:scale-95"
+                >
+                  {s.verification ? <IconArrowUp size={20} strokeWidth={2.6} /> : <IconShield size={18} strokeWidth={2.4} />}
+                  Podbij
+                </button>
+              )}
+            </div>
+          )}
+          {!mine && !s.verification && knowledge.status !== 'resolved' && (
+            <p className="-mt-1.5 px-1 text-[14px] leading-5 text-ink-2">Podbijać mogą mieszkańcy zweryfikowani przez mObywatel. Tak jeden głos liczy się raz.</p>
+          )}
 
           <h2 ref={timelineRef} className="mt-2 scroll-mt-3 text-h2 font-bold">
             Co się dzieje

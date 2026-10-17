@@ -1,10 +1,10 @@
 import type { Report } from '../lib/types'
 import type { DemoState } from '../lib/store'
-import { caseDocuments, caseStatus, caseUrgency, DOC_KIND_LABEL, isOverdue, monthsOverdue, unitById } from '../lib/domain'
-import { formatDate, plural, romanMonth } from '../lib/format'
+import { caseDocuments, caseStatus, caseUrgency, DOC_KIND_LABEL, monthsOverdue, unitById } from '../lib/domain'
+import { formatDate, plural } from '../lib/format'
 import { Button, StatusBadge, Tag, TypeBadge, VerifiedBadge } from '../components/ui'
-import { IconAlert, IconCalendar, IconExternal, IconFile, IconX } from '../components/icons'
-import { isCommitmentFulfilled, Photo, Timeline } from '../components/shared'
+import { IconExternal, IconFile, IconX } from '../components/icons'
+import { CommitmentBadge, commitmentState, Photo, Timeline } from '../components/shared'
 
 export function CaseDetail({
   s,
@@ -95,7 +95,7 @@ export function CaseDetail({
             ) : (
               <ul className="flex flex-col gap-2.5">
                 {docs.map((d) => {
-                  const over = d.commitment && isOverdue(d.commitment) && !isCommitmentFulfilled(d, s)
+                  const over = commitmentState(d, s) === 'overdue'
                   return (
                     <li key={d.id} className={`rounded-card px-4 py-3 ${over ? 'border-2 border-brand' : 'border border-line'}`}>
                       <div className="flex flex-wrap items-center gap-2 text-[14px] font-bold text-ink-2">
@@ -104,10 +104,9 @@ export function CaseDetail({
                       <div className="mt-0.5 text-[16px] font-bold leading-6">{d.title}</div>
                       <div className="mt-0.5 text-[15px] leading-[22px] text-ink-2">{d.summary}</div>
                       {d.commitment && (
-                        <div className={`mt-2 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[14px] font-bold ${over ? 'bg-st-overdue-bg text-st-overdue' : 'bg-st-planned-bg text-st-planned'}`}>
-                          {over ? <IconAlert size={14} strokeWidth={2.4} /> : <IconCalendar size={14} strokeWidth={2.2} />}
-                          Termin {romanMonth(d.commitment.deadline)}
-                          {over && `, minął ${monthsOverdue(d.commitment.deadline)} mies. temu`}
+                        <div className="mt-2">
+                          <CommitmentBadge d={d} s={s} />
+                          {over && <span className="ml-2 text-[14px] text-st-overdue">{monthsOverdue(d.commitment.deadline)} mies. temu</span>}
                         </div>
                       )}
                       <div>

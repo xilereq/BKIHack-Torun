@@ -1,55 +1,495 @@
 [
-  { "id": "r-001", "caseId": "c-rubinkowo-centrum", "description": "Duży ubytek w jezdni przy zatoce autobusowej, autobusy w niego wjeżdżają.", "photo": "/demo/dziura.svg", "createdAt": "2025-03-03", "location": { "lat": 53.02851, "lng": 18.65792 }, "verified": true },
-  { "id": "r-002", "caseId": "c-rubinkowo-centrum", "description": "Dziura przy przystanku coraz większa, woda chlapie na ludzi.", "photo": "/demo/dziura.svg", "createdAt": "2025-06-12", "location": { "lat": 53.02855, "lng": 18.65801 }, "verified": false },
-  { "id": "r-003", "caseId": "c-rubinkowo-centrum", "description": "Rozbite koło w samochodzie na dziurze przy Rubinkowo Centrum.", "photo": "/demo/dziura.svg", "createdAt": "2025-11-04", "location": { "lat": 53.02848, "lng": 18.65788 }, "verified": true },
-  { "id": "r-004", "caseId": "c-rubinkowo-centrum", "description": "Po zimie dziura jest jeszcze głębsza.", "photo": "/demo/dziura.svg", "createdAt": "2026-03-21", "location": { "lat": 53.02857, "lng": 18.65806 }, "verified": false },
-  { "id": "r-005", "caseId": "c-rubinkowo-centrum", "description": "Miał być remont do czerwca, a nic się nie dzieje.", "photo": "/demo/dziura.svg", "createdAt": "2026-07-08", "location": { "lat": 53.02849, "lng": 18.65798 }, "verified": true },
-  { "id": "r-006", "caseId": "c-rubinkowo-centrum", "description": "Wyrwa w asfalcie na wysokości przystanku, niebezpiecznie dla rowerzystów.", "photo": "/demo/dziura.svg", "createdAt": "2026-09-14", "location": { "lat": 53.02854, "lng": 18.65785 }, "verified": false },
-
-  { "id": "r-010", "caseId": "c-lawka-manhattan", "description": "Przydałaby się ławka, starsi ludzie nie mają gdzie odpocząć w drodze do przychodni.", "photo": "/demo/trawnik.svg", "createdAt": "2024-10-21", "location": { "lat": 53.02736, "lng": 18.66418 }, "verified": true },
-  { "id": "r-011", "caseId": "c-lawka-manhattan", "description": "Prośba o ławkę przed blokiem.", "photo": "/demo/trawnik.svg", "createdAt": "2025-02-02", "location": { "lat": 53.02731, "lng": 18.66425 }, "verified": false },
-  { "id": "r-012", "caseId": "c-lawka-manhattan", "description": "Mama ma 82 lata i musi się zatrzymywać po drodze. Ławka by pomogła.", "photo": "/demo/trawnik.svg", "createdAt": "2025-04-17", "location": { "lat": 53.02739, "lng": 18.66414 }, "verified": true },
-  { "id": "r-013", "caseId": "c-lawka-manhattan", "description": "Brakuje ławek między przystankiem a przychodnią.", "photo": "/demo/trawnik.svg", "createdAt": "2025-05-30", "location": { "lat": 53.02742, "lng": 18.66431 }, "verified": false },
-  { "id": "r-014", "caseId": "c-lawka-manhattan", "description": "Ławka dla seniorów w tym miejscu, bardzo proszę.", "photo": "/demo/trawnik.svg", "createdAt": "2025-08-11", "location": { "lat": 53.02729, "lng": 18.66409 }, "verified": true },
-  { "id": "r-015", "caseId": "c-lawka-manhattan", "description": "Można by postawić tu ławkę i kosz.", "photo": "/demo/trawnik.svg", "createdAt": "2025-10-03", "location": { "lat": 53.02737, "lng": 18.66427 }, "verified": false },
-  { "id": "r-016", "caseId": "c-lawka-manhattan", "description": "Seniorzy siadają na murku, przydałaby się ławka.", "photo": "/demo/trawnik.svg", "createdAt": "2026-01-22", "location": { "lat": 53.02733, "lng": 18.66421 }, "verified": true },
-  { "id": "r-017", "caseId": "c-lawka-manhattan", "description": "Ławka przed blokiem, najlepiej w cieniu drzewa.", "photo": "/demo/trawnik.svg", "createdAt": "2026-04-09", "location": { "lat": 53.0274, "lng": 18.66412 }, "verified": false },
-  { "id": "r-018", "caseId": "c-lawka-manhattan", "description": "Brak miejsca do odpoczynku na trawniku przed blokiem.", "photo": "/demo/trawnik.svg", "createdAt": "2026-06-18", "location": { "lat": 53.02728, "lng": 18.66428 }, "verified": false },
-  { "id": "r-019", "caseId": "c-lawka-manhattan", "description": "Proszę o ławkę, sąsiadki też o to proszą.", "photo": "/demo/trawnik.svg", "createdAt": "2026-08-27", "location": { "lat": 53.02735, "lng": 18.66416 }, "verified": true },
-  { "id": "r-020", "caseId": "c-lawka-manhattan", "description": "Ławka przy chodniku do przychodni.", "photo": "/demo/trawnik.svg", "createdAt": "2026-10-02", "location": { "lat": 53.02738, "lng": 18.66423 }, "verified": false },
-
-  { "id": "r-030", "caseId": "c-latarnia-skarpa", "description": "Nie świeci latarnia nad przejściem przy przystanku tramwajowym.", "photo": "/demo/latarnia.svg", "createdAt": "2026-09-25", "location": { "lat": 53.02399, "lng": 18.6669 }, "verified": true },
-  { "id": "r-031", "caseId": "c-latarnia-skarpa", "description": "Po zmroku na przejściu jest zupełnie ciemno.", "photo": "/demo/latarnia.svg", "createdAt": "2026-10-04", "location": { "lat": 53.02396, "lng": 18.66695 }, "verified": false },
-  { "id": "r-032", "caseId": "c-latarnia-skarpa", "description": "Latarnia zepsuta od kilku tygodni.", "photo": "/demo/latarnia.svg", "createdAt": "2026-10-12", "location": { "lat": 53.024, "lng": 18.66688 }, "verified": true },
-
-  { "id": "r-040", "caseId": "c-chodnik-przychodnia", "description": "Pęknięte płyty, łatwo się potknąć idąc do przychodni.", "photo": "/demo/chodnik.svg", "createdAt": "2026-01-15", "location": { "lat": 53.02421, "lng": 18.67209 }, "verified": true },
-  { "id": "r-041", "caseId": "c-chodnik-przychodnia", "description": "Wózek inwalidzki zahacza o wystające płyty.", "photo": "/demo/chodnik.svg", "createdAt": "2026-05-20", "location": { "lat": 53.02418, "lng": 18.67216 }, "verified": false },
-
-  { "id": "r-050", "caseId": "c-przejscie-sp16", "description": "Dzieci przechodzą do szkoły po ciemku, kierowcy ich nie widzą.", "photo": "/demo/latarnia.svg", "createdAt": "2025-08-28", "location": { "lat": 53.02881, "lng": 18.66928 }, "verified": true },
-  { "id": "r-051", "caseId": "c-przejscie-sp16", "description": "Przejście przy szkole bardzo słabo oświetlone.", "photo": "/demo/latarnia.svg", "createdAt": "2026-01-13", "location": { "lat": 53.02878, "lng": 18.66934 }, "verified": true },
-  { "id": "r-052", "caseId": "c-przejscie-sp16", "description": "Obiecane oświetlenie przejścia nadal nie powstało.", "photo": "/demo/latarnia.svg", "createdAt": "2026-09-08", "location": { "lat": 53.02883, "lng": 18.66925 }, "verified": false },
-
-  { "id": "r-060", "caseId": "c-schody-skarpa", "description": "Pęknięte stopnie i brak poręczy na schodach do przystanku.", "photo": "/demo/chodnik.svg", "createdAt": "2024-12-10", "location": { "lat": 53.02301, "lng": 18.66948 }, "verified": true },
-  { "id": "r-061", "caseId": "c-schody-skarpa", "description": "Zimą na tych schodach nie da się zejść bez poręczy.", "photo": "/demo/chodnik.svg", "createdAt": "2026-02-03", "location": { "lat": 53.02298, "lng": 18.66953 }, "verified": false },
-
-  { "id": "r-070", "caseId": "c-graffiti-jamontta", "description": "Wiata przystanku pomalowana sprayem.", "photo": "/demo/graffiti.svg", "createdAt": "2026-10-06", "location": { "lat": 53.02548, "lng": 18.67222 }, "verified": false },
-
-  { "id": "r-080", "caseId": "c-kosze-plac", "description": "Kosze przy placu zabaw przepełnione od kilku dni.", "photo": "/demo/kosz.svg", "createdAt": "2026-10-01", "location": { "lat": 53.02786, "lng": 18.67108 }, "verified": false, "mine": true },
-  { "id": "r-081", "caseId": "c-kosze-plac", "description": "Śmieci wysypują się z kosza obok huśtawek.", "photo": "/demo/kosz.svg", "createdAt": "2026-10-08", "location": { "lat": 53.02789, "lng": 18.67113 }, "verified": true },
-
-  { "id": "r-090", "caseId": "c-studzienka-przybylow", "description": "Zapadnięta studzienka, samochody gwałtownie hamują.", "photo": "/demo/studzienka.svg", "createdAt": "2026-10-11", "location": { "lat": 53.02968, "lng": 18.67132 }, "verified": true },
-
-  { "id": "r-100", "caseId": "c-stojak-centrum", "description": "Przydałby się stojak na rowery przy sklepach.", "photo": "/demo/stojak.svg", "createdAt": "2026-06-04", "location": { "lat": 53.02905, "lng": 18.65952 }, "verified": false },
-  { "id": "r-101", "caseId": "c-stojak-centrum", "description": "Nie ma gdzie przypiąć roweru robiąc zakupy.", "photo": "/demo/stojak.svg", "createdAt": "2026-07-19", "location": { "lat": 53.02903, "lng": 18.65957 }, "verified": true },
-  { "id": "r-102", "caseId": "c-stojak-centrum", "description": "Stojak rowerowy przy wejściu do sklepu.", "photo": "/demo/stojak.svg", "createdAt": "2026-09-30", "location": { "lat": 53.02908, "lng": 18.65949 }, "verified": false },
-
-  { "id": "r-110", "caseId": "c-silownia-niesiolowskiego", "description": "Na trawniku przy bloku przydałaby się siłownia plenerowa.", "photo": "/demo/trawnik.svg", "createdAt": "2026-05-19", "location": { "lat": 53.0306, "lng": 18.6742 }, "verified": true },
-  { "id": "r-111", "caseId": "c-silownia-niesiolowskiego", "description": "Siłownia na świeżym powietrzu dla młodzieży i seniorów.", "photo": "/demo/trawnik.svg", "createdAt": "2026-06-22", "location": { "lat": 53.03063, "lng": 18.67425 }, "verified": false },
-  { "id": "r-112", "caseId": "c-silownia-niesiolowskiego", "description": "Chętnie zagłosuję na siłownię plenerową w tym miejscu.", "photo": "/demo/trawnik.svg", "createdAt": "2026-08-14", "location": { "lat": 53.03057, "lng": 18.67416 }, "verified": true },
-  { "id": "r-113", "caseId": "c-silownia-niesiolowskiego", "description": "Proszę o urządzenia do ćwiczeń na tym terenie.", "photo": "/demo/trawnik.svg", "createdAt": "2026-09-28", "location": { "lat": 53.03062, "lng": 18.67412 }, "verified": false },
-
-  { "id": "r-120", "caseId": "c-lawka-sybirakow", "description": "Dwie ławki na placu są połamane.", "photo": "/demo/lawka.svg", "createdAt": "2026-05-06", "location": { "lat": 53.02449, "lng": 18.66775 }, "verified": true },
-  { "id": "r-121", "caseId": "c-lawka-sybirakow", "description": "Połamana ławka, wystają gwoździe.", "photo": "/demo/lawka.svg", "createdAt": "2026-05-29", "location": { "lat": 53.02452, "lng": 18.66779 }, "verified": false },
-
-  { "id": "r-130", "caseId": "c-chodnik-slaskiego", "description": "Dziura w chodniku przy przejściu.", "photo": "/demo/chodnik.svg", "createdAt": "2026-10-13", "location": { "lat": 53.02375, "lng": 18.67487 }, "verified": false }
+  {
+    "id": "r-001",
+    "caseId": "c-rubinkowo-centrum",
+    "description": "Duży ubytek w jezdni przy zatoce autobusowej, autobusy w niego wjeżdżają.",
+    "photo": "/zdjecia/dziura.jpg",
+    "createdAt": "2025-03-03",
+    "location": {
+      "lat": 53.02851,
+      "lng": 18.65792
+    },
+    "verified": true
+  },
+  {
+    "id": "r-002",
+    "caseId": "c-rubinkowo-centrum",
+    "description": "Dziura przy przystanku coraz większa, woda chlapie na ludzi.",
+    "photo": "/zdjecia/dziura-2.jpg",
+    "createdAt": "2025-06-12",
+    "location": {
+      "lat": 53.02855,
+      "lng": 18.65801
+    },
+    "verified": false
+  },
+  {
+    "id": "r-003",
+    "caseId": "c-rubinkowo-centrum",
+    "description": "Rozbite koło w samochodzie na dziurze przy Rubinkowo Centrum.",
+    "photo": "/zdjecia/dziura-3.jpg",
+    "createdAt": "2025-11-04",
+    "location": {
+      "lat": 53.02848,
+      "lng": 18.65788
+    },
+    "verified": true
+  },
+  {
+    "id": "r-004",
+    "caseId": "c-rubinkowo-centrum",
+    "description": "Po zimie dziura jest jeszcze głębsza.",
+    "photo": "/zdjecia/dziura.jpg",
+    "createdAt": "2026-03-21",
+    "location": {
+      "lat": 53.02857,
+      "lng": 18.65806
+    },
+    "verified": false
+  },
+  {
+    "id": "r-005",
+    "caseId": "c-rubinkowo-centrum",
+    "description": "Miał być remont do czerwca, a nic się nie dzieje.",
+    "photo": "/zdjecia/dziura-2.jpg",
+    "createdAt": "2026-07-08",
+    "location": {
+      "lat": 53.02849,
+      "lng": 18.65798
+    },
+    "verified": true
+  },
+  {
+    "id": "r-006",
+    "caseId": "c-rubinkowo-centrum",
+    "description": "Wyrwa w asfalcie na wysokości przystanku, niebezpiecznie dla rowerzystów.",
+    "photo": "/zdjecia/dziura-3.jpg",
+    "createdAt": "2026-09-14",
+    "location": {
+      "lat": 53.02854,
+      "lng": 18.65785
+    },
+    "verified": false
+  },
+  {
+    "id": "r-010",
+    "caseId": "c-lawka-manhattan",
+    "description": "Przydałaby się ławka, starsi ludzie nie mają gdzie odpocząć w drodze do przychodni.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2024-10-21",
+    "location": {
+      "lat": 53.02736,
+      "lng": 18.66418
+    },
+    "verified": true
+  },
+  {
+    "id": "r-011",
+    "caseId": "c-lawka-manhattan",
+    "description": "Prośba o ławkę przed blokiem.",
+    "photo": "/zdjecia/trawnik-2.jpg",
+    "createdAt": "2025-02-02",
+    "location": {
+      "lat": 53.02731,
+      "lng": 18.66425
+    },
+    "verified": false
+  },
+  {
+    "id": "r-012",
+    "caseId": "c-lawka-manhattan",
+    "description": "Mama ma 82 lata i musi się zatrzymywać po drodze. Ławka by pomogła.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2025-04-17",
+    "location": {
+      "lat": 53.02739,
+      "lng": 18.66414
+    },
+    "verified": true
+  },
+  {
+    "id": "r-013",
+    "caseId": "c-lawka-manhattan",
+    "description": "Brakuje ławek między przystankiem a przychodnią.",
+    "photo": "/zdjecia/trawnik-2.jpg",
+    "createdAt": "2025-05-30",
+    "location": {
+      "lat": 53.02742,
+      "lng": 18.66431
+    },
+    "verified": false
+  },
+  {
+    "id": "r-014",
+    "caseId": "c-lawka-manhattan",
+    "description": "Ławka dla seniorów w tym miejscu, bardzo proszę.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2025-08-11",
+    "location": {
+      "lat": 53.02729,
+      "lng": 18.66409
+    },
+    "verified": true
+  },
+  {
+    "id": "r-015",
+    "caseId": "c-lawka-manhattan",
+    "description": "Można by postawić tu ławkę i kosz.",
+    "photo": "/zdjecia/trawnik-2.jpg",
+    "createdAt": "2025-10-03",
+    "location": {
+      "lat": 53.02737,
+      "lng": 18.66427
+    },
+    "verified": false
+  },
+  {
+    "id": "r-016",
+    "caseId": "c-lawka-manhattan",
+    "description": "Seniorzy siadają na murku, przydałaby się ławka.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-01-22",
+    "location": {
+      "lat": 53.02733,
+      "lng": 18.66421
+    },
+    "verified": true
+  },
+  {
+    "id": "r-017",
+    "caseId": "c-lawka-manhattan",
+    "description": "Ławka przed blokiem, najlepiej w cieniu drzewa.",
+    "photo": "/zdjecia/trawnik-2.jpg",
+    "createdAt": "2026-04-09",
+    "location": {
+      "lat": 53.0274,
+      "lng": 18.66412
+    },
+    "verified": false
+  },
+  {
+    "id": "r-018",
+    "caseId": "c-lawka-manhattan",
+    "description": "Brak miejsca do odpoczynku na trawniku przed blokiem.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-06-18",
+    "location": {
+      "lat": 53.02728,
+      "lng": 18.66428
+    },
+    "verified": false
+  },
+  {
+    "id": "r-019",
+    "caseId": "c-lawka-manhattan",
+    "description": "Proszę o ławkę, sąsiadki też o to proszą.",
+    "photo": "/zdjecia/trawnik-2.jpg",
+    "createdAt": "2026-08-27",
+    "location": {
+      "lat": 53.02735,
+      "lng": 18.66416
+    },
+    "verified": true
+  },
+  {
+    "id": "r-020",
+    "caseId": "c-lawka-manhattan",
+    "description": "Ławka przy chodniku do przychodni.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-10-02",
+    "location": {
+      "lat": 53.02738,
+      "lng": 18.66423
+    },
+    "verified": false
+  },
+  {
+    "id": "r-030",
+    "caseId": "c-latarnia-skarpa",
+    "description": "Nie świeci latarnia nad przejściem przy przystanku tramwajowym.",
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2026-09-25",
+    "location": {
+      "lat": 53.02399,
+      "lng": 18.6669
+    },
+    "verified": true
+  },
+  {
+    "id": "r-031",
+    "caseId": "c-latarnia-skarpa",
+    "description": "Po zmroku na przejściu jest zupełnie ciemno.",
+    "photo": "/zdjecia/latarnia-2.jpg",
+    "createdAt": "2026-10-04",
+    "location": {
+      "lat": 53.02396,
+      "lng": 18.66695
+    },
+    "verified": false
+  },
+  {
+    "id": "r-032",
+    "caseId": "c-latarnia-skarpa",
+    "description": "Latarnia zepsuta od kilku tygodni.",
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2026-10-12",
+    "location": {
+      "lat": 53.024,
+      "lng": 18.66688
+    },
+    "verified": true
+  },
+  {
+    "id": "r-040",
+    "caseId": "c-chodnik-przychodnia",
+    "description": "Pęknięte płyty, łatwo się potknąć idąc do przychodni.",
+    "photo": "/zdjecia/chodnik.jpg",
+    "createdAt": "2026-01-15",
+    "location": {
+      "lat": 53.02421,
+      "lng": 18.67209
+    },
+    "verified": true
+  },
+  {
+    "id": "r-041",
+    "caseId": "c-chodnik-przychodnia",
+    "description": "Wózek inwalidzki zahacza o wystające płyty.",
+    "photo": "/zdjecia/chodnik.jpg",
+    "createdAt": "2026-05-20",
+    "location": {
+      "lat": 53.02418,
+      "lng": 18.67216
+    },
+    "verified": false
+  },
+  {
+    "id": "r-050",
+    "caseId": "c-przejscie-sp16",
+    "description": "Dzieci przechodzą do szkoły po ciemku, kierowcy ich nie widzą.",
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2025-08-28",
+    "location": {
+      "lat": 53.02881,
+      "lng": 18.66928
+    },
+    "verified": true
+  },
+  {
+    "id": "r-051",
+    "caseId": "c-przejscie-sp16",
+    "description": "Przejście przy szkole bardzo słabo oświetlone.",
+    "photo": "/zdjecia/latarnia-2.jpg",
+    "createdAt": "2026-01-13",
+    "location": {
+      "lat": 53.02878,
+      "lng": 18.66934
+    },
+    "verified": true
+  },
+  {
+    "id": "r-052",
+    "caseId": "c-przejscie-sp16",
+    "description": "Obiecane oświetlenie przejścia nadal nie powstało.",
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2026-09-08",
+    "location": {
+      "lat": 53.02883,
+      "lng": 18.66925
+    },
+    "verified": false
+  },
+  {
+    "id": "r-060",
+    "caseId": "c-schody-skarpa",
+    "description": "Pęknięte stopnie i brak poręczy na schodach do przystanku.",
+    "photo": "/zdjecia/chodnik.jpg",
+    "createdAt": "2024-12-10",
+    "location": {
+      "lat": 53.02301,
+      "lng": 18.66948
+    },
+    "verified": true
+  },
+  {
+    "id": "r-061",
+    "caseId": "c-schody-skarpa",
+    "description": "Zimą na tych schodach nie da się zejść bez poręczy.",
+    "photo": "/zdjecia/chodnik.jpg",
+    "createdAt": "2026-02-03",
+    "location": {
+      "lat": 53.02298,
+      "lng": 18.66953
+    },
+    "verified": false
+  },
+  {
+    "id": "r-070",
+    "caseId": "c-graffiti-jamontta",
+    "description": "Wiata przystanku pomalowana sprayem.",
+    "photo": "/zdjecia/graffiti.jpg",
+    "createdAt": "2026-10-06",
+    "location": {
+      "lat": 53.02548,
+      "lng": 18.67222
+    },
+    "verified": false
+  },
+  {
+    "id": "r-080",
+    "caseId": "c-kosze-plac",
+    "description": "Kosze przy placu zabaw przepełnione od kilku dni.",
+    "photo": "/zdjecia/kosz.jpg",
+    "createdAt": "2026-10-01",
+    "location": {
+      "lat": 53.02786,
+      "lng": 18.67108
+    },
+    "verified": false,
+    "mine": true
+  },
+  {
+    "id": "r-081",
+    "caseId": "c-kosze-plac",
+    "description": "Śmieci wysypują się z kosza obok huśtawek.",
+    "photo": "/zdjecia/kosz.jpg",
+    "createdAt": "2026-10-08",
+    "location": {
+      "lat": 53.02789,
+      "lng": 18.67113
+    },
+    "verified": true
+  },
+  {
+    "id": "r-090",
+    "caseId": "c-studzienka-przybylow",
+    "description": "Zapadnięta studzienka, samochody gwałtownie hamują.",
+    "photo": "/zdjecia/studzienka.jpg",
+    "createdAt": "2026-10-11",
+    "location": {
+      "lat": 53.02968,
+      "lng": 18.67132
+    },
+    "verified": true
+  },
+  {
+    "id": "r-100",
+    "caseId": "c-stojak-centrum",
+    "description": "Przydałby się stojak na rowery przy sklepach.",
+    "photo": "/zdjecia/stojak.jpg",
+    "createdAt": "2026-06-04",
+    "location": {
+      "lat": 53.02905,
+      "lng": 18.65952
+    },
+    "verified": false
+  },
+  {
+    "id": "r-101",
+    "caseId": "c-stojak-centrum",
+    "description": "Nie ma gdzie przypiąć roweru robiąc zakupy.",
+    "photo": "/zdjecia/stojak.jpg",
+    "createdAt": "2026-07-19",
+    "location": {
+      "lat": 53.02903,
+      "lng": 18.65957
+    },
+    "verified": true
+  },
+  {
+    "id": "r-102",
+    "caseId": "c-stojak-centrum",
+    "description": "Stojak rowerowy przy wejściu do sklepu.",
+    "photo": "/zdjecia/stojak.jpg",
+    "createdAt": "2026-09-30",
+    "location": {
+      "lat": 53.02908,
+      "lng": 18.65949
+    },
+    "verified": false
+  },
+  {
+    "id": "r-110",
+    "caseId": "c-silownia-niesiolowskiego",
+    "description": "Na trawniku przy bloku przydałaby się siłownia plenerowa.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-05-19",
+    "location": {
+      "lat": 53.0306,
+      "lng": 18.6742
+    },
+    "verified": true
+  },
+  {
+    "id": "r-111",
+    "caseId": "c-silownia-niesiolowskiego",
+    "description": "Siłownia na świeżym powietrzu dla młodzieży i seniorów.",
+    "photo": "/zdjecia/trawnik-2.jpg",
+    "createdAt": "2026-06-22",
+    "location": {
+      "lat": 53.03063,
+      "lng": 18.67425
+    },
+    "verified": false
+  },
+  {
+    "id": "r-112",
+    "caseId": "c-silownia-niesiolowskiego",
+    "description": "Chętnie zagłosuję na siłownię plenerową w tym miejscu.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-08-14",
+    "location": {
+      "lat": 53.03057,
+      "lng": 18.67416
+    },
+    "verified": true
+  },
+  {
+    "id": "r-113",
+    "caseId": "c-silownia-niesiolowskiego",
+    "description": "Proszę o urządzenia do ćwiczeń na tym terenie.",
+    "photo": "/zdjecia/trawnik-2.jpg",
+    "createdAt": "2026-09-28",
+    "location": {
+      "lat": 53.03062,
+      "lng": 18.67412
+    },
+    "verified": false
+  },
+  {
+    "id": "r-120",
+    "caseId": "c-lawka-sybirakow",
+    "description": "Dwie ławki na placu są połamane.",
+    "photo": "/zdjecia/lawka.jpg",
+    "createdAt": "2026-05-06",
+    "location": {
+      "lat": 53.02449,
+      "lng": 18.66775
+    },
+    "verified": true
+  },
+  {
+    "id": "r-121",
+    "caseId": "c-lawka-sybirakow",
+    "description": "Połamana ławka, wystają gwoździe.",
+    "photo": "/zdjecia/lawka.jpg",
+    "createdAt": "2026-05-29",
+    "location": {
+      "lat": 53.02452,
+      "lng": 18.66779
+    },
+    "verified": false
+  },
+  {
+    "id": "r-130",
+    "caseId": "c-chodnik-slaskiego",
+    "description": "Dziura w chodniku przy przejściu.",
+    "photo": "/zdjecia/chodnik.jpg",
+    "createdAt": "2026-10-13",
+    "location": {
+      "lat": 53.02375,
+      "lng": 18.67487
+    },
+    "verified": false
+  }
 ]

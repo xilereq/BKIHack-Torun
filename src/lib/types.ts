@@ -61,6 +61,8 @@ export interface Case {
   bigIdea?: boolean
   /** Sprawa powiązana (np. ponowne zgłoszenie po remoncie) */
   linkedCaseId?: string
+  /** Ile razy zweryfikowani mieszkańcy podbili sprawę („mnie też to dotyczy”) */
+  supporters?: number
 }
 
 export interface Report {

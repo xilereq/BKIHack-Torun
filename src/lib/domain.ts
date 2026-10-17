@@ -83,12 +83,17 @@ export function caseUrgency(c: Case, reports: Report[], docs: CityDocument[], no
     tags.push({ label: `${n} ${plural(n, ['osoba prosi', 'osoby proszą', 'osób prosi'])} o to samo`, tone: 'neutral' })
     const v = rs.filter((r) => r.verified).length
     if (v) tags.push({ label: `${v} ${plural(v, ['zweryfikowana', 'zweryfikowane', 'zweryfikowanych'])}`, tone: 'success' })
+    if (c.supporters) tags.push({ label: boostLabel(c.supporters), tone: 'success' })
     if (c.bigIdea) tags.push({ label: 'pasuje do budżetu obywatelskiego', tone: 'info' })
-    return { score: Math.min(99, score + n * 4), tags }
+    return { score: Math.min(99, score + n * 4 + (c.supporters ?? 0) * 2), tags }
   }
 
   tags.push({ label: countLabel(n, REPORT_FORMS), tone: 'neutral' })
   score += Math.min(20, n * 3)
+  if (c.supporters) {
+    tags.push({ label: boostLabel(c.supporters), tone: 'success' })
+    score += Math.min(10, c.supporters)
+  }
 
   const lc = latestCommitment(c, docs)
   if (lc && status === 'overdue') {
@@ -115,6 +120,11 @@ export function caseUrgency(c: Case, reports: Report[], docs: CityDocument[], no
   }
   if (status === 'resolved' || status === 'done') score = Math.min(score, 20)
   return { score: Math.max(1, Math.min(99, score)), tags }
+}
+
+/** „9 podbić od zweryfikowanych” */
+export function boostLabel(n: number): string {
+  return `${n} ${plural(n, ['podbicie', 'podbicia', 'podbić'])} od zweryfikowanych`
 }
 
 export const DOC_KIND_LABEL: Record<CityDocument['kind'], string> = {

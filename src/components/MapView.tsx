@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react'
-import { Map as MlMap, Marker, NavigationControl, setWorkerUrl, type StyleSpecification } from 'maplibre-gl'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { createPortal } from 'react-dom'
+import { Map as MlMap, Marker, NavigationControl, Popup, setWorkerUrl, type StyleSpecification } from 'maplibre-gl'
 import type { LngLat } from '../lib/types'
 
 // Vite przepakowuje bibliotekę i psuje ścieżkę do workera, więc serwujemy go jako plik statyczny.
@@ -31,6 +32,8 @@ interface Props {
   fitPadding?: { top: number; bottom: number; left: number; right: number }
   /** Prawy margines przy przelocie (np. gdy panel szczegółów zasłania prawą część mapy) */
   flyPadRight?: number
+  /** Dymek przy punkcie mapy (treść renderuje React) */
+  popup?: { key: string; location: LngLat; content: ReactNode; onClose: () => void } | null
   showControls?: boolean
   className?: string
   ariaLabel?: string
@@ -55,26 +58,37 @@ const RASTER_STYLE: StyleSpecification = {
   ],
 }
 
-const DEFAULT_SIZE: Record<MarkerKind, number> = {
-  problem: 28,
-  idea: 28,
-  resolved: 24,
-  doc: 20,
-  overdue: 22,
-  planned: 22,
-  me: 18,
+// Minimalistyczne ikonki znaczników (obrys 24×24, jak w components/icons.tsx)
+const ICON_PATHS: Record<MarkerKind, string> = {
+  problem: '<path d="M12 7v6"/><path d="M12 17v.01"/>',
+  idea: '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/>',
+  resolved: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  doc: '<path d="M7 3h7l4 4v14H7z"/><path d="M10 12h5M10 16h5"/>',
+  overdue: '<circle cx="12" cy="12" r="8"/><path d="M12 8v4.5l3 2"/>',
+  planned: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+  me: '',
 }
 
+const SIZE: Record<MarkerKind, number> = { problem: 34, idea: 34, resolved: 30, doc: 28, overdue: 30, planned: 28, me: 18 }
+
+/**
+ * Zewnętrzny element (button) pozycjonuje MapLibre przez `transform` — nie wolno go stylować transformacjami
+ * ani przejściami, bo znaczniki „pływają” przy przesuwaniu mapy. Cały wygląd jest w elemencie wewnętrznym.
+ */
 function styleMarker(el: HTMLElement, m: MapMarker) {
-  const size = m.size ?? DEFAULT_SIZE[m.kind] + (m.label && Number(m.label) > 9 ? 4 : 0)
-  el.className = `gm-pin gm-pin--${m.kind}${m.selected ? ' gm-pin--selected' : ''}`
-  el.style.width = `${size}px`
-  el.style.height = `${size}px`
-  el.style.fontSize = size > 28 ? '14px' : '12px'
-  el.textContent = m.label !== undefined ? String(m.label) : ''
+  const size = m.size ?? SIZE[m.kind]
+  // classList.add, NIE className = … — nadpisanie kasuje klasy MapLibre (position:absolute) i znaczniki się rozjeżdżają
+  el.classList.add('gm-marker')
+  el.style.zIndex = m.selected ? '5' : m.kind === 'problem' || m.kind === 'idea' ? '3' : '2'
   el.setAttribute('aria-label', m.title)
   el.title = m.title
-  el.style.zIndex = m.selected ? '5' : m.kind === 'doc' || m.kind === 'overdue' || m.kind === 'planned' ? '2' : '3'
+  const iconSize = Math.round(size * 0.56)
+  const stroke = m.kind === 'problem' ? 3 : 2.2
+  const count = m.label !== undefined && m.label !== '' ? `<span class="gm-count">${m.label}</span>` : ''
+  el.innerHTML =
+    `<span class="gm-pin gm-pin--${m.kind}${m.selected ? ' gm-pin--selected' : ''}" style="width:${size}px;height:${size}px">` +
+    `<svg width="${iconSize}" height="${iconSize}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${stroke}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON_PATHS[m.kind]}</svg>` +
+    `${count}</span>`
 }
 
 function createPinElement(): HTMLElement {
@@ -84,6 +98,8 @@ function createPinElement(): HTMLElement {
     '<svg width="44" height="54" viewBox="0 0 44 54" aria-hidden="true"><path d="M22 52s-18-15.5-18-30a18 18 0 0 1 36 0c0 14.5-18 30-18 30z" fill="#c8102e" stroke="#fff" stroke-width="3"/><circle cx="22" cy="22" r="7" fill="#fff"/></svg>'
   el.style.cursor = 'grab'
   el.style.filter = 'drop-shadow(0 3px 4px rgba(22,25,29,.3))'
+  el.style.width = '44px'
+  el.style.height = '54px'
   return el
 }
 
@@ -106,10 +122,14 @@ export function MapView({
   fitPoints,
   fitPadding = { top: 60, bottom: 50, left: 30, right: 30 },
   flyPadRight = 0,
+  popup = null,
   showControls = false,
   className = '',
   ariaLabel,
 }: Props) {
+  const [popupEl, setPopupEl] = useState<HTMLElement | null>(null)
+  const popupCloseRef = useRef(popup?.onClose)
+  popupCloseRef.current = popup?.onClose
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<MlMap | null>(null)
   const markersRef = useRef(new Map<string, { marker: Marker; el: HTMLElement }>())
@@ -131,7 +151,6 @@ export function MapView({
         style: VECTOR_STYLE,
         center: [center.lng, center.lat],
         zoom,
-        ...(fitPoints && fitPoints.length > 1 ? { bounds: boundsOf(fitPoints), fitBoundsOptions: { padding: fitPadding, maxZoom: 16 } } : {}),
         attributionControl: { compact: true },
         dragRotate: false,
         pitchWithRotate: false,
@@ -164,12 +183,28 @@ export function MapView({
       }
     })
     mapRef.current = map
-    let firstResize = true
+    // dopóki użytkownik sam nie ruszy mapy, po każdej zmianie rozmiaru kontenera dopasowujemy widok do punktów
+    let userMoved = false
+    map.on('dragstart', () => (userMoved = true))
+    map.on('zoomstart', (e) => {
+      if ((e as { originalEvent?: Event }).originalEvent) userMoved = true
+    })
+    const refit = () => {
+      if (userMoved || !fitPoints || fitPoints.length < 2) return
+      const { clientWidth: w, clientHeight: h } = map.getContainer()
+      if (w < 50 || h < 50) return
+      // padding nie może zjeść całego kontenera
+      const pad = {
+        top: Math.min(fitPadding.top, h * 0.3),
+        bottom: Math.min(fitPadding.bottom, h * 0.2),
+        left: Math.min(fitPadding.left, w * 0.2),
+        right: Math.min(fitPadding.right, w * 0.2),
+      }
+      map.fitBounds(boundsOf(fitPoints), { padding: pad, maxZoom: 16, duration: 0 })
+    }
     const ro = new ResizeObserver(() => {
       map.resize()
-      // kontener mógł zmienić rozmiar po animacji wejścia ekranu: dopasuj widok jeszcze raz
-      if (firstResize && fitPoints && fitPoints.length > 1) map.fitBounds(boundsOf(fitPoints), { padding: fitPadding, maxZoom: 16, duration: 0 })
-      firstResize = false
+      refit()
     })
     ro.observe(containerRef.current)
     const markerStore = markersRef.current
@@ -238,6 +273,32 @@ export function MapView({
     }
   }, [pin?.location.lat, pin?.location.lng, pin])
 
+  // dymek: kontener DOM w Popup MapLibre, treść przez portal Reacta
+  const popupKey = popup?.key
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !popup) return
+    const el = document.createElement('div')
+    const p = new Popup({ closeButton: false, closeOnClick: true, anchor: 'bottom', offset: 24, maxWidth: '340px', className: 'gm-popup', focusAfterOpen: false })
+      .setLngLat([popup.location.lng, popup.location.lat])
+      .setDOMContent(el)
+      .addTo(map)
+    // dymek jest nad punktem: przesuwamy mapę tak, żeby punkt był niżej i dymek zmieścił się w całości
+    const h = map.getContainer().clientHeight
+    map.easeTo({ center: [popup.location.lng, popup.location.lat], offset: [0, Math.round(h * 0.28)], duration: 500 })
+    let closedByUs = false
+    p.on('close', () => {
+      if (!closedByUs) popupCloseRef.current?.()
+    })
+    setPopupEl(el)
+    return () => {
+      closedByUs = true
+      p.remove()
+      setPopupEl(null)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [popupKey])
+
   useEffect(() => {
     if (flyTo && mapRef.current) {
       mapRef.current.flyTo({
@@ -251,11 +312,14 @@ export function MapView({
   }, [flyTo])
 
   return (
-    <div
-      ref={containerRef}
-      role="region"
-      aria-label={ariaLabel ?? 'Mapa osiedla Rubinkowo'}
-      className={`relative h-full w-full overflow-hidden bg-[#eef0ec] ${className}`}
-    />
+    <>
+      <div
+        ref={containerRef}
+        role="region"
+        aria-label={ariaLabel ?? 'Mapa osiedla Rubinkowo'}
+        className={`relative h-full w-full overflow-hidden bg-[#eef0ec] ${className}`}
+      />
+      {popupEl && popup && createPortal(popup.content, popupEl)}
+    </>
   )
 }

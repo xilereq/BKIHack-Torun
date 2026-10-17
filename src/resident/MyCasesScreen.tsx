@@ -4,9 +4,8 @@ import { relativeDate } from '../lib/format'
 import { Button, StatusBadge, VerifiedBadge } from '../components/ui'
 import { IconChevron, IconShield } from '../components/icons'
 import { Photo } from '../components/shared'
-import { ScreenHeader } from './ScreenHeader'
 
-export function MyCasesScreen({ onBack, onOpen, onVerify, onReport }: { onBack: () => void; onOpen: (id: string) => void; onVerify: () => void; onReport: () => void }) {
+export function MyCasesScreen({ onOpen, onVerify, onReport }: { onOpen: (id: string) => void; onVerify: () => void; onReport: () => void }) {
   const s = useDemo()
   const myCaseIds = [...new Set(s.reports.filter((r) => r.mine).map((r) => r.caseId))]
   const cases = myCaseIds
@@ -16,9 +15,9 @@ export function MyCasesScreen({ onBack, onOpen, onVerify, onReport }: { onBack: 
 
   return (
     <div className="flex h-full flex-col">
-      <ScreenHeader title="Moje sprawy" onBack={onBack} />
       <div className="min-h-0 flex-1 overflow-y-auto">
-        <div className="flex flex-col gap-3 px-4 py-4">
+        <div className="flex flex-col gap-3 px-4 pt-4 pb-6">
+          <h1 className="px-1 pt-2 text-[32px] font-bold leading-10 tracking-[-0.01em]">Moje sprawy</h1>
           {s.verification ? (
             <div className="flex flex-wrap items-center gap-2">
               <VerifiedBadge />
@@ -55,7 +54,7 @@ export function MyCasesScreen({ onBack, onOpen, onVerify, onReport }: { onBack: 
                 key={c.id}
                 type="button"
                 onClick={() => onOpen(c.id)}
-                className={`flex items-center gap-3 rounded-card bg-surface p-3 text-left hover:bg-canvas ${unread ? 'border-2 border-brand' : 'border border-line'}`}
+                className={`flex items-center gap-3 rounded-[20px] bg-surface p-3 text-left hover:bg-canvas ${unread ? 'border-2 border-brand' : 'border border-line'}`}
               >
                 <Photo src={c.photo} alt="" className="size-16 shrink-0 rounded-[12px]" />
                 <div className="flex min-w-0 flex-1 flex-col gap-1">

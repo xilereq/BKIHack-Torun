@@ -132,11 +132,11 @@ export function ResultScreen({
         </div>
       </div>
       <div className="flex shrink-0 flex-col gap-2.5 bg-canvas px-4 pt-3 pb-5">
-        <Button variant="primary" size="lg" onClick={onFollow}>
+        <Button variant="primary" size="lg" className="rounded-full" onClick={onFollow}>
           Śledź sprawę
         </Button>
         {!s.verification && (
-          <Button onClick={onVerify} className="rounded-[16px]">
+          <Button onClick={onVerify} className="rounded-full">
             <IconShield size={20} className="text-st-done" strokeWidth={2.2} /> Zweryfikuj przez mObywatel
           </Button>
         )}

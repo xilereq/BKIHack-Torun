@@ -1,11 +1,9 @@
 import { useMemo, useState } from 'react'
 import { useDemo } from '../lib/store'
 import { MapView, type MapMarker } from '../components/MapView'
-import { Logo, StatusBadge } from '../components/ui'
-import { IconExternal, IconX } from '../components/icons'
-import { caseMarkers, documentMarkers, isCommitmentFulfilled } from '../components/shared'
-import { DOC_KIND_LABEL, isOverdue } from '../lib/domain'
-import { formatDate, romanMonth } from '../lib/format'
+import { Logo } from '../components/ui'
+import { caseMarkers, commitmentState, documentMarkers } from '../components/shared'
+import { CasePopup, DocPopup } from './MapPopups'
 import { RUBINKOWO_CENTER } from '../lib/geo'
 import { COUNCILLOR } from '../lib/interpelacja'
 import { buildList, CaseList } from './CaseList'
@@ -18,8 +16,8 @@ type Layers = { problems: boolean; ideas: boolean; docs: boolean; commitments: b
 const LAYER_LABELS: { key: keyof Layers; label: string; swatch: string }[] = [
   { key: 'problems', label: 'Problemy', swatch: 'size-3.5 rounded-full bg-brand' },
   { key: 'ideas', label: 'Pomysły', swatch: 'size-3.5 rounded-full bg-idea-pin' },
-  { key: 'docs', label: 'Dokumenty miasta', swatch: 'size-3 rounded-[3px] bg-ink' },
-  { key: 'commitments', label: 'Zobowiązania', swatch: 'size-3.5 rounded-[3px] border-[3px] border-brand' },
+  { key: 'docs', label: 'Dokumenty miasta', swatch: 'size-3.5 rounded-full border-[1.5px] border-line-strong bg-surface' },
+  { key: 'commitments', label: 'Zobowiązania', swatch: 'size-3.5 rounded-full border-[2.5px] border-brand bg-surface' },
 ]
 
 export function CouncilApp() {
@@ -37,29 +35,43 @@ export function CouncilApp() {
   const items = tab === 'problem' ? problems : ideas
   const overdueCount = problems.filter((it) => it.c.documentIds.some((id) => {
     const d = s.documents.find((x) => x.id === id && !x.hidden)
-    return d?.commitment && isOverdue(d.commitment) && !isCommitmentFulfilled(d, s)
+    return !!d && commitmentState(d, s) === 'overdue'
   })).length
 
   const markers: MapMarker[] = useMemo(() => {
     const visibleCaseIds = new Set([...problems, ...ideas].map((it) => it.c.id))
-    const cm = caseMarkers({ ...s, reports }, { selectedId: selected, problems: layers.problems, ideas: layers.ideas }).filter((m) => visibleCaseIds.has(m.id))
+    const cm = caseMarkers({ ...s, reports }, { selectedId: docId ?? selected, problems: layers.problems, ideas: layers.ideas }).filter((m) => visibleCaseIds.has(m.id))
     return [...documentMarkers(s, { docs: layers.docs, commitments: layers.commitments, selectedId: docId }), ...cm]
   }, [s, reports, problems, ideas, selected, layers, docId])
 
   const selectedCase = selected ? s.cases.find((c) => c.id === selected) : null
-  const doc = docId ? s.documents.find((d) => d.id === docId) : null
-  const docCase = doc ? s.cases.find((c) => c.documentIds.includes(doc.id)) : null
+  const popupCase = docId ? s.cases.find((c) => c.id === docId) : null
+  const popupDoc = docId && !popupCase ? s.documents.find((d) => d.id === docId) : null
 
-  const onMarker = (id: string) => {
-    if (s.cases.some((c) => c.id === id)) {
-      const c = s.cases.find((x) => x.id === id)!
-      setTab(c.type)
-      setSelected(id)
-      setDocId(null)
-    } else {
-      setDocId(id)
-    }
+  // klik w punkt: dymek ze zdjęciami; „Historia miejsca” otwiera panel szczegółów
+  const onMarker = (id: string) => setDocId(id)
+  const openCase = (id: string) => {
+    const c = s.cases.find((x) => x.id === id)
+    if (!c) return
+    setTab(c.type)
+    setSelected(id)
+    setDocId(null)
   }
+  const popup = popupCase
+    ? {
+        key: popupCase.id,
+        location: popupCase.location,
+        onClose: () => setDocId(null),
+        content: <CasePopup s={s} caseId={popupCase.id} reports={reports} onOpen={() => openCase(popupCase.id)} onClose={() => setDocId(null)} />,
+      }
+    : popupDoc
+      ? {
+          key: popupDoc.id,
+          location: popupDoc.location,
+          onClose: () => setDocId(null),
+          content: <DocPopup s={s} docId={popupDoc.id} onOpenCase={openCase} onClose={() => setDocId(null)} />,
+        }
+      : null
 
   return (
     <div className="flex h-full min-h-0 flex-col bg-canvas">
@@ -133,6 +145,7 @@ export function CouncilApp() {
             fitPadding={{ top: 90, bottom: 40, left: 40, right: 40 }}
             markers={markers}
             onMarkerClick={onMarker}
+            popup={popup}
             flyTo={selectedCase?.location ?? null}
             flyPadRight={540}
             showControls
@@ -151,40 +164,6 @@ export function CouncilApp() {
               </label>
             ))}
           </div>
-
-          {doc && !selectedCase && (
-            <div className="absolute bottom-4 left-4 z-10 w-[420px] rounded-card border border-line bg-surface p-4 shadow-xl animate-fade-up">
-              <div className="flex items-start justify-between gap-2">
-                <div className="text-[14px] font-bold text-ink-2">
-                  {DOC_KIND_LABEL[doc.kind]} · {formatDate(doc.date)}
-                </div>
-                <button type="button" aria-label="Zamknij dokument" onClick={() => setDocId(null)} className="-mt-2 -mr-2 flex size-10 items-center justify-center rounded-btn hover:bg-canvas">
-                  <IconX size={18} />
-                </button>
-              </div>
-              <div className="text-[17px] font-bold leading-6">{doc.title}</div>
-              <p className="mt-1 text-[15px] leading-[22px] text-ink-2">{doc.summary}</p>
-              {doc.commitment && (
-                <div className="mt-2">
-                  <StatusBadge
-                    status={isOverdue(doc.commitment) && !isCommitmentFulfilled(doc, s) ? 'overdue' : 'planned'}
-                    small
-                    label={`Termin ${romanMonth(doc.commitment.deadline)}${isOverdue(doc.commitment) && !isCommitmentFulfilled(doc, s) ? ' minął' : ''}`}
-                  />
-                </div>
-              )}
-              <div className="mt-2 flex flex-wrap gap-4">
-                <a href={doc.url} target="_blank" rel="noreferrer" className="inline-flex min-h-10 items-center gap-1.5 text-[15px] font-bold text-brand hover:underline">
-                  Źródło: BIP <IconExternal size={15} strokeWidth={2.2} />
-                </a>
-                {docCase && (
-                  <button type="button" onClick={() => onMarker(docCase.id)} className="min-h-10 text-[15px] font-bold text-ink underline-offset-4 hover:underline">
-                    Pokaż sprawę: {docCase.title}
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
 
           {selectedCase && (
             <div className="absolute inset-y-0 right-0 z-10 w-[540px] max-w-full border-l border-line shadow-2xl animate-[fade-up_240ms_ease-out_both]">

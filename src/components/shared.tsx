@@ -30,7 +30,7 @@ export function caseMarkers(s: DemoState, opts: { selectedId?: string | null; pr
         id: c.id,
         location: c.location,
         kind: st === 'resolved' ? 'resolved' : c.type === 'idea' ? 'idea' : 'problem',
-        label: st === 'resolved' ? '✓' : n,
+        label: st === 'resolved' || n < 2 ? undefined : n,
         title: `${c.title}, ${c.place}: ${countLabel(n, REPORT_FORMS)}`,
         selected: opts.selectedId === c.id,
       } satisfies MapMarker
@@ -41,14 +41,15 @@ export function documentMarkers(s: DemoState, opts: { docs?: boolean; commitment
   const { docs = true, commitments = true } = opts
   const out: MapMarker[] = []
   for (const d of visibleDocs(s.documents)) {
-    if (d.commitment) {
+    const cs = commitmentState(d, s)
+    if (cs === 'overdue' || cs === 'pending') {
       if (!commitments) continue
-      const over = isOverdue(d.commitment) && !isCommitmentFulfilled(d, s)
+      const over = cs === 'overdue'
       out.push({
         id: d.id,
         location: d.location,
         kind: over ? 'overdue' : 'planned',
-        title: `${over ? 'Obietnica przeterminowana' : 'Zobowiązanie miasta'}: ${d.commitment.text}, termin ${romanMonth(d.commitment.deadline)}`,
+        title: `${over ? 'Obietnica przeterminowana' : 'Zobowiązanie miasta'}: ${d.commitment!.text}, termin ${romanMonth(d.commitment!.deadline)}`,
         selected: opts.selectedId === d.id,
       })
     } else if (docs) {
@@ -66,6 +67,64 @@ export function isCommitmentFulfilled(d: CityDocument, s: DemoState): boolean {
   if (st === 'done' || st === 'resolved') return true
   const lc = latestCommitment(c, s.documents)
   return !!lc && lc.doc.id !== d.id
+}
+
+/** Zdjęcia sprawy do karuzeli: najnowsze najpierw, bez powtórzeń tego samego pliku */
+export function caseSlides(c: Case, s: DemoState): { src: string; alt: string; caption?: string }[] {
+  const seen = new Set<string>()
+  const out: { src: string; alt: string; caption?: string }[] = []
+  for (const r of caseReports(c, s.reports).slice().reverse()) {
+    if (seen.has(r.photo)) continue
+    seen.add(r.photo)
+    out.push({ src: r.photo, alt: `Zdjęcie mieszkańca: ${r.description}`, caption: shortDate(r.createdAt) })
+  }
+  if (out.length === 0) out.push({ src: c.photo, alt: `Zdjęcie: ${c.title}` })
+  return out
+}
+
+function shortDate(iso: string) {
+  return new Date(iso).toLocaleDateString('pl-PL', { day: 'numeric', month: 'short', year: 'numeric' })
+}
+
+export type CommitmentState = 'overdue' | 'pending' | 'rescheduled' | 'fulfilled' | 'none'
+
+/** Stan zobowiązania z dokumentu. Po wykonaniu remontu nie straszymy „terminem”, tylko piszemy łagodnie. */
+export function commitmentState(d: CityDocument, s: DemoState): CommitmentState {
+  if (!d.commitment) return 'none'
+  const c = s.cases.find((x) => x.documentIds.includes(d.id))
+  if (c) {
+    const st = caseStatus(c, s.documents)
+    if (st === 'done' || st === 'resolved') return 'fulfilled'
+    const lc = latestCommitment(c, s.documents)
+    if (lc && lc.doc.id !== d.id) return 'rescheduled'
+  }
+  return isOverdue(d.commitment) ? 'overdue' : 'pending'
+}
+
+export const COMMITMENT_LABEL: Record<Exclude<CommitmentState, 'none'>, { label: (deadline: string) => string; tone: 'danger' | 'info' | 'neutral' | 'success' }> = {
+  overdue: { label: (dl) => `Termin ${romanMonth(dl)} minął`, tone: 'danger' },
+  pending: { label: (dl) => `Termin ${romanMonth(dl)}`, tone: 'info' },
+  rescheduled: { label: (dl) => `Pierwotny termin ${romanMonth(dl)}, zmieniony`, tone: 'neutral' },
+  fulfilled: { label: () => 'Zrealizowano', tone: 'success' },
+}
+
+export function CommitmentBadge({ d, s }: { d: CityDocument; s: DemoState }) {
+  const cs = commitmentState(d, s)
+  if (cs === 'none' || !d.commitment) return null
+  const { label, tone } = COMMITMENT_LABEL[cs]
+  const cls = {
+    danger: 'bg-st-overdue-bg text-st-overdue',
+    info: 'bg-st-planned-bg text-st-planned',
+    neutral: 'bg-st-new-bg text-st-new',
+    success: 'bg-st-done-bg text-st-done',
+  }[tone]
+  const Icon = tone === 'danger' ? IconAlert : tone === 'success' ? IconCheck : IconCalendar
+  return (
+    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[14px] font-bold leading-5 ${cls}`}>
+      <Icon size={14} strokeWidth={2.4} />
+      {label(d.commitment.deadline)}
+    </span>
+  )
 }
 
 const EVENT_STYLE: Record<EventType, { cls: string; Icon: typeof IconCheck }> = {
@@ -149,16 +208,21 @@ export function OverdueNote({ text }: { text: string }) {
   )
 }
 
-/** Obrazek zgłoszenia z bezpiecznym zastępnikiem, gdy plik nie istnieje */
+/**
+ * Zdjęcie zgłoszenia. Prawdziwe zdjęcia leżą w public/zdjecia/<nazwa>[-n].jpg.
+ * Gdy pliku brak: ilustracja public/demo/<nazwa>.svg, a na końcu neutralny zastępnik.
+ */
 export function Photo({ src, alt, className = '' }: { src?: string; alt: string; className?: string }) {
   return (
     <img
-      src={src || '/demo/trawnik.svg'}
+      src={src || '/demo/zastepcze.svg'}
       alt={alt}
       className={`bg-[#e6e8eb] object-cover ${className}`}
       onError={(e) => {
         const img = e.currentTarget
-        if (!img.src.endsWith('/demo/zastepcze.svg')) img.src = '/demo/zastepcze.svg'
+        const real = img.src.match(/\/zdjecia\/([a-z0-9]+?)(?:-\d+)?\.(?:jpe?g|png|webp)$/i)
+        if (real) img.src = `/demo/${real[1]}.svg`
+        else if (!img.src.endsWith('/demo/zastepcze.svg')) img.src = '/demo/zastepcze.svg'
       }}
     />
   )

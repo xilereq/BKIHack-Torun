@@ -25,12 +25,18 @@ export function AnalyzingScreen({ draft, onDone }: { draft: ReportDraft; onDone:
   return (
     <div className="flex h-full flex-col bg-surface" role="status" aria-live="polite">
       <div className="flex flex-1 flex-col items-center justify-center gap-8 px-6">
-        <div className="relative">
-          <img src={draft.photo} alt="" className="size-36 rounded-[24px] border border-line object-cover" />
-          <span className="absolute -right-3 -bottom-3 flex size-14 items-center justify-center rounded-full border-4 border-white bg-brand text-white">
-            <IconSparkle size={26} strokeWidth={2} className="animate-pulse" />
+        {draft.photo.endsWith('zastepcze.svg') ? (
+          <span className="flex size-32 items-center justify-center rounded-full bg-brand-tint text-brand">
+            <IconSparkle size={56} strokeWidth={1.8} className="animate-pulse" />
           </span>
-        </div>
+        ) : (
+          <div className="relative">
+            <img src={draft.photo} alt="" className="size-36 rounded-[24px] border border-line object-cover" />
+            <span className="absolute -right-3 -bottom-3 flex size-14 items-center justify-center rounded-full border-4 border-white bg-brand text-white">
+              <IconSparkle size={26} strokeWidth={2} className="animate-pulse" />
+            </span>
+          </div>
+        )}
         <div className="text-center">
           <h1 className="text-h1 font-bold">AI analizuje Twoje zgłoszenie…</h1>
           <p className="mt-1 text-body text-ink-2">To potrwa tylko chwilę.</p>
