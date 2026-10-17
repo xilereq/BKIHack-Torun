@@ -39,7 +39,7 @@ const STATUS_STYLE: Record<CaseStatus, string> = {
   new: 'bg-st-new-bg text-st-new',
   planned: 'bg-st-planned-bg text-st-planned',
   overdue: 'bg-st-wait-bg text-st-wait',
-  done: 'bg-st-planned-bg text-st-planned',
+  done: 'bg-st-done-bg text-st-done',
   resolved: 'bg-st-done-bg text-st-done',
 }
 

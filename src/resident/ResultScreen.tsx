@@ -2,9 +2,9 @@ import type { Analysis } from '../lib/ai'
 import { useState } from 'react'
 import { useDemo } from '../lib/store'
 import type { TraceStep } from '../lib/aiTrace'
-import { TechChip, TraceList } from '../components/AiTrace'
+import { TraceList } from '../components/AiTrace'
 import { Button, StatusBadge, TypeBadge } from '../components/ui'
-import { IconClock, IconChevron, IconSparkle, IconBuilding, IconCalendar, IconCheckCircle, IconShield, IconUsers } from '../components/icons'
+import { IconClock, IconChevron, IconSparkle, IconBuilding, IconCalendar, IconCheck, IconCheckCircle, IconShield, IconUsers } from '../components/icons'
 import { DocLink, Photo } from '../components/shared'
 import { caseReports } from '../lib/domain'
 import { plural } from '../lib/format'
@@ -16,7 +16,7 @@ const TONE_BADGE: Record<Analysis['answer']['tone'], { label: string; cls: strin
   planned: { label: 'Zaplanowane', cls: 'bg-st-planned-bg text-st-planned', Icon: IconCalendar },
   interpellation: { label: 'Radny już pyta', cls: 'bg-st-new-bg text-st-new', Icon: IconUsers },
   idea: null,
-  done: { label: 'Po remoncie', cls: 'bg-st-planned-bg text-st-planned', Icon: IconCalendar },
+  done: { label: 'Po remoncie', cls: 'bg-st-done-bg text-st-done', Icon: IconCheck },
   none: null,
 }
 
@@ -142,17 +142,13 @@ export function ResultScreen({
               </span>
               <span className="min-w-0 flex-1">
                 <span className="block text-[17px] font-bold leading-6">Jak AI to oceniło</span>
-                <span className="mt-0.5 flex flex-wrap gap-1">
-                  {[...new Set(trace.flatMap((st) => st.tech))].map((id) => (
-                    <TechChip key={id} id={id} small />
-                  ))}
-                </span>
+                <span className="block text-[14px] leading-5 text-ink-2">{trace.length} kroków analizy prostymi słowami</span>
               </span>
               <IconChevron size={20} className={`shrink-0 text-ink-2 transition-transform ${showAi ? 'rotate-90' : ''}`} />
             </button>
             {showAi && (
               <div className="pb-3">
-                <TraceList steps={trace} dense />
+                <TraceList steps={trace} />
               </div>
             )}
           </div>

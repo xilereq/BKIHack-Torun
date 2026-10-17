@@ -135,7 +135,7 @@ const EVENT_STYLE: Record<EventType, { cls: string; Icon: typeof IconCheck }> = 
   interpellation: { cls: 'bg-ink text-white', Icon: IconMegaphone },
   response: { cls: 'bg-ink text-white', Icon: IconFile },
   planned: { cls: 'bg-st-planned-bg text-st-planned', Icon: IconCalendar },
-  done: { cls: 'bg-st-planned-bg text-st-planned', Icon: IconWrench },
+  done: { cls: 'bg-st-done-bg text-st-done', Icon: IconWrench },
   resolved: { cls: 'bg-st-done-bg text-st-done', Icon: IconCheck },
   reopened: { cls: 'bg-st-wait-bg text-st-wait', Icon: IconRefresh },
 }

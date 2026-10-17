@@ -7,7 +7,7 @@ import type { Case, CityDocument } from './types'
 import type { DemoState } from './store'
 import type { Analysis } from './ai'
 import { caseDocuments, caseReports, caseUrgency, unitById } from './domain'
-import { distanceM, districtName } from './geo'
+import { districtName } from './geo'
 import { countLabel, REPORT_FORMS } from './format'
 
 export type TechId = 'stt' | 'vlm' | 'llm' | 'emb' | 'postgis' | 'rag' | 'score' | 'gtfs'
@@ -27,11 +27,8 @@ export interface TraceStep {
   id: string
   title: string
   tech: TechId[]
-  /** krótki wynik do animacji „AI analizuje” */
+  /** wynik etapu prostym językiem — to widzi mieszkaniec (bez procentów i szczegółów technicznych) */
   short: string
-  /** szczegóły do rozwinięcia */
-  lines: { label: string; value: string; bar?: number }[]
-  code?: string
   ms: number
   skipped?: boolean
 }
@@ -48,20 +45,19 @@ function seeded(text: string) {
   }
 }
 
-const pct = (x: number) => `${Math.round(x * 100)}%`
-
-const VISION: Record<string, string[]> = {
-  'Nawierzchnia jezdni': ['ubytek w nawierzchni', 'jezdnia asfaltowa', 'zatoka autobusowa'],
-  Chodnik: ['pęknięte płyty chodnikowe', 'ciąg pieszy', 'krawężnik'],
-  Oświetlenie: ['latarnia uliczna', 'przejście dla pieszych', 'słabe oświetlenie'],
-  'Bezpieczeństwo ruchu': ['przejście dla pieszych', 'oznakowanie poziome', 'słaba widoczność'],
-  'Graffiti i dewastacja': ['graffiti', 'wiata przystankowa', 'powierzchnia malowana'],
-  Czystość: ['przepełniony kosz', 'odpady', 'teren zielony'],
-  Kanalizacja: ['studzienka kanalizacyjna', 'zastoisko wody', 'jezdnia'],
-  'Mała architektura': ['trawnik przed budynkiem', 'chodnik', 'brak ławki'],
-  Rekreacja: ['wolny teren zielony', 'zabudowa mieszkaniowa', 'chodnik'],
-  'Infrastruktura rowerowa': ['rower', 'wejście do sklepu', 'brak stojaka'],
-  Zieleń: ['drzewo', 'gałęzie', 'chodnik'],
+/** Co widać na zdjęciu — opis zrozumiały dla mieszkańca */
+const VISION: Record<string, string> = {
+  'Nawierzchnia jezdni': 'ubytek w nawierzchni jezdni',
+  Chodnik: 'uszkodzony chodnik',
+  Oświetlenie: 'niedziałające oświetlenie',
+  'Bezpieczeństwo ruchu': 'przejście dla pieszych',
+  'Graffiti i dewastacja': 'pomalowaną powierzchnię',
+  Czystość: 'przepełniony kosz i śmieci',
+  Kanalizacja: 'zastoisko wody przy studzience',
+  'Mała architektura': 'miejsce na ławkę',
+  Rekreacja: 'wolny teren zielony',
+  'Infrastruktura rowerowa': 'miejsce na stojak rowerowy',
+  Zieleń: 'drzewa i zieleń',
 }
 
 export interface TraceInput {
@@ -71,131 +67,99 @@ export interface TraceInput {
   place: string
 }
 
-/** Ślad analizy pojedynczego zgłoszenia (widok mieszkańca) */
+const MONTHS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII']
+const docShort = (d: CityDocument) => {
+  const kind = { interpelacja: 'interpelacja radnego', odpowiedz: 'odpowiedź urzędu', plan: 'plan remontów', komunikat: 'komunikat', protokol: 'protokół odbioru', budzet: 'budżet obywatelski' }[d.kind]
+  const dt = new Date(d.date)
+  return `${kind} (${MONTHS[dt.getMonth()]} ${dt.getFullYear()})`
+}
+
+/** Ślad analizy pojedynczego zgłoszenia (widok mieszkańca) — prosty język, bez liczb technicznych */
 export function reportTrace(input: TraceInput, a: Analysis, s: DemoState): TraceStep[] {
   const rnd = seeded(input.description + a.category)
   const hasPhoto = !input.photo.endsWith('zastepcze.svg')
   const steps: TraceStep[] = []
 
   if (input.usedMic) {
-    steps.push({
-      id: 'stt',
-      title: 'Zamiana mowy na tekst',
-      tech: ['stt'],
-      short: `Rozpoznano ${input.description.split(/\s+/).length} słów · pewność ${pct(rnd(0.93, 0.98))}`,
-      lines: [
-        { label: 'Język', value: 'polski' },
-        { label: 'Pewność transkrypcji', value: pct(rnd(0.93, 0.98)), bar: rnd(0.93, 0.98) },
-      ],
-      ms: Math.round(rnd(380, 620)),
-    })
+    steps.push({ id: 'stt', title: 'Zamiana mowy na tekst', tech: ['stt'], short: 'Twoje nagranie zamieniliśmy na tekst.', ms: Math.round(rnd(380, 620)) })
   }
 
-  const labels = VISION[a.category] ?? ['przestrzeń publiczna', 'ulica', 'zabudowa']
-  const confs = [rnd(0.88, 0.97), rnd(0.74, 0.9), rnd(0.6, 0.8)]
   steps.push(
     hasPhoto
-      ? {
-          id: 'vlm',
-          title: 'Rozpoznanie zdjęcia',
-          tech: ['vlm'],
-          short: `Wykryto: ${labels[0]} · ${pct(confs[0])}`,
-          lines: [
-            ...labels.map((l, i) => ({ label: l, value: pct(confs[i]), bar: confs[i] })),
-            { label: 'Twarze / tablice rejestracyjne', value: 'nie wykryto' },
-          ],
-          ms: Math.round(rnd(700, 1100)),
-        }
-      : { id: 'vlm', title: 'Rozpoznanie zdjęcia', tech: ['vlm'], short: 'Brak zdjęcia — analiza samego opisu', lines: [], ms: 0, skipped: true },
+      ? { id: 'vlm', title: 'Rozpoznanie zdjęcia', tech: ['vlm'], short: `Na zdjęciu widać ${VISION[a.category] ?? 'przestrzeń publiczną'}.`, ms: Math.round(rnd(700, 1100)) }
+      : { id: 'vlm', title: 'Rozpoznanie zdjęcia', tech: ['vlm'], short: 'Bez zdjęcia — oceniliśmy sam opis.', ms: 0, skipped: true },
   )
 
-  const json = {
-    typ: a.type === 'idea' ? 'pomysł' : 'problem',
-    kategoria: a.category,
-    miejsce: input.place,
-    adresat: a.unitShort,
-    spam: a.spam,
-  }
   steps.push({
     id: 'llm',
     title: 'Zrozumienie opisu',
     tech: ['llm'],
-    short: `${json.typ === 'pomysł' ? 'Pomysł' : 'Problem'} · ${a.category}`,
-    lines: [
-      { label: 'Rodzaj', value: json.typ },
-      { label: 'Kategoria', value: a.category },
-      { label: 'Spam / treść niezwiązana', value: a.spam ? 'tak' : 'nie' },
-    ],
-    code: JSON.stringify(json, null, 2),
+    short: a.type === 'idea' ? `To pomysł na okolicę: ${a.category.toLowerCase()}.` : `To problem: ${a.category.toLowerCase()}.`,
     ms: Math.round(rnd(600, 900)),
   })
 
   const target = a.targetCaseId ? s.cases.find((c) => c.id === a.targetCaseId) : null
-  const nearSame = s.cases
-    .filter((c) => c.category === a.category && c.id !== a.targetCaseId)
-    .map((c) => ({ c, d: distanceM(target?.location ?? s.cases[0].location, c.location) }))
-    .sort((x, y) => x.d - y.d)
-    .slice(0, 2)
-  const sim = rnd(0.86, 0.95)
   steps.push({
     id: 'dup',
-    title: 'Szukanie podobnych zgłoszeń',
+    title: 'Podobne zgłoszenia w okolicy',
     tech: ['emb', 'postgis'],
-    short: target ? `Podobna sprawa w ${Math.round(rnd(8, 40))} m · podobieństwo ${pct(sim)}` : 'Brak podobnych w promieniu 150 m',
-    lines: target
-      ? [
-          { label: `„${target.title}” (${a.similarCount} zgł.)`, value: pct(sim), bar: sim },
-          ...nearSame.map(({ c, d }) => {
-            const v = Math.max(0.2, sim - 0.25 - d / 4000)
-            return { label: `„${c.title}”, ${Math.round(d)} m`, value: pct(v), bar: v }
-          }),
-          { label: 'Decyzja', value: 'połączono w jedną sprawę' },
-        ]
-      : [{ label: 'Decyzja', value: 'nowa sprawa' }],
-    code: `SELECT id FROM cases\nWHERE ST_DWithin(geom, :punkt, 150)\nORDER BY embedding <=> :wektor_opisu\nLIMIT 3;`,
+    short:
+      target && a.similarCount > 0
+        ? `Sąsiedzi zgłaszali to samo miejsce już ${countLabel(a.similarCount, ['raz', 'razy', 'razy']).replace(/^1 raz$/, 'raz')}. Połączyliśmy wszystko w jedną sprawę.`
+        : 'To pierwsze takie zgłoszenie w tym miejscu.',
     ms: Math.round(rnd(150, 300)),
   })
 
   const docs: CityDocument[] = target ? caseDocuments(target, s.documents) : []
   steps.push({
     id: 'rag',
-    title: 'Sprawdzenie dokumentów miasta',
+    title: 'Dokumenty i plany miasta',
     tech: ['rag'],
-    short: docs.length ? `Znaleziono ${docs.length} dokument${docs.length === 1 ? '' : docs.length < 5 ? 'y' : 'ów'} z BIP` : 'Brak planów dla tego miejsca',
-    lines: docs.length
-      ? docs.map((d, i) => {
-          const r = Math.max(0.55, rnd(0.82, 0.95) - i * 0.06)
-          return { label: d.title, value: pct(r), bar: r }
-        })
-      : [{ label: 'Przeszukano', value: `${s.documents.filter((d) => !d.hidden).length} dokumentów` }],
+    short: docs.length
+      ? `Znaleźliśmy: ${docs.slice(-3).reverse().map(docShort).join(', ')}${docs.length > 3 ? ` oraz ${docs.length - 3} ${docs.length - 3 === 1 ? 'inny dokument' : 'inne dokumenty'}` : ''}.`
+      : 'Nie znaleźliśmy planów miasta dla tego miejsca.',
     ms: Math.round(rnd(400, 700)),
   })
 
-  steps.push({
-    id: 'route',
-    title: 'Adresat i odpowiedź dla mieszkańca',
-    tech: ['llm'],
-    short: `Adresat: ${a.unitShort}`,
-    lines: [
-      { label: 'Jednostka', value: a.unitName },
-      { label: 'Uzasadnienie', value: a.unitReason },
-      { label: 'Odpowiedź oparta na źródłach', value: a.answer.docId ? '1 dokument z BIP' : 'brak planów — informacja wprost' },
-    ],
-    ms: Math.round(rnd(500, 800)),
-  })
+  steps.push({ id: 'route', title: 'Kto się tym zajmie', tech: ['llm'], short: `Sprawa trafia do: ${a.unitName}.`, ms: Math.round(rnd(500, 800)) })
 
   if (target) {
     const u = caseUrgency(target, s.reports, s.documents)
+    const level = u.score >= 75 ? 'wysoka' : u.score >= 45 ? 'średnia' : 'niska'
+    const reasons = plainReasons(u.factors)
+    const finished = u.factors.some((f) => f.label.startsWith('Sprawa wykonana'))
     steps.push({
       id: 'score',
-      title: 'Ocena pilności',
+      title: 'Jak pilna jest sprawa',
       tech: ['score', 'gtfs'],
-      short: `Pilność ${u.score}/99`,
-      lines: urgencyBreakdown(target, s).map((f) => ({ label: f.label, value: f.points >= 0 ? `+${f.points}` : `−${-f.points}`, bar: Math.max(0, f.points / 40) })),
+      short: finished
+        ? 'Pilność niska: prace w tym miejscu zostały już wykonane.'
+        : reasons.length
+          ? `Pilność ${level}: ${reasons.join(', ')}.`
+          : `Pilność ${level}.`,
       ms: Math.round(rnd(60, 120)),
     })
   }
   return steps
+}
+
+/** Najważniejsze powody pilności, opisane po ludzku (bez punktów) */
+function plainReasons(factors: { label: string; points: number }[]): string[] {
+  const map: [RegExp, (l: string) => string][] = [
+    [/^Liczba zgłoszeń|^Liczba próśb/, () => 'wielu mieszkańców to zgłasza'],
+    [/^Podbicia/, () => 'sąsiedzi popierają sprawę'],
+    [/^Plan miasta czeka/, () => 'miasto planowało tu prace'],
+    [/^Ruch:/, () => 'ruchliwe miejsce'],
+    [/^W pobliżu: (.+?)( \(|$)/, (l) => `blisko: ${l.match(/^W pobliżu: (.+?)( \(|$)/)?.[1] ?? ''}`],
+    [/^Czas oczekiwania/, () => 'sprawa czeka od dawna'],
+  ]
+  return factors
+    .filter((f) => f.points > 0)
+    .map((f) => ({ f, m: map.find(([rx]) => rx.test(f.label)) }))
+    .filter((x) => x.m)
+    .sort((x, y) => y.f.points - x.f.points)
+    .slice(0, 3)
+    .map((x) => x.m![1](x.f.label))
 }
 
 /** Rozbicie pilności na czynniki (do wykresu) — te same składniki, z których liczony jest wynik */

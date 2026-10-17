@@ -85,7 +85,7 @@ export function CaseScreen({
           {askResolved && (
             <div className="flex flex-col gap-3 rounded-card border-2 border-brand bg-surface p-4 animate-pop" role="alertdialog" aria-labelledby="ask-title">
               <div className="flex items-center gap-2.5">
-                <span className="flex size-10 items-center justify-center rounded-full bg-st-planned-bg text-st-planned">
+                <span className="flex size-10 items-center justify-center rounded-full bg-st-done-bg text-st-done">
                   <IconWrench size={22} strokeWidth={2.2} />
                 </span>
                 <div id="ask-title" className="text-[19px] font-bold leading-6">
