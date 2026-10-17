@@ -113,7 +113,7 @@ export function caseUrgency(c: Case, reports: Report[], docs: CityDocument[], no
   const lc = latestCommitment(c, docs)
   if (lc && status === 'overdue') {
     const m = monthsOverdue(lc.commitment.deadline, now)
-    tags.unshift({ label: `plan ${romanMonth(lc.commitment.deadline)} · czeka na aktualny termin`, tone: 'wait' })
+    tags.unshift({ label: `plan był na ${romanMonth(lc.commitment.deadline)}`, tone: 'wait' })
     factors.push({ label: `Plan miasta czeka na aktualny termin (${romanMonth(lc.commitment.deadline)})`, points: Math.min(18, 6 + m * 2) })
   } else if (lc && status === 'planned') {
     tags.push({ label: `zaplanowane na ${romanMonth(lc.commitment.deadline)}`, tone: 'info' })

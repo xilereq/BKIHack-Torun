@@ -63,19 +63,19 @@ export function CaseDetail({
             </Button>
           </section>
 
-          <section aria-labelledby="sec-ai" className="rounded-card border border-line bg-[#fafbfc] p-4">
+          <section aria-labelledby="sec-ai" className="min-w-0 rounded-card border border-line bg-[#fafbfc] p-4">
             <h3 id="sec-ai" className="mb-2 flex items-center gap-2 text-[17px] font-bold">
               <IconSparkle size={18} className="text-brand" /> Analiza AI
             </h3>
             <div className="flex flex-col gap-3">
               <div>
-                <div className="mb-1 flex items-center gap-1.5 text-[13px] font-bold text-ink-2">
+                <div className="mb-1 flex flex-wrap items-center gap-1.5 text-[13px] font-bold text-ink-2">
                   Podsumowanie zgłoszeń <TechChip id="llm" small />
                 </div>
                 <p className="text-[15px] leading-[22px]">{summary.text}</p>
               </div>
-              <div className="flex items-center justify-between gap-3 text-[14px]">
-                <span className="flex items-center gap-1.5 text-ink-2">
+              <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-[14px]">
+                <span className="flex flex-wrap items-center gap-1.5 text-ink-2">
                   Połączone duplikaty <TechChip id="emb" small /> <TechChip id="postgis" small />
                 </span>
                 <span className="font-bold tabular-nums">
@@ -83,8 +83,8 @@ export function CaseDetail({
                 </span>
               </div>
               <div>
-                <div className="mb-1.5 flex items-center justify-between text-[13px] font-bold text-ink-2">
-                  <span className="flex items-center gap-1.5">
+                <div className="mb-1.5 flex items-center justify-between gap-2 text-[13px] font-bold text-ink-2">
+                  <span className="flex flex-wrap items-center gap-1.5">
                     Skąd ta pilność <TechChip id="score" small /> <TechChip id="gtfs" small />
                   </span>
                   <span className="text-[15px] text-ink">{u.score}/99</span>
@@ -92,7 +92,7 @@ export function CaseDetail({
                 <ul className="flex flex-col gap-1.5">
                   {breakdown.map((f) => (
                     <li key={f.label} className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1 text-[14px]">
-                      <span className="min-w-0 truncate">{f.label}</span>
+                      <span className="min-w-0">{f.label}</span>
                       <span className="font-bold tabular-nums">{f.points >= 0 ? `+${f.points}` : `−${-f.points}`}</span>
                       <span className="col-span-2 block h-1.5 overflow-hidden rounded-full bg-line" aria-hidden="true">
                         <span className="block h-full rounded-full bg-ink" style={{ width: `${Math.max(0, Math.min(100, (f.points / 40) * 100))}%` }} />

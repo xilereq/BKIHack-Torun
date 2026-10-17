@@ -67,7 +67,7 @@ export function HomeScreen({ onNotifications, onOpenCase }: { onNotifications: (
       </div>
 
       {sel && (
-        <div className="absolute inset-x-3 bottom-3 z-10 overflow-hidden rounded-[22px] bg-surface shadow-[0_8px_28px_rgba(22,25,29,0.22)] animate-slide-up">
+        <div className="absolute inset-x-3 bottom-11 z-10 overflow-hidden rounded-[22px] bg-surface shadow-[0_8px_28px_rgba(22,25,29,0.22)] animate-slide-up">
           <div className="relative">
             <Carousel slides={caseSlides(sel, s)} height={150} />
             <button
@@ -86,7 +86,7 @@ export function HomeScreen({ onNotifications, onOpenCase }: { onNotifications: (
                 <StatusBadge status={caseStatus(sel, s.documents)} small />
               </div>
               <div className="mt-1 text-[18px] font-bold leading-6">{sel.title}</div>
-              <div className="truncate text-[14px] leading-5 text-ink-2">
+              <div className="text-[14px] leading-5 text-ink-2">
                 {sel.place} · {countLabel(caseReports(sel, s.reports).length, REPORT_FORMS)}
                 {sel.supporters ? ` · ${sel.supporters} ${plural(sel.supporters, ['podbicie', 'podbicia', 'podbić'])}` : ''}
               </div>

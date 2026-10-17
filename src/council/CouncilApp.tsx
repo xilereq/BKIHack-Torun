@@ -29,7 +29,7 @@ const LAYER_LABELS: { key: keyof Layers; label: string; swatch: string }[] = [
 const STATUS_OPTIONS: { key: StatusFilter; label: string }[] = [
   { key: 'all', label: 'Wszystkie' },
   { key: 'attention', label: 'Do działania' },
-  { key: 'planned', label: 'Zaplanowane' },
+  { key: 'planned', label: 'W planie' },
   { key: 'done', label: 'Wykonane' },
 ]
 
@@ -93,7 +93,8 @@ export function CouncilApp() {
     ro.observe(el)
     return () => ro.disconnect()
   }, [])
-  const detailPx = Math.min(mapWidth, Math.max(380, Math.min(540, Math.round(mapWidth * 0.46))))
+  // na wąskiej mapie panel historii zajmuje całą szerokość
+  const detailPx = mapWidth < 760 ? mapWidth : Math.min(mapWidth, Math.max(380, Math.min(540, Math.round(mapWidth * 0.46))))
 
   // zmiana obszaru zamyka dymek (punkt mógł zniknąć z widoku)
   useEffect(() => setPopupId(null), [area])
@@ -204,8 +205,9 @@ export function CouncilApp() {
         </div>
       </header>
 
-      <div className="flex min-h-0 flex-1 gap-[clamp(12px,1.4vw,20px)] px-[clamp(12px,2vw,28px)] py-[clamp(12px,1.4vw,20px)]">
-        <section className="flex w-[clamp(330px,31vw,440px)] shrink-0 flex-col gap-2.5" aria-label="Sprawy">
+      {/* wąskie okno (< 1000 px): lista nad mapą, całość przewijana */}
+      <div className="flex min-h-0 flex-1 gap-[clamp(12px,1.4vw,20px)] px-[clamp(12px,2vw,28px)] py-[clamp(12px,1.4vw,20px)] max-[999px]:flex-col max-[999px]:overflow-y-auto">
+        <section className="flex w-[clamp(330px,31vw,440px)] shrink-0 flex-col gap-2.5 max-[999px]:w-full" aria-label="Sprawy">
           <div className="flex flex-col gap-2.5 rounded-card border border-line bg-surface p-3" role="group" aria-label="Filtry i sortowanie">
             <div className="grid grid-cols-2 gap-2">
               <Field label="Obszar">
@@ -239,7 +241,7 @@ export function CouncilApp() {
                   role="radio"
                   aria-checked={status === o.key}
                   onClick={() => setStatus(o.key)}
-                  className={`min-h-10 rounded-[8px] px-1 text-[13px] font-bold leading-4 ${status === o.key ? 'bg-surface text-ink shadow-sm' : 'text-ink-2 hover:text-ink'}`}
+                  className={`min-h-10 min-w-0 rounded-[8px] px-0.5 text-[13px] font-bold leading-4 [overflow-wrap:anywhere] ${status === o.key ? 'bg-surface text-ink shadow-sm' : 'text-ink-2 hover:text-ink'}`}
                 >
                   {o.label}
                 </button>
@@ -310,12 +312,12 @@ export function CouncilApp() {
               </button>
             ))}
           </div>
-          <div className="min-h-0 flex-1 overflow-y-auto pr-1">
+          <div className="min-h-0 flex-1 overflow-y-auto pr-1 max-[999px]:max-h-[55vh] max-[999px]:flex-none">
             <CaseList items={items} s={s} reports={reports} selectedId={selected} onSelect={(id) => openCase(id)} />
           </div>
         </section>
 
-        <section ref={mapBoxRef} className="relative min-w-0 flex-1 overflow-hidden rounded-card border border-line" aria-label="Mapa">
+        <section ref={mapBoxRef} className="relative min-w-0 flex-1 overflow-hidden rounded-card border border-line max-[999px]:h-[75vh] max-[999px]:min-h-[460px] max-[999px]:flex-none" aria-label="Mapa">
           <MapView
             center={districts[0].center}
             zoom={13}

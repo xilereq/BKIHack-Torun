@@ -58,12 +58,12 @@ export function MyCasesScreen({ onOpen, onVerify, onReport }: { onOpen: (id: str
               >
                 <Photo src={c.photo} alt="" className="size-16 shrink-0 rounded-[12px]" />
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-1.5">
                     <StatusBadge status={caseStatus(c, s.documents)} small />
                     {unread > 0 && <span className="rounded-full bg-brand px-2 text-[13px] font-bold leading-5 text-white">Nowe</span>}
                   </div>
-                  <div className="truncate text-[17px] font-bold leading-6">{c.title}</div>
-                  <div className="truncate text-[15px] leading-5 text-ink-2">
+                  <div className="line-clamp-2 text-[17px] font-bold leading-6">{c.title}</div>
+                  <div className="line-clamp-2 text-[15px] leading-5 text-ink-2">
                     {last?.title} · {relativeDate(last?.date ?? c.createdAt)}
                   </div>
                 </div>

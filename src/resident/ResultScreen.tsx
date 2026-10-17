@@ -100,7 +100,7 @@ export function ResultScreen({
                 {c?.bigIdea && <StatusBadge status="planned" small label="Budżet obywatelski" />}
               </div>
               <div className="text-[18px] font-bold leading-6">{c?.title ?? analysis.title}</div>
-              <div className="truncate text-small text-ink-2">
+              <div className="text-small text-ink-2">
                 {analysis.category} · {c?.place ?? draft.place}
               </div>
             </div>
