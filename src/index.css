@@ -162,7 +162,7 @@ button { cursor: pointer; }
 .gm-pin--doc { background: #fff; color: var(--color-ink); border: 1.5px solid var(--color-line-strong); }
 .gm-pin--overdue { background: #fff; color: var(--color-st-wait-pin); border: 2.5px solid var(--color-st-wait-pin); }
 .gm-pin--planned { background: #fff; color: var(--color-st-planned); border: 2px solid var(--color-st-planned); }
-.gm-pin--me { background: var(--color-ink); box-shadow: 0 0 0 6px rgba(22,25,29,.15); }
+.gm-pin--me { background: var(--color-st-planned); border: 3px solid #fff; box-shadow: 0 0 0 7px rgba(29,79,158,.18), 0 2px 6px rgba(22,25,29,.25); }
 .gm-pin--selected { transform: scale(1.15); animation: pulse-ring 1.4s ease-out infinite; }
 .gm-marker:hover .gm-pin--selected { transform: scale(1.15); }
 .gm-count {

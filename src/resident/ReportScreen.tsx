@@ -8,6 +8,7 @@ import { useTypewriter } from '../lib/hooks'
 import { DEFAULT_TRANSCRIPT, downscale, photoExists, SCENARIOS } from './demoPhotos'
 import { FALLBACK_LOCATION, geocodeAddress, getGpsLocation } from '../lib/geocode'
 import { ScreenHeader } from './ScreenHeader'
+import { LocationHelp } from '../components/LocationHelp'
 
 const LOC_HINT: Record<LocSource, string> = {
   locating: 'Pobieramy lokalizację z telefonu.',
@@ -54,6 +55,7 @@ export function ReportScreen({
   const [addressLabel, setAddressLabel] = useState('')
   const [searching, setSearching] = useState(false)
   const [addressError, setAddressError] = useState('')
+  const [showLocHelp, setShowLocHelp] = useState(false)
   const [recording, setRecording] = useState(false)
   const [transcript, setTranscript] = useState<string | null>(null)
   const [error, setError] = useState('')
@@ -147,7 +149,7 @@ export function ReportScreen({
   }
 
   return (
-    <div className="flex h-full flex-col bg-canvas">
+    <div className="relative flex h-full flex-col bg-canvas">
       <ScreenHeader title="Nowe zgłoszenie" onBack={onBack} />
       <input ref={cameraRef} type="file" accept="image/*" capture="environment" className="sr-only" tabIndex={-1} aria-hidden="true" onChange={(e) => onFile(e.target.files?.[0])} />
       <input ref={galleryRef} type="file" accept="image/*" className="sr-only" tabIndex={-1} aria-hidden="true" onChange={(e) => onFile(e.target.files?.[0])} />
@@ -284,9 +286,16 @@ export function ReportScreen({
                   </p>
                 )}
                 {locSource !== 'gps' && locSource !== 'locating' && (
-                  <button type="button" onClick={locate} className="self-start min-h-10 text-[15px] font-bold text-brand hover:underline">
-                    Użyj mojej lokalizacji
-                  </button>
+                  <div className="flex flex-wrap gap-x-4">
+                    <button type="button" onClick={locate} className="min-h-10 text-[15px] font-bold text-brand hover:underline">
+                      Użyj mojej lokalizacji
+                    </button>
+                    {locSource === 'denied' && (
+                      <button type="button" onClick={() => setShowLocHelp(true)} className="min-h-10 text-[15px] font-bold text-ink-2 underline underline-offset-2 hover:text-ink">
+                        Jak włączyć lokalizację?
+                      </button>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
@@ -300,6 +309,16 @@ export function ReportScreen({
         </Button>
         <p className="mt-1.5 text-center text-[14px] text-ink-2">Bez logowania. Nie zapisujemy danych osobowych.</p>
       </div>
+      {showLocHelp && (
+        <LocationHelp
+          problem="denied"
+          onRetry={() => {
+            setShowLocHelp(false)
+            locate()
+          }}
+          onClose={() => setShowLocHelp(false)}
+        />
+      )}
     </div>
   )
 }

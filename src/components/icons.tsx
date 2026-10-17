@@ -184,6 +184,13 @@ export const IconList = (p: IconProps) => (
     <path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01" />
   </svg>
 )
+export const IconLocate = (p: IconProps) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="6.5" />
+    <circle cx="12" cy="12" r="2" fill="currentColor" />
+    <path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3" />
+  </svg>
+)
 export const IconEdit = (p: IconProps) => (
   <svg {...base(p)}>
     <path d="M4 20h4L19 9l-4-4L4 16z" />

@@ -326,6 +326,7 @@ export function MapView({
       .setLngLat([popup.location.lng, popup.location.lat])
       .setDOMContent(el)
       .addTo(map)
+    userMovedRef.current = true
     // dymek jest nad punktem: punkt ustawiamy poniżej środka widocznej części mapy,
     // a po przesunięciu dosuwamy mapę tak, żeby cały dymek był widoczny (nie pod panelami)
     const h = map.getContainer().clientHeight
@@ -364,6 +365,8 @@ export function MapView({
 
   useEffect(() => {
     if (flyTo && mapRef.current) {
+      // świadomy przelot: automatyczne dopasowanie widoku nie może go już cofnąć
+      userMovedRef.current = true
       mapRef.current.flyTo({
         center: [flyTo.lng, flyTo.lat],
         zoom: Math.max(mapRef.current.getZoom(), 16),

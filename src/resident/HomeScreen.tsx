@@ -1,8 +1,11 @@
 import { useMemo, useState } from 'react'
 import { useDemo } from '../lib/store'
 import { MapView } from '../components/MapView'
-import { Logo, StatusBadge, TypeBadge } from '../components/ui'
-import { IconBell, IconChevron, IconShield, IconX } from '../components/icons'
+import { Logo, Spinner, StatusBadge, TypeBadge } from '../components/ui'
+import { IconBell, IconChevron, IconLocate, IconShield, IconX } from '../components/icons'
+import { LocationHelp, type LocationProblem } from '../components/LocationHelp'
+import { getGpsLocation } from '../lib/geocode'
+import type { LngLat } from '../lib/types'
 import { Carousel } from '../components/Carousel'
 import { caseMarkers, caseSlides, cityKnowledge } from '../components/shared'
 import { caseReports, caseStatus } from '../lib/domain'
@@ -12,7 +15,22 @@ import { distanceM, districtName, nearestDistrict, RUBINKOWO_CENTER } from '../l
 export function HomeScreen({ onNotifications, onOpenCase }: { onNotifications: () => void; onOpenCase: (id: string) => void }) {
   const s = useDemo()
   const [selected, setSelected] = useState<string | null>(null)
-  const markers = useMemo(() => caseMarkers(s, { selectedId: selected }), [s, selected])
+  // lokalizacja użytkownika: kropka „Tu jesteś” i przelot mapy; po odmowie — instrukcja włączenia
+  const [me, setMe] = useState<LngLat | null>(null)
+  const [locating, setLocating] = useState(false)
+  const [locProblem, setLocProblem] = useState<LocationProblem | null>(null)
+  const locate = async () => {
+    setLocProblem(null)
+    setLocating(true)
+    const r = await getGpsLocation()
+    setLocating(false)
+    if (r.ok) setMe({ ...r.location })
+    else setLocProblem(r.reason)
+  }
+  const markers = useMemo(
+    () => [...caseMarkers(s, { selectedId: selected }), ...(me ? [{ id: 'me', location: me, kind: 'me' as const, title: 'Tu jesteś' }] : [])],
+    [s, selected, me],
+  )
   const unread = s.notifications.filter((n) => !n.read).length
   // okolica mieszkańca w demo: Rubinkowo i Na Skarpie (na mapie widać całe miasto)
   const nearby = s.cases.filter((c) => c.district === 'rubinkowo' || c.district === 'na-skarpie')
@@ -28,7 +46,8 @@ export function HomeScreen({ onNotifications, onOpenCase }: { onNotifications: (
         fitPoints={nearby.map((c) => c.location)}
         fitPadding={{ top: 130, bottom: 40, left: 30, right: 30 }}
         markers={markers}
-        onMarkerClick={setSelected}
+        onMarkerClick={(id) => id !== 'me' && setSelected(id)}
+        flyTo={me}
         onViewChange={({ center, zoom }) => {
           if (zoom < 12.6) return setAreaLabel('Toruń')
           // osiedla spraw są sprawdzone w OSM, więc najpierw najbliższa sprawa (do 700 m), potem środek osiedla
@@ -70,6 +89,19 @@ export function HomeScreen({ onNotifications, onOpenCase }: { onNotifications: (
           )}
         </div>
       </div>
+
+      {!sel && (
+        <button
+          type="button"
+          onClick={locate}
+          aria-label={me ? 'Pokaż moją lokalizację ponownie' : 'Włącz lokalizację i pokaż, gdzie jestem'}
+          className="absolute right-3 bottom-11 z-10 flex h-12 items-center gap-2 rounded-full bg-surface/95 px-4 text-[15px] font-bold text-ink shadow-[0_2px_12px_rgba(22,25,29,0.18)] backdrop-blur hover:bg-surface"
+        >
+          {locating ? <Spinner size={18} /> : <IconLocate size={20} className={me ? 'text-st-planned' : ''} />}
+          {me ? 'Moja lokalizacja' : 'Włącz lokalizację'}
+        </button>
+      )}
+      {locProblem && <LocationHelp problem={locProblem} onRetry={locate} onClose={() => setLocProblem(null)} />}
 
       {sel && (
         <div className="absolute inset-x-3 bottom-11 z-10 overflow-hidden rounded-[22px] bg-surface shadow-[0_8px_28px_rgba(22,25,29,0.22)] animate-slide-up">
