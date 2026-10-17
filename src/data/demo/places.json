@@ -1,0 +1,22 @@
+[
+  { "name": "przystanek Rubinkowo Centrum", "location": { "lat": 53.02837, "lng": 18.65767 } },
+  { "name": "przystanek Manhattan", "location": { "lat": 53.02769, "lng": 18.66476 } },
+  { "name": "przystanek Przy Skarpie", "location": { "lat": 53.0242, "lng": 18.66643 } },
+  { "name": "przystanek Jamontta", "location": { "lat": 53.02542, "lng": 18.67237 } },
+  { "name": "przystanek Rydygiera", "location": { "lat": 53.02319, "lng": 18.65994 } },
+  { "name": "przystanek Mocarskiego", "location": { "lat": 53.02705, "lng": 18.65591 } },
+  { "name": "przystanek Przybyłów", "location": { "lat": 53.02862, "lng": 18.67279 } },
+  { "name": "przystanek Ślaskiego", "location": { "lat": 53.02354, "lng": 18.67604 } },
+  { "name": "przystanek Donimirskiego", "location": { "lat": 53.0295, "lng": 18.65338 } },
+  { "name": "Plac Sybiraków", "location": { "lat": 53.02449, "lng": 18.66775 } },
+  { "name": "Szkoła Podstawowa nr 16", "location": { "lat": 53.02856, "lng": 18.6699 } },
+  { "name": "Zespół Szkół nr 8", "location": { "lat": 53.03001, "lng": 18.65971 } },
+  { "name": "IX Liceum Ogólnokształcące", "location": { "lat": 53.02658, "lng": 18.65914 } },
+  { "name": "Przychodnia Rodzinna na Skarpie", "location": { "lat": 53.02425, "lng": 18.67241 } },
+  { "name": "plac zabaw Zaczarowany las", "location": { "lat": 53.0279, "lng": 18.67121 } },
+  { "name": "ul. Tymona Niesiołowskiego", "location": { "lat": 53.03067, "lng": 18.6741 } },
+  { "name": "ul. Ludwika Ślaskiego", "location": { "lat": 53.02375, "lng": 18.67487 } },
+  { "name": "ul. Władysława Dziewulskiego", "location": { "lat": 53.02911, "lng": 18.66899 } },
+  { "name": "ul. Janiny i Eugeniusza Przybyłów", "location": { "lat": 53.02968, "lng": 18.67132 } },
+  { "name": "ul. Szosa Lubicka", "location": { "lat": 53.02666, "lng": 18.68031 } }
+]

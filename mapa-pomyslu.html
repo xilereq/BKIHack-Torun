@@ -1,0 +1,578 @@
+<title>Mapa pomysłu Głos Osiedla</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: pomysł na górze, pięć gałęzi pod nim, dalej droga zgłoszenia, mObywatel, zakres, film i pitch, za i przeciw */
+:root {
+  --bg: #f2f4f6;
+  --surface: #ffffff;
+  --ink: #14213d;
+  --muted: #56627a;
+  --line: #c9d0db;
+  --accent: #1d5fbf;
+  --accent-strong: #1d5fbf;
+  --accent-soft: #dbe7f8;
+  --warn: #9a6a00;
+  --warn-soft: #fbefcc;
+  --good: #2f7d4f;
+  --good-soft: #d9efe1;
+  --bad: #b23a3a;
+  --bad-soft: #f6dddd;
+  --display: "Overpass", "Arial Narrow", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1522; --surface: #182133; --ink: #e8edf6; --muted: #9aa6bd; --line: #2e3a52;
+    --accent: #6ea2ef; --accent-strong: #2856a0; --accent-soft: #1d3157; --warn: #e3b23c; --warn-soft: #3d3216;
+    --good: #5fbf86; --good-soft: #17352a; --bad: #e07a7a; --bad-soft: #3d1f22;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1522; --surface: #182133; --ink: #e8edf6; --muted: #9aa6bd; --line: #2e3a52;
+  --accent: #6ea2ef; --accent-strong: #2856a0; --accent-soft: #1d3157; --warn: #e3b23c; --warn-soft: #3d3216;
+  --good: #5fbf86; --good-soft: #17352a; --bad: #e07a7a; --bad-soft: #3d1f22;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.55; }
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+  display: grid; gap: 56px;
+}
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.15; }
+h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spacing: -0.01em; }
+h2 { font-size: 24px; font-weight: 800; }
+h3 { font-size: 16px; font-weight: 700; }
+p { margin: 0; }
+ul, ol { margin: 0; padding-left: 18px; }
+li + li { margin-top: 4px; }
+.eyebrow { font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+.lede { color: var(--muted); max-width: 66ch; font-size: 17px; }
+header { display: grid; gap: 12px; }
+.section-head { display: grid; gap: 6px; margin-bottom: 20px; }
+.section-head p { color: var(--muted); max-width: 70ch; }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* mapa myśli */
+.map { position: relative; display: grid; gap: 18px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.map svg.links { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.map svg.links path { fill: none; stroke: var(--line); stroke-width: 2; stroke-dasharray: 5 5; }
+.center {
+  grid-column: 1 / -1; justify-self: center; max-width: 620px; position: relative; z-index: 1;
+  background: var(--accent-strong); color: #fff; border-radius: 14px; padding: 22px 26px; display: grid; gap: 8px; margin-bottom: 28px;
+}
+.center h2 { color: #fff; font-size: 28px; }
+.center p { color: rgba(255,255,255,0.92); }
+.center .badge { justify-self: start; font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; border: 1.5px solid rgba(255,255,255,0.7); border-radius: 4px; padding: 2px 8px; }
+.node { position: relative; z-index: 1; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.node .tag { justify-self: start; font-family: var(--display); font-weight: 700; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); }
+.node.key { border: 2px solid var(--accent); }
+.node.key .tag { background: var(--accent-strong); color: #fff; }
+.node.t-warn .tag { background: var(--warn-soft); color: var(--warn); }
+.node ul { font-size: 14px; }
+@media (max-width: 900px) {
+  .map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .map svg.links { display: none; }
+  .center { margin-bottom: 0; }
+}
+@media (max-width: 560px) { .map { grid-template-columns: minmax(0, 1fr); } }
+
+/* droga zgłoszenia */
+.flow { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.step { position: relative; padding: 0 10px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.step .dot { width: 34px; height: 34px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); color: var(--accent); font-family: var(--display); font-weight: 800; display: grid; place-items: center; position: relative; z-index: 1; }
+.step::before { content: ""; position: absolute; top: 17px; left: 0; right: 0; height: 2px; background: var(--line); }
+.step:first-child::before { left: 27px; }
+.step:last-child::before { right: calc(100% - 27px); }
+.step.hl .dot { background: var(--accent-strong); border-color: var(--accent-strong); color: #fff; }
+.step h3 { font-size: 15px; }
+.step p { font-size: 13.5px; color: var(--muted); }
+.who { font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 860px) {
+  .flow { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .step { grid-template-columns: 34px minmax(0, 1fr); column-gap: 12px; padding: 0; }
+  .step .dot { grid-row: span 3; }
+  .step::before { top: 0; bottom: -14px; left: 16px; right: auto; width: 2px; height: auto; }
+  .step:first-child::before { top: 17px; left: 16px; }
+  .step:last-child::before { display: none; }
+}
+
+/* panele */
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 860px) { .two, .three { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.panel.muted { background: transparent; border-style: dashed; }
+.panel ul, .panel ol { font-size: 14px; }
+.panel .meta { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.panel.now { border: 2px solid var(--accent); }
+.pill { justify-self: start; font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: var(--accent-soft); color: var(--accent); }
+.pill.good { background: var(--good-soft); color: var(--good); }
+.pill.warn { background: var(--warn-soft); color: var(--warn); }
+
+/* przepływ danych mObywatel */
+.pseudo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 18px; }
+@media (max-width: 860px) { .pseudo { grid-template-columns: minmax(0, 1fr); } }
+.pseudo div { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.pseudo .k { font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.pseudo code { font-family: var(--mono); font-size: 12.5px; overflow-wrap: anywhere; }
+.pseudo .del { color: var(--bad); text-decoration: line-through; }
+.pseudo .keep { color: var(--good); font-weight: 600; }
+
+/* film i pitch */
+.timeline { display: grid; gap: 3px; }
+.timeline div { padding: 10px 8px; background: var(--accent-soft); min-width: 0; display: grid; gap: 2px; align-content: start; }
+.timeline div.big { background: var(--accent-strong); color: #fff; }
+.timeline div:first-child { border-radius: 6px 0 0 6px; }
+.timeline div:last-child { border-radius: 0 6px 6px 0; }
+.timeline .t { font-family: var(--mono); font-size: 11px; opacity: 0.85; }
+.timeline .d { font-size: 12.5px; line-height: 1.35; }
+.film { grid-template-columns: 20fr 20fr 60fr 20fr; }
+.pitch { grid-template-columns: 30fr 90fr 45fr 45fr 30fr; }
+@media (max-width: 760px) {
+  .film, .pitch { grid-template-columns: minmax(0, 1fr); }
+  .timeline div, .timeline div:first-child, .timeline div:last-child { border-radius: 6px; }
+}
+
+/* za i przeciw */
+.balance { display: grid; grid-template-columns: minmax(0, 1fr) 280px minmax(0, 1fr); gap: 24px; align-items: start; }
+.col { display: grid; gap: 10px; min-width: 0; }
+.col h3 { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; font-size: 18px; }
+.col.pro h3 { color: var(--good); }
+.col.con h3 { color: var(--bad); }
+.col h3 .sum { font-family: var(--mono); font-size: 14px; }
+.item { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: start; }
+.col.pro .item { border-left: 4px solid var(--good); }
+.col.con .item { border-left: 4px solid var(--bad); }
+.item p { font-size: 14px; }
+.item .reply { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+.item .reply b { color: var(--ink); font-weight: 600; }
+.weights { display: flex; gap: 4px; }
+.weights button { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; padding: 0; cursor: pointer; }
+.col.pro .weights button.on { background: var(--good); border-color: var(--good); }
+.col.con .weights button.on { background: var(--bad); border-color: var(--bad); }
+.weights button:focus-visible, .reset:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.scale-box { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); display: grid; gap: 10px; justify-items: center; text-align: center; }
+.scale-box svg { width: 100%; max-width: 280px; height: auto; }
+.scale-box .verdict { font-family: var(--display); font-weight: 700; font-size: 17px; }
+.beam { transition: transform 0.6s cubic-bezier(.3,1.4,.5,1); transform-origin: 150px 70px; }
+.pan { transition: transform 0.6s cubic-bezier(.3,1.4,.5,1); }
+@media (prefers-reduced-motion: reduce) { .beam, .pan { transition: none; } }
+@media (max-width: 960px) { .balance { grid-template-columns: minmax(0, 1fr); } .scale-box { position: static; order: -1; } }
+.reset { font: inherit; font-size: 13px; color: var(--accent); background: none; border: 1px solid var(--accent); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+
+.cut { display: flex; flex-wrap: wrap; gap: 8px; }
+.cut span { font-size: 13px; padding: 4px 10px; border-radius: 999px; border: 1px dashed var(--line); color: var(--muted); }
+.questions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px; }
+@media (max-width: 760px) { .questions { grid-template-columns: minmax(0, 1fr); } }
+.questions label { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; padding: 8px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.questions input { margin-top: 4px; accent-color: var(--accent); width: 16px; height: 16px; flex: none; }
+.questions input:checked + span { color: var(--muted); text-decoration: line-through; }
+.sources { font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.sources a { color: var(--accent); }
+footer { font-size: 12.5px; color: var(--muted); }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <span class="eyebrow">BKIhack 2026 · Toruń · wersja uproszczona</span>
+    <h1>Głos Osiedla</h1>
+    <p class="lede">Mieszkaniec robi zdjęcie i mówi, co jest nie tak albo czego brakuje. AI od razu odpowiada, co miasto w tym miejscu planuje, porządkuje zgłoszenia na mapie razem ze zobowiązaniami miasta, a radni i urzędnicy dostają gotową listę spraw. Mieszkaniec jest informowany aż do rozwiązania i czuje, że jego głos został zauważony.</p>
+  </header>
+
+  <!-- MAPA MYŚLI -->
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Mapa myśli</span>
+      <h2>Problem i pięć elementów produktu</h2>
+    </div>
+    <div class="map" id="map">
+      <svg class="links" id="links" aria-hidden="true"></svg>
+      <div class="center">
+        <span class="badge">Pomysł</span>
+        <h2>Zgłoszenia, które nie giną</h2>
+        <p>Niski próg dla mieszkańca, porządek dzięki AI, kontekst z dokumentów miasta dla radnych i urzędników oraz informacja zwrotna aż do rozwiązania sprawy.</p>
+      </div>
+
+      <div class="node t-warn">
+        <span class="tag">Problem</span>
+        <h3>Zgłoszenia giną, ludzie nie wiedzą, gdzie pisać</h3>
+        <ul>
+          <li><span class="num">716</span> zgłoszeń w Dbam o Miasto w całym 2022 r.</li>
+          <li><span class="num">546</span> wciąż „nowych” w IV 2026, część sprzed ok. 4 lat</li>
+          <li>ok. 1/4 mieszkańców nie wie, jak rozwiązać lokalny problem</li>
+        </ul>
+      </div>
+
+      <div class="node">
+        <span class="tag">1 · Mieszkaniec</span>
+        <h3>Zgłoszenie w 10 sekund</h3>
+        <ul>
+          <li>Zdjęcie + opis słowami, pisany lub mówiony</li>
+          <li><b>Problem</b> (dziura, graffiti) albo <b>pomysł</b> (ławka, kosz, latarnia, plac zabaw)</li>
+          <li>Lokalizacja z telefonu lub ze zdjęcia</li>
+          <li>Bez konta; opcjonalna weryfikacja przez mObywatel daje znaczek</li>
+        </ul>
+      </div>
+
+      <div class="node">
+        <span class="tag">2 · AI</span>
+        <h3>Porządkuje zgłoszenia</h3>
+        <ul>
+          <li>Odsiewa spam</li>
+          <li>Kategoria i kto odpowiada (MZD, MPO, Straż Miejska…)</li>
+          <li>Łączy duplikaty w jedną sprawę</li>
+          <li>Pilność z uzasadnieniem</li>
+        </ul>
+      </div>
+
+      <div class="node key">
+        <span class="tag">3 · Innowacja</span>
+        <h3>Mapa ze zobowiązaniami miasta</h3>
+        <ul>
+          <li>Interpelacje, odpowiedzi i zapowiedziane remonty z BIP na mapie</li>
+          <li>Historia miejsca: zgłoszenia + dokumenty</li>
+          <li>Przeterminowane zobowiązania wyróżnione</li>
+          <li>Każda informacja ze źródłem</li>
+        </ul>
+      </div>
+
+      <div class="node">
+        <span class="tag">4 · Radni i urząd</span>
+        <h3>Gotowa lista spraw</h3>
+        <ul>
+          <li>Mapa okręgu, sprawy według pilności</li>
+          <li>Szkic interpelacji jednym kliknięciem, z przypisami</li>
+          <li>Radny edytuje i wysyła sam</li>
+        </ul>
+      </div>
+
+      <div class="node key">
+        <span class="tag">5 · Informacja zwrotna</span>
+        <h3>Twój głos jest zauważony</h3>
+        <ul>
+          <li>Od razu: „Remont tego odcinka zaplanowany na 2027 r.”, ze źródłem</li>
+          <li>Później: interpelacja, odpowiedź urzędu, remont zaplanowany, wykonany</li>
+          <li>Po remoncie: „Czy problem rozwiązany?”</li>
+          <li>„Nie” po świeżym remoncie to sygnał gwarancji wykonawcy</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DROGA ZGŁOSZENIA -->
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Droga zgłoszenia</span>
+      <h2>Od zdjęcia do rozwiązanej sprawy</h2>
+      <p>To jest jednocześnie scenariusz demo. Wyróżnione kroki sprawiają, że mieszkaniec czuje się zauważony. Przykład jest ilustracyjny, w demo użyjemy prawdziwych dokumentów z BIP.</p>
+    </div>
+    <div class="flow">
+      <div class="step"><div class="dot">1</div><span class="who">Mieszkaniec</span><h3>Zdjęcie i jedno zdanie</h3><p>„Przy przystanku na Szosie Chełmińskiej jest wielka dziura.”</p></div>
+      <div class="step"><div class="dot">2</div><span class="who">AI</span><h3>Porządkuje</h3><p>Problem, nawierzchnia, adresat MZD. Łączy z 6 wcześniejszymi zgłoszeniami, ustala pilność.</p></div>
+      <div class="step hl"><div class="dot">3</div><span class="who">AI → mieszkaniec</span><h3>Od razu odpowiedź</h3><p>„Remont tego odcinka zapowiedziano na VI 2026. Termin minął, sprawa trafia do radnych okręgu.” Z linkiem do BIP.</p></div>
+      <div class="step"><div class="dot">4</div><span class="who">Radny</span><h3>Szkic interpelacji</h3><p>Jedno kliknięcie, przypisy do źródeł, edycja i wysyłka przez radnego.</p></div>
+      <div class="step hl"><div class="dot">5</div><span class="who">Mieszkaniec</span><h3>Powiadomienia</h3><p>Interpelacja złożona → odpowiedź urzędu → remont zaplanowany na 2027 r. → remont wykonany.</p></div>
+      <div class="step hl"><div class="dot">6</div><span class="who">Mieszkaniec</span><h3>„Czy problem rozwiązany?”</h3><p>Tak: sprawa zamknięta. Nie: nowe zgłoszenie powiązane z poprzednim, a po świeżym remoncie sygnał gwarancji wykonawcy.</p></div>
+    </div>
+    <div class="panel" style="margin-top:22px">
+      <span class="pill good">Nie tylko skargi</span>
+      <h3>Pomysł na okolicę</h3>
+      <p style="font-size:14px">Mieszkanka fotografuje trawnik przed blokiem: „Przydałaby się tu ławka dla seniorów”. AI rozpoznaje pomysł, a nie usterkę, łączy z prośbami sąsiadów („12 osób prosi o ławkę przy tym bloku”) i kieruje do właściwej jednostki. Przy większych pomysłach, jak plac zabaw, podpowiada też ścieżkę budżetu obywatelskiego. Dzięki temu aplikacja służy dobrym zmianom, a nie jest tylko forum frustracji.</p>
+    </div>
+  </section>
+
+  <!-- MOBYWATEL -->
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Integracja z mObywatelem</span>
+      <h2>Jak weryfikujemy mieszkańców, nie przechowując ich danych</h2>
+      <p>mObywatel nie daje „UUID” użytkownika. Stabilnym identyfikatorem jest PESEL, więc liczymy z niego pseudonim i od razu usuwamy dane osobowe.</p>
+    </div>
+    <div class="pseudo">
+      <div><span class="k">1. Weryfikacja zwraca</span><code>imię, nazwisko, PESEL, adres zameldowania</code></div>
+      <div><span class="k">2. Liczymy pseudonim</span><code>HMAC-SHA256(PESEL, klucz serwera)</code><span style="font-size:13px;color:var(--muted)">Ta sama osoba zawsze dostaje ten sam pseudonim.</span></div>
+      <div><span class="k">3. Z adresu</span><code>zameldowany w Toruniu: tak / nie</code></div>
+      <div><span class="k">4. Zapisujemy</span><code class="keep">pseudonim, „zweryfikowany”, „Toruń”, data</code><code class="del">imię, nazwisko, PESEL, adres</code></div>
+    </div>
+    <div class="three">
+      <div class="panel now">
+        <span class="pill">A · Pilotaż</span>
+        <h3>Certyfikowany integrator</h3>
+        <p style="font-size:14px">Kod QR na stronie, mieszkaniec skanuje go w mObywatelu, integrator zwraca podpisane dane. Firmy łączą się przez integratorów, np. Autopay, IDENTT, Authologic.</p>
+        <span class="meta">tygodnie · opłata za weryfikację</span>
+      </div>
+      <div class="panel">
+        <span class="pill good">B · Wdrożenie przez miasto</span>
+        <h3>login.gov.pl (Węzeł Krajowy)</h3>
+        <p style="font-size:14px">Logowanie mObywatelem, profilem zaufanym albo bankiem przez SAML 2.0. Przeznaczone głównie dla podmiotów publicznych.</p>
+        <span class="meta">ok. 1,5 miesiąca integracji</span>
+      </div>
+      <div class="panel">
+        <span class="pill warn">C · Przyszłość</span>
+        <h3>Europejski portfel tożsamości</h3>
+        <p style="font-size:14px">mObywatel Europa (EUDI Wallet): mieszkaniec przekazuje tylko atrybut „mieszka w Toruniu”, bez nazwiska.</p>
+        <span class="meta">sandbox od VIII 2026, wdrożenie XII 2026 (do potwierdzenia)</span>
+      </div>
+    </div>
+    <div class="panel muted" style="margin-top:18px">
+      <h3>Na hackathonie</h3>
+      <p style="font-size:14px">Interfejs <code>VerificationProvider</code> z działającym <code>MockProvider</code> (symulowany kod QR). Ścieżki A, B i C opisane w README jako kolejne implementacje. Zameldowanie to nie zamieszkanie (np. studenci), dlatego weryfikacja daje znaczek, a nie blokuje zgłoszeń.</p>
+    </div>
+  </section>
+
+  <!-- ZAKRES -->
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Zakres</span>
+      <h2>Co pokazujemy, a co wycinamy</h2>
+      <p>Mamy 2 minuty filmu i 4 minuty pitchu. Pokazujemy tylko to, co sprzedaje główną historię.</p>
+    </div>
+    <div class="two">
+      <div class="panel now">
+        <h3>Pokazujemy</h3>
+        <ol>
+          <li>Zgłoszenie: zdjęcie + opis + lokalizacja; AI rozpoznaje problem albo pomysł, zwraca kategorię, adresata, pilność i łączy z podobnymi</li>
+          <li>Natychmiastowa odpowiedź: co miasto w tym miejscu planuje, ze źródłem</li>
+          <li>Mapa: zgłoszenia, dokumenty z BIP i przeterminowane zobowiązania</li>
+          <li>Panel radnego: lista według pilności i szkic interpelacji ze źródłami</li>
+          <li>Oś powiadomień sprawy i pytanie „Czy problem rozwiązany?” (zdarzenia dopisuje przycisk symulacji)</li>
+          <li>Przycisk „Zweryfikuj przez mObywatel” (symulacja) i znaczek</li>
+        </ol>
+        <p style="font-size:14px;color:var(--muted)">Dokumenty przetwarzamy przed demo. Na żywo działa zgłoszenie, odpowiedź i mapa. Obszar demo: jedno osiedle. Pomysł na okolicę pokazujemy jako drugi, krótki przykład w demo na żywo.</p>
+      </div>
+      <div class="panel muted">
+        <h3>Roadmapa, najwyżej jeden slajd</h3>
+        <div class="cut">
+          <span>Obserwowanie całej okolicy</span>
+          <span>Generator wniosków</span>
+          <span>Pełne powiązanie z budżetem obywatelskim</span>
+          <span>Automatyczne zgłaszanie usterek gwarancyjnych</span>
+          <span>Inne języki</span>
+          <span>Rozmazywanie twarzy</span>
+          <span>Własność działek</span>
+          <span>Panel dla jednostek miejskich</span>
+          <span>Inne miasta</span>
+        </div>
+        <h3 style="margin-top:6px">Odrzucone</h3>
+        <div class="cut">
+          <span>Punkty i renoma</span>
+          <span>Komentarze</span>
+          <span>Głosy na nie</span>
+          <span>Płatna wersja dla mieszkańców</span>
+          <span>Nagrody</span>
+          <span>Logowanie wymagane do zgłoszenia</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILM I PITCH -->
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Film i pitch</span>
+      <h2>2 minuty filmu, 4 minuty na scenie</h2>
+    </div>
+    <div class="panel">
+      <h3>Film, 2 min</h3>
+      <div class="timeline film">
+        <div><span class="t">0:00–0:20</span><span class="d">Sonda: „Gdzie zgłosiłbyś dziurę?” → „nie wiem”</span></div>
+        <div><span class="t">0:20–0:40</span><span class="d">716 zgłoszeń rocznie, 546 wiszących, co czwarty nie wie, gdzie pisać</span></div>
+        <div class="big"><span class="t">0:40–1:40</span><span class="d">Demo: zdjęcie + zdanie → od razu odpowiedź o zaplanowanym remoncie → radny ma szkic interpelacji → powiadomienie o odpowiedzi urzędu → „Czy problem rozwiązany?”</span></div>
+        <div><span class="t">1:40–2:00</span><span class="d">„Zgłoszenia, które nie giną. Twój głos jest zauważony.”</span></div>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:18px">
+      <h3>Pitch, 4 min</h3>
+      <div class="timeline pitch">
+        <div><span class="t">0:00–0:30</span><span class="d">Problem: liczby i cytat z sondy</span></div>
+        <div class="big"><span class="t">0:30–2:00</span><span class="d">Demo na żywo: te same kroki co w filmie + ławka przed blokiem jako pomysł</span></div>
+        <div><span class="t">2:00–2:45</span><span class="d">Jak działa: AI, dokumenty z BIP na mapie, mObywatel</span></div>
+        <div><span class="t">2:45–3:30</span><span class="d">Co nowego, pilotaż na osiedlu, płaci miasto</span></div>
+        <div><span class="t">3:30–4:00</span><span class="d">Prośba do jury i miasta</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZA I PRZECIW -->
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Za i przeciw</span>
+      <h2>Na co przeważa szala</h2>
+      <p>Kliknij kropki, żeby zmienić wagę argumentu od 1 do 3. Ustawienia zapisują się tylko w tej przeglądarce.</p>
+    </div>
+    <div class="balance">
+      <div class="col pro" id="pros"><h3>Za <span class="sum" id="sumPro"></span></h3></div>
+      <div class="scale-box">
+        <svg viewBox="0 0 300 230" role="img" aria-labelledby="scaleTitle">
+          <title id="scaleTitle">Waga argumentów za i przeciw</title>
+          <rect x="138" y="70" width="24" height="130" fill="var(--line)"/>
+          <rect x="95" y="196" width="110" height="14" rx="3" fill="var(--line)"/>
+          <g class="beam" id="beam"><rect x="30" y="66" width="240" height="8" rx="4" fill="var(--ink)"/></g>
+          <circle cx="150" cy="70" r="9" fill="var(--accent)"/>
+          <g class="pan" id="panL">
+            <line x1="40" y1="70" x2="22" y2="120" stroke="var(--muted)" stroke-width="1.5"/>
+            <line x1="40" y1="70" x2="58" y2="120" stroke="var(--muted)" stroke-width="1.5"/>
+            <path d="M14 120 H66 Q60 140 40 140 Q20 140 14 120 Z" fill="var(--good)"/>
+            <text x="40" y="160" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--good)">ZA</text>
+          </g>
+          <g class="pan" id="panR">
+            <line x1="260" y1="70" x2="242" y2="120" stroke="var(--muted)" stroke-width="1.5"/>
+            <line x1="260" y1="70" x2="278" y2="120" stroke="var(--muted)" stroke-width="1.5"/>
+            <path d="M234 120 H286 Q280 140 260 140 Q240 140 234 120 Z" fill="var(--bad)"/>
+            <text x="260" y="160" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="var(--bad)">PRZECIW</text>
+          </g>
+        </svg>
+        <div class="verdict" id="verdict"></div>
+        <button class="reset" id="reset" type="button">Przywróć wagi domyślne</button>
+      </div>
+      <div class="col con" id="cons"><h3>Przeciw <span class="sum" id="sumCon"></span></h3></div>
+    </div>
+  </section>
+
+  <!-- PYTANIA -->
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Do ustalenia</span>
+      <h2>Otwarte pytania</h2>
+      <p>Odhaczenia zapisują się tylko w tej przeglądarce.</p>
+    </div>
+    <div class="questions" id="questions"></div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="eyebrow">Źródła</span></div>
+    <div class="sources">
+      <a href="https://tylkotorun.pl/wiadomosci/inne/jak-dzialala-aplikacja-dbam-o-miasto-w-minionym-roku/" target="_blank" rel="noopener">Tylko Toruń: 716 zgłoszeń w 2022</a>
+      <a href="https://tylkotorun.pl/wiadomosci/jak-dziala-torunski-system-do-zglaszania-usterek-przez-mieszkancow/" target="_blank" rel="noopener">Tylko Toruń, IV 2026: 546 wiszących</a>
+      <a href="https://torun.pl/pl/aktualnosc/poznalismy-wyniki-barometru-torunskiego" target="_blank" rel="noopener">Barometr Toruński</a>
+      <a href="https://bip.torun.pl/interpelacje/29500" target="_blank" rel="noopener">BIP Toruń: interpelacje</a>
+      <a href="https://www.geoportal.gov.pl/pl/dane/panstwowy-rejestr-granic" target="_blank" rel="noopener">PRG: punkty adresowe</a>
+      <a href="https://pomoc.autopay.pl/weryfikacje/mobywatel" target="_blank" rel="noopener">Autopay: weryfikacja mObywatel</a>
+      <a href="https://identt.io/solution/mobywatel/" target="_blank" rel="noopener">IDENTT: mObywatel</a>
+      <a href="https://mobywatel.authologic.com/pl/" target="_blank" rel="noopener">Authologic: integracja mObywatel</a>
+      <a href="https://www.gov.pl/attachment/3d21beab-aa2e-426b-90f8-2fa300916891" target="_blank" rel="noopener">Przewodnik integracji z Węzłem Krajowym</a>
+      <a href="https://www.coi.gov.pl/aktualnosci/europejski-portfel-tozsamosci-cyfrowej-zmierza-do-mobywatela" target="_blank" rel="noopener">COI: portfel EUDI w mObywatelu</a>
+      <a href="https://tmt.expert/mobywatel-europa-sandbox-i-eidas-2-0-kluczowe-wnioski-z-warsztatow-w-coi-2998/" target="_blank" rel="noopener">tmt.expert: mObywatel Europa i sandbox</a>
+    </div>
+  </section>
+
+  <footer>Koncepcja robocza na BKIhack 2026. Dane z publicznych źródeł, stan na październik 2026.</footer>
+</div>
+
+<script>
+(function () {
+  var PROS = [
+    { id: "s1", t: "Udokumentowany problem: 546 wiszących zgłoszeń i bardzo niskie użycie Dbam o Miasto.", w: 3 },
+    { id: "s2", t: "Najniższy możliwy próg: zdjęcie i jedno zdanie, bez konta.", w: 3 },
+    { id: "s3", t: "Unikalny rdzeń: zgłoszenia na tle zobowiązań miasta z BIP. Nie znaleźliśmy takiego narzędzia.", w: 3 },
+    { id: "s4", t: "Pomaga obu stronom: mieszkańcom oraz radnym i urzędnikom.", w: 2 },
+    { id: "s5", t: "Każda informacja ze źródłem, więc zarzut halucynacji AI ma odpowiedź.", w: 2 },
+    { id: "s6", t: "Mieszkaniec od razu dostaje odpowiedź i jest informowany do końca, więc czuje się zauważony.", w: 3 },
+    { id: "s7", t: "Nie tylko skargi: pomysły na okolicę dają aplikacji pozytywny wydźwięk.", w: 2 }
+  ];
+  var CONS = [
+    { id: "k1", t: "Miasto ma już Dbam o Miasto. Jury zapyta, po co drugi kanał.", r: "Nie zastępujemy go. Dodajemy porządek, kontekst z dokumentów i radnych jako drugą ścieżkę.", w: 3 },
+    { id: "k2", t: "Zgłoszenia bez konta mogą przyciągać spam.", r: "AI odsiewa spam, limit zgłoszeń z urządzenia, znaczek mObywatel i filtr „tylko zweryfikowane”.", w: 2 },
+    { id: "k3", t: "Prawdziwa integracja z mObywatelem wymaga umowy z integratorem lub miastem.", r: "W demo symulacja, architektura gotowa, trzy opisane ścieżki wdrożenia.", w: 2 },
+    { id: "k4", t: "Adresy wyciągnięte z PDF mogą być źle dopasowane.", r: "Poziom pewności przy każdym dopasowaniu, demo na sprawdzonych przypadkach.", w: 2 },
+    { id: "k5", t: "Kto zapłaci?", r: "Miasto z budżetu na partycypację, pilotaż na jednym osiedlu.", w: 2 },
+    { id: "k6", t: "Natychmiastowa odpowiedź zależy od tego, czy plany remontów da się znaleźć i przetworzyć.", r: "Gdy nic nie znajdziemy, mówimy wprost, dokąd trafia zgłoszenie. Demo na sprawdzonych dokumentach.", w: 2 },
+    { id: "k7", t: "Powiadomienia wymagają, żeby miasto na bieżąco publikowało informacje.", r: "Interpelacje i odpowiedzi są w BIP. Na demo nowe zdarzenia dopisuje przycisk symulacji.", w: 1 }
+  ];
+  var QUESTIONS = [
+    "Nazwa produktu (Głos Osiedla jest robocza)",
+    "Które osiedle na demo?",
+    "Które 2–3 przeterminowane zobowiązania z BIP pokazujemy?",
+    "Czy znajdziemy plan remontów w formie, którą da się przetworzyć?",
+    "Jakie modele AI?",
+    "Kto robi film, a kto prowadzi demo na żywo?"
+  ];
+
+  function load(key, fallback) { try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; } }
+  function save(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
+
+  var weights = load("go-weights-v2", {});
+  function w(it) { return weights[it.id] || it.w; }
+  function renderCol(list, el) {
+    list.forEach(function (it) {
+      var d = document.createElement("div"); d.className = "item";
+      var p = document.createElement("p"); p.textContent = it.t; d.appendChild(p);
+      var ws = document.createElement("div"); ws.className = "weights";
+      [1, 2, 3].forEach(function (n) {
+        var b = document.createElement("button");
+        b.type = "button"; b.id = it.id + "-w" + n; b.setAttribute("aria-label", "Waga " + n);
+        b.addEventListener("click", function () { weights[it.id] = n; save("go-weights-v2", weights); update(); });
+        ws.appendChild(b);
+      });
+      d.appendChild(ws);
+      if (it.r) {
+        var r = document.createElement("p"); r.className = "reply";
+        var bb = document.createElement("b"); bb.textContent = "Odpowiedź: "; r.appendChild(bb);
+        r.appendChild(document.createTextNode(it.r)); d.appendChild(r);
+      }
+      it.el = ws; el.appendChild(d);
+    });
+  }
+  renderCol(PROS, document.getElementById("pros"));
+  renderCol(CONS, document.getElementById("cons"));
+  function paint(it) {
+    var n = w(it);
+    Array.prototype.forEach.call(it.el.children, function (b, i) { b.classList.toggle("on", i < n); b.setAttribute("aria-pressed", i < n ? "true" : "false"); });
+  }
+  function update() {
+    var sp = 0, sc = 0;
+    PROS.forEach(function (it) { sp += w(it); paint(it); });
+    CONS.forEach(function (it) { sc += w(it); paint(it); });
+    document.getElementById("sumPro").textContent = sp + " pkt";
+    document.getElementById("sumCon").textContent = sc + " pkt";
+    var deg = Math.max(-14, Math.min(14, -(sp - sc) * 2)), rad = deg * Math.PI / 180;
+    document.getElementById("beam").style.transform = "rotate(" + deg + "deg)";
+    var dy = -110 * Math.sin(rad), dx = 110 - 110 * Math.cos(rad);
+    document.getElementById("panL").style.transform = "translate(" + dx + "px," + dy + "px)";
+    document.getElementById("panR").style.transform = "translate(" + (-dx) + "px," + (-dy) + "px)";
+    var v = document.getElementById("verdict");
+    v.textContent = sp > sc ? "Przeważa za: " + sp + " do " + sc : sc > sp ? "Przeważa przeciw: " + sc + " do " + sp : "Remis: " + sp + " do " + sc;
+  }
+  document.getElementById("reset").addEventListener("click", function () { weights = {}; save("go-weights-v2", weights); update(); });
+  update();
+
+  var checked = load("go-questions-v4", {});
+  var qEl = document.getElementById("questions");
+  QUESTIONS.forEach(function (q, i) {
+    var l = document.createElement("label");
+    var c = document.createElement("input"); c.type = "checkbox"; c.id = "q" + i; c.checked = !!checked[i];
+    c.addEventListener("change", function () { checked[i] = c.checked; save("go-questions-v4", checked); });
+    var s = document.createElement("span"); s.textContent = q;
+    l.appendChild(c); l.appendChild(s); qEl.appendChild(l);
+  });
+
+  var map = document.getElementById("map"), svg = document.getElementById("links");
+  function drawLinks() {
+    if (getComputedStyle(svg).display === "none") return;
+    var mb = map.getBoundingClientRect(), c = map.querySelector(".center").getBoundingClientRect();
+    var cx = c.left + c.width / 2 - mb.left, cy = c.bottom - mb.top;
+    var out = "";
+    map.querySelectorAll(".node").forEach(function (n) {
+      var r = n.getBoundingClientRect();
+      var nx = r.left + r.width / 2 - mb.left, ny = r.top - mb.top;
+      var my = (cy + ny) / 2;
+      out += '<path d="M' + cx + ' ' + cy + ' C ' + cx + ' ' + my + ', ' + nx + ' ' + my + ', ' + nx + ' ' + ny + '"/>';
+    });
+    svg.setAttribute("viewBox", "0 0 " + mb.width + " " + mb.height);
+    svg.innerHTML = out;
+  }
+  drawLinks();
+  window.addEventListener("resize", drawLinks);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawLinks);
+})();
+</script>
