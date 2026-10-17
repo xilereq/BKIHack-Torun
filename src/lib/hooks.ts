@@ -42,7 +42,7 @@ export function useTypewriter(text: string | null, opts: { cps?: number; onDone?
 
 /** Zdarzenia z panelu demo do widoków (wypełnienie scenariusza, nawigacja) */
 export type DemoCommand =
-  | { type: 'prefill'; scenario: 'pothole' | 'bench' }
+  | { type: 'prefill'; scenario: 'pothole' | 'bench' | 'violation' }
   | { type: 'home' }
   | { type: 'open-case'; caseId: string }
 

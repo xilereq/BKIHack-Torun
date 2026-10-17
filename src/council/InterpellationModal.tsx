@@ -4,7 +4,6 @@ import { addCaseEvent } from '../lib/store'
 import { draftInterpellation } from '../lib/interpelacja'
 import { useTypewriter } from '../lib/hooks'
 import { Button, Spinner } from '../components/ui'
-import { TechChip } from '../components/AiTrace'
 import { IconCheckCircle, IconCopy, IconExternal, IconSend, IconSparkle, IconX } from '../components/icons'
 import { caseReports } from '../lib/domain'
 import { countLabel, REPORT_FORMS, plural } from '../lib/format'
@@ -64,7 +63,7 @@ export function InterpellationModal({ s, caseId, onClose }: { s: DemoState; case
               Przygotowany na podstawie {countLabel(nReports, REPORT_FORMS)} i {nDocs} {plural(nDocs, ['dokumentu', 'dokumentów', 'dokumentów'])} miasta. Sprawdź, popraw i wyślij sam.
             </p>
             <div className="mt-2 flex flex-wrap items-center gap-1.5 text-[13px] text-ink-2">
-              <TechChip id="llm" small /> <TechChip id="rag" small /> szablon interpelacji · {draft.sources.length} źródeł z przypisami · bez wymyślonych faktów
+              {draft.sources.length} źródeł z przypisami · tylko fakty z dokumentów i zgłoszeń
             </div>
           </div>
           <button type="button" onClick={onClose} aria-label="Zamknij" className="flex size-12 shrink-0 items-center justify-center rounded-btn hover:bg-canvas">

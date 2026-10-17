@@ -1,12 +1,23 @@
 import { useEffect, useRef, useState } from 'react'
 import type { LngLat } from '../lib/types'
 import { MapView } from '../components/MapView'
-import { Button } from '../components/ui'
+import { Button, Spinner } from '../components/ui'
 import { IconCamera, IconImage, IconMic, IconPin, IconSend } from '../components/icons'
 import { describeLocation } from '../lib/geo'
 import { useTypewriter } from '../lib/hooks'
-import { DEFAULT_TRANSCRIPT, DEMO_GPS, downscale, photoExists, SCENARIOS } from './demoPhotos'
+import { DEFAULT_TRANSCRIPT, downscale, photoExists, SCENARIOS } from './demoPhotos'
+import { FALLBACK_LOCATION, geocodeAddress, getGpsLocation } from '../lib/geocode'
 import { ScreenHeader } from './ScreenHeader'
+
+const LOC_HINT: Record<LocSource, string> = {
+  locating: 'Pobieramy lokalizację z telefonu.',
+  gps: 'Twoja lokalizacja z telefonu. Przesuń pinezkę, jeśli trzeba.',
+  denied: 'Brak zgody na lokalizację, więc pinezka stoi na środku osiedla. Przesuń ją albo wpisz adres.',
+  unavailable: 'Nie udało się pobrać lokalizacji, więc pinezka stoi na środku osiedla. Przesuń ją albo wpisz adres.',
+  outside: 'Jesteś poza Toruniem, więc pinezka stoi na środku osiedla. Przesuń ją albo wpisz adres.',
+  manual: 'Ustawione ręcznie na mapie.',
+  address: 'Ustawione według wpisanego adresu.',
+}
 
 export interface ReportDraft {
   photo: string
@@ -18,24 +29,31 @@ export interface ReportDraft {
   usedMic: boolean
 }
 
-type LocSource = 'locating' | 'gps' | 'manual'
+type LocSource = 'locating' | 'gps' | 'denied' | 'unavailable' | 'outside' | 'manual' | 'address'
 
 export function ReportScreen({
   preset,
   initialPhoto,
+  initial,
   onBack,
   onSubmit,
 }: {
-  preset?: 'pothole' | 'bench'
+  preset?: 'pothole' | 'bench' | 'violation'
   initialPhoto?: string
+  initial?: ReportDraft
   onBack: () => void
   onSubmit: (d: ReportDraft) => void
 }) {
   const scenario = SCENARIOS.find((s) => s.id === preset)
-  const [photo, setPhoto] = useState<string | null>(initialPhoto ?? null)
-  const [description, setDescription] = useState('')
-  const [location, setLocation] = useState<LngLat>(scenario?.location ?? DEMO_GPS)
-  const [locSource, setLocSource] = useState<LocSource>('locating')
+  const [photo, setPhoto] = useState<string | null>(initialPhoto ?? (initial && !initial.photo.endsWith('zastepcze.svg') ? initial.photo : null))
+  const [description, setDescription] = useState(initial?.description ?? '')
+  const [location, setLocation] = useState<LngLat>(initial?.location ?? scenario?.location ?? FALLBACK_LOCATION)
+  const [locSource, setLocSource] = useState<LocSource>(initial ? 'manual' : scenario ? 'gps' : 'locating')
+  const [flyTarget, setFlyTarget] = useState<LngLat | null>(null)
+  const [address, setAddress] = useState('')
+  const [addressLabel, setAddressLabel] = useState('')
+  const [searching, setSearching] = useState(false)
+  const [addressError, setAddressError] = useState('')
   const [recording, setRecording] = useState(false)
   const [transcript, setTranscript] = useState<string | null>(null)
   const [error, setError] = useState('')
@@ -43,11 +61,44 @@ export function ReportScreen({
   const galleryRef = useRef<HTMLInputElement>(null)
   const typed = useTypewriter(transcript, { cps: 48 })
 
-  // symulowane ustalanie lokalizacji z telefonu
+  // lokalizacja z telefonu; gdy brak (odmowa, brak GPS, poza Toruniem) — środek osiedla
+  const locate = async () => {
+    setLocSource('locating')
+    const r = await getGpsLocation()
+    if (r.ok) {
+      setLocation(r.location)
+      setFlyTarget(r.location)
+      setLocSource('gps')
+    } else {
+      setLocation(FALLBACK_LOCATION)
+      setFlyTarget(FALLBACK_LOCATION)
+      setLocSource(r.reason)
+    }
+  }
   useEffect(() => {
-    const t = window.setTimeout(() => setLocSource((s) => (s === 'locating' ? 'gps' : s)), 900)
-    return () => window.clearTimeout(t)
+    // scenariusz z panelu demo ma ustalone miejsce (jak z telefonu)
+    if (!scenario && !initial) locate()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const findAddress = async () => {
+    if (address.trim().length < 3) {
+      setAddressError('Wpisz ulicę i numer albo nazwę miejsca.')
+      return
+    }
+    setSearching(true)
+    setAddressError('')
+    const r = await geocodeAddress(address)
+    setSearching(false)
+    if (!r) {
+      setAddressError('Nie znaleźliśmy tego adresu w Toruniu. Spróbuj inaczej albo przesuń pinezkę.')
+      return
+    }
+    setLocation(r.location)
+    setFlyTarget(r.location)
+    setAddressLabel(r.label)
+    setLocSource('address')
+  }
 
   // scenariusz z panelu demo: prawdziwe zdjęcie zespołu, jeśli leży w public/zdjecia/
   useEffect(() => {
@@ -90,7 +141,7 @@ export function ReportScreen({
       photoLabel: photo ? 'Zdjęcie mieszkańca' : 'Bez zdjęcia',
       description: description.trim(),
       location,
-      place: describeLocation(location),
+      place: locSource === 'address' && addressLabel ? addressLabel : describeLocation(location),
       usedMic: transcript !== null,
     })
   }
@@ -176,6 +227,7 @@ export function ReportScreen({
                 <MapView
                   center={location}
                   zoom={16.4}
+                  flyTo={flyTarget}
                   pin={{
                     location,
                     onChange: (p) => {
@@ -188,12 +240,54 @@ export function ReportScreen({
               </div>
               <div className="flex items-start gap-2.5 px-4 py-3">
                 <IconPin size={22} className="mt-0.5 shrink-0 text-brand" strokeWidth={2.2} />
-                <div>
-                  <div className="text-[17px] font-bold leading-6">{locSource === 'locating' ? 'Ustalam lokalizację…' : describeLocation(location)}</div>
-                  <div className="text-[14px] leading-5 text-ink-2">
-                    {locSource === 'manual' ? 'Ustawione ręcznie' : 'Lokalizacja z telefonu'} · przesuń pinezkę, jeśli trzeba
+                <div className="min-w-0">
+                  <div className="text-[17px] font-bold leading-6">
+                    {locSource === 'locating'
+                      ? 'Ustalam Twoją lokalizację…'
+                      : locSource === 'address' && addressLabel
+                        ? addressLabel
+                        : locSource === 'denied' || locSource === 'unavailable' || locSource === 'outside'
+                          ? 'Środek osiedla Rubinkowo'
+                          : describeLocation(location)}
                   </div>
+                  <div className="text-[14px] leading-5 text-ink-2">{LOC_HINT[locSource]}</div>
                 </div>
+              </div>
+              <div className="flex flex-col gap-2 border-t border-[#eef0f3] px-4 pt-3 pb-4">
+                <label htmlFor="addr" className="text-[15px] font-bold">
+                  Albo wpisz adres
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    id="addr"
+                    type="text"
+                    inputMode="search"
+                    autoComplete="street-address"
+                    value={address}
+                    onChange={(e) => {
+                      setAddress(e.target.value)
+                      setAddressError('')
+                    }}
+                    onKeyDown={(e) => e.key === 'Enter' && findAddress()}
+                    placeholder="np. Dziewulskiego 20"
+                    aria-invalid={!!addressError}
+                    aria-describedby={addressError ? 'addr-err' : undefined}
+                    className="h-12 min-w-0 flex-1 rounded-[12px] border-2 border-line-strong bg-surface px-3.5 text-[17px] outline-none placeholder:text-ink-2/70 focus:border-ink"
+                  />
+                  <Button size="sm" onClick={findAddress} disabled={searching} className="shrink-0 rounded-[12px]">
+                    {searching ? <Spinner size={18} /> : 'Ustaw'}
+                  </Button>
+                </div>
+                {addressError && (
+                  <p id="addr-err" role="alert" className="text-[14px] font-bold leading-5 text-st-overdue">
+                    {addressError}
+                  </p>
+                )}
+                {locSource !== 'gps' && locSource !== 'locating' && (
+                  <button type="button" onClick={locate} className="self-start min-h-10 text-[15px] font-bold text-brand hover:underline">
+                    Użyj mojej lokalizacji
+                  </button>
+                )}
               </div>
             </div>
           </section>

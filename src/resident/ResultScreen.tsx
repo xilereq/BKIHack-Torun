@@ -129,7 +129,7 @@ export function ResultScreen({
                   <div className="text-[17px] font-bold leading-6">Pierwsze zgłoszenie w tym miejscu</div>
                 )}
                 <div className="text-small text-ink-2">
-                  {others > 0 ? 'Jedna sprawa zamiast wielu zgłoszeń. Twój głos ją wzmacnia.' : 'Sąsiedzi zgłaszający to samo dołączą do Twojej sprawy.'}
+                  {others > 0 ? 'Jedna sprawa zamiast wielu zgłoszeń. Twój głos ją wzmacnia.' : 'Kolejne zgłoszenia z tego miejsca dołączą do Twojej sprawy.'}
                 </div>
               </div>
             </div>

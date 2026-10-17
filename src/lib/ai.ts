@@ -4,6 +4,7 @@
  * Tu: reguły słów kluczowych + wyszukiwanie spraw i dokumentów w promieniu. Zawsze zwraca sensowny wynik.
  */
 import type { CaseType, LngLat } from './types'
+import { moderate, type Moderation } from './moderation'
 import type { DemoState } from './store'
 import { caseReports, caseStatus, latestCommitment, unitById, caseDocuments, isOverdue, visibleDocs } from './domain'
 import { distanceM } from './geo'
@@ -11,6 +12,8 @@ import { plural, romanMonth, lowerFirst, shortMonth } from './format'
 
 export interface Analysis {
   spam: boolean
+  /** sprawdzenie treści: dane osobowe, obraźliwe słowa, groźby, reklama */
+  moderation: Moderation
   type: CaseType
   category: string
   title: string
@@ -96,8 +99,10 @@ export function analyzeReport(description: string, location: LngLat, s: DemoStat
 
   // przy dołączaniu do sprawy adresat jest ten sam co w sprawie
   const finalUnit = target ? unitById(target.unitId) : unit
+  const moderation = moderate(text)
   const base = {
     spam,
+    moderation,
     type,
     category: rule.category,
     title,

@@ -52,7 +52,7 @@ export function DemoPanel({ view, onSwitchView, onClose }: { view: View; onSwitc
 
         <div>
           <div className="mb-1.5 text-[13px] font-bold tracking-wide text-white/60 uppercase">Szybki start zgłoszenia</div>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
               className={btn}
@@ -72,6 +72,16 @@ export function DemoPanel({ view, onSwitchView, onClose }: { view: View; onSwitc
               }}
             >
               Ławka
+            </button>
+            <button
+              type="button"
+              className={btn}
+              onClick={() => {
+                onSwitchView('resident')
+                window.setTimeout(() => sendDemoCommand({ type: 'prefill', scenario: 'violation' }), 50)
+              }}
+            >
+              Z błędem
             </button>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { answerResolved, boostCase, markNotificationsRead, useDemo, type ResolveResult } from '../lib/store'
+import { answerResolved, boostCase, markNotificationsRead, unboostCase, useDemo, type ResolveResult } from '../lib/store'
 import { caseReports, unitById } from '../lib/domain'
 import { countLabel, plural, REPORT_FORMS } from '../lib/format'
 import { Button, StatusBadge, TypeBadge } from '../components/ui'
@@ -106,7 +106,7 @@ export function CaseScreen({
               <IconCheckCircle size={44} strokeWidth={2} />
               <div className="text-[20px] font-bold">Dziękujemy! Sprawa zamknięta.</div>
               <p className="text-[16px] leading-6 text-ink">
-                {n > 1 ? `Razem z ${n - 1} ${plural(n - 1, ['sąsiadem', 'sąsiadami', 'sąsiadami'])} zmieniliście okolicę.` : 'Twoje zgłoszenie zmieniło okolicę.'} Twój głos został zauważony.
+                {n > 1 ? `Razem z ${n - 1} ${plural(n - 1, ['inną osobą', 'innymi osobami', 'innymi osobami'])} zmieniliście okolicę.` : 'Twoje zgłoszenie zmieniło okolicę.'} Twój głos został zauważony.
               </p>
             </div>
           )}
@@ -155,9 +155,14 @@ export function CaseScreen({
                 </div>
               </div>
               {boosted ? (
-                <span className="inline-flex min-h-12 shrink-0 items-center gap-1.5 rounded-full bg-st-done-bg px-4 text-[16px] font-bold text-st-done">
-                  <IconCheck size={18} strokeWidth={2.6} /> Podbite
-                </span>
+                <div className="flex shrink-0 flex-col items-center gap-0.5">
+                  <span className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-st-done-bg px-4 text-[16px] font-bold text-st-done">
+                    <IconCheck size={18} strokeWidth={2.6} /> Podbite
+                  </span>
+                  <button type="button" onClick={() => unboostCase(c.id)} className="min-h-9 px-2 text-[14px] font-bold text-ink-2 underline underline-offset-2 hover:text-ink">
+                    Cofnij
+                  </button>
+                </div>
               ) : (
                 <button
                   type="button"

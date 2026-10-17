@@ -98,6 +98,15 @@ export function reportTrace(input: TraceInput, a: Analysis, s: DemoState): Trace
     ms: Math.round(rnd(600, 900)),
   })
 
+  const v = a.moderation.violations
+  steps.push({
+    id: 'mod',
+    title: 'Sprawdzenie treści',
+    tech: ['llm'],
+    short: v.length ? `Do poprawy: ${v.map((x) => x.title.toLowerCase()).join(', ')}.` : 'Bez uwag: nie ma danych osobowych ani obraźliwych słów.',
+    ms: Math.round(rnd(300, 500)),
+  })
+
   const target = a.targetCaseId ? s.cases.find((c) => c.id === a.targetCaseId) : null
   steps.push({
     id: 'dup',
@@ -105,7 +114,7 @@ export function reportTrace(input: TraceInput, a: Analysis, s: DemoState): Trace
     tech: ['emb', 'postgis'],
     short:
       target && a.similarCount > 0
-        ? `Sąsiedzi zgłaszali to samo miejsce już ${countLabel(a.similarCount, ['raz', 'razy', 'razy']).replace(/^1 raz$/, 'raz')}. Połączyliśmy wszystko w jedną sprawę.`
+        ? `To miejsce zgłaszano już ${countLabel(a.similarCount, ['raz', 'razy', 'razy']).replace(/^1 raz$/, 'raz')}. Połączyliśmy wszystko w jedną sprawę.`
         : 'To pierwsze takie zgłoszenie w tym miejscu.',
     ms: Math.round(rnd(150, 300)),
   })
@@ -147,7 +156,7 @@ export function reportTrace(input: TraceInput, a: Analysis, s: DemoState): Trace
 function plainReasons(factors: { label: string; points: number }[]): string[] {
   const map: [RegExp, (l: string) => string][] = [
     [/^Liczba zgłoszeń|^Liczba próśb/, () => 'wielu mieszkańców to zgłasza'],
-    [/^Podbicia/, () => 'sąsiedzi popierają sprawę'],
+    [/^Podbicia/, () => 'inni mieszkańcy popierają sprawę'],
     [/^Plan miasta czeka/, () => 'miasto planowało tu prace'],
     [/^Ruch:/, () => 'ruchliwe miejsce'],
     [/^W pobliżu: (.+?)( \(|$)/, (l) => `blisko: ${l.match(/^W pobliżu: (.+?)( \(|$)/)?.[1] ?? ''}`],

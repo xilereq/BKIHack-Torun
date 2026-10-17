@@ -4,7 +4,6 @@ import { reportTrace, type TraceStep } from '../lib/aiTrace'
 import { getState } from '../lib/store'
 import { IconCheck, IconSparkle } from '../components/icons'
 import { Spinner } from '../components/ui'
-import { TechChip } from '../components/AiTrace'
 import type { ReportDraft } from './ReportScreen'
 
 const STEP_MS = 640
@@ -65,9 +64,6 @@ export function AnalyzingScreen({ draft, onDone }: { draft: ReportDraft; onDone:
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-1.5">
                     <span className="text-[16px] font-bold leading-6">{st.title}</span>
-                    {st.tech.map((t) => (
-                      <TechChip key={t} id={t} small />
-                    ))}
                   </div>
                   <div className={`text-[14px] leading-5 ${done ? 'text-ink' : 'text-ink-2'}`}>{done ? st.short : active ? 'Przetwarzanie…' : 'W kolejce'}</div>
                 </div>

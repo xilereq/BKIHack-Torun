@@ -36,6 +36,8 @@ interface Props {
   occludeRight?: number
   /** Zmiana klucza = dopasuj widok do fitPoints od nowa (np. po zmianie filtra obszaru) */
   fitKey?: string
+  /** Wywoływane po każdym przesunięciu/przybliżeniu mapy (środek widoku i przybliżenie) */
+  onViewChange?: (view: { center: LngLat; zoom: number }) => void
   /** Dymek przy punkcie mapy (treść renderuje React) */
   popup?: { key: string; location: LngLat; content: ReactNode; onClose: () => void } | null
   showControls?: boolean
@@ -145,6 +147,7 @@ export function MapView({
   occludeRight = 0,
   fitKey,
   popup = null,
+  onViewChange,
   showControls = false,
   className = '',
   ariaLabel,
@@ -163,6 +166,8 @@ export function MapView({
   const fitRef = useRef({ points: fitPoints, padding: fitPadding, occlude: occludeRight })
   fitRef.current = { points: fitPoints, padding: fitPadding, occlude: occludeRight }
   const userMovedRef = useRef(false)
+  const viewRef = useRef(onViewChange)
+  viewRef.current = onViewChange
   const refitRef = useRef<(animate: boolean) => void>(() => {})
 
   // utworzenie mapy (raz)
@@ -210,6 +215,10 @@ export function MapView({
     })
     mapRef.current = map
     // dopóki użytkownik sam nie ruszy mapy, po każdej zmianie rozmiaru kontenera dopasowujemy widok do punktów
+    map.on('moveend', () => {
+      const c = map.getCenter()
+      viewRef.current?.({ center: { lat: c.lat, lng: c.lng }, zoom: map.getZoom() })
+    })
     map.on('dragstart', () => (userMovedRef.current = true))
     map.on('zoomstart', (e) => {
       if ((e as { originalEvent?: Event }).originalEvent) userMovedRef.current = true

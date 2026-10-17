@@ -6,7 +6,7 @@ import type { LngLat } from '../lib/types'
  * Zdjęcie: prawdziwe zdjęcie zespołu z public/zdjecia/ (jeśli jest), inaczej mieszkaniec robi je sam.
  */
 export interface Scenario {
-  id: 'pothole' | 'bench'
+  id: 'pothole' | 'bench' | 'violation'
   photo: string
   location: LngLat
   transcript: string
@@ -24,6 +24,14 @@ export const SCENARIOS: Scenario[] = [
     photo: '/zdjecia/zgloszenie-lawka.jpg',
     location: { lat: 53.02733, lng: 18.66424 },
     transcript: 'Przydałaby się tu ławka dla seniorów. Nie ma gdzie usiąść w drodze do przychodni.',
+  },
+  {
+    // ścieżka z błędem: dane osobowe, obraźliwe słowo, numer telefonu i reklama — AI wskazuje, co poprawić
+    id: 'violation',
+    photo: '/zdjecia/zgloszenie-bledne.jpg',
+    location: { lat: 53.02905, lng: 18.66885 },
+    transcript:
+      'Sąsiad Jan Kowalski z bloku przy Dziewulskiego znowu parkuje na trawniku i niszczy zieleń, to idiota! Dzwońcie do niego: 601 234 567. Kupcie u mnie tanie opony: www.opony-tanio.pl',
   },
 ]
 

@@ -184,6 +184,12 @@ export const IconList = (p: IconProps) => (
     <path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01" />
   </svg>
 )
+export const IconEdit = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M4 20h4L19 9l-4-4L4 16z" />
+    <path d="M13.5 6.5l4 4" />
+  </svg>
+)
 export const IconClock = (p: IconProps) => (
   <svg {...base(p)}>
     <circle cx="12" cy="12" r="8.5" />

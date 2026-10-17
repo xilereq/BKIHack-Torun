@@ -15,11 +15,13 @@ import { CaseScreen } from './CaseScreen'
 import { VerifyModal } from './VerifyModal'
 import { TabBar } from './TabBar'
 import { CaptureSheet } from './CaptureSheet'
+import { ModerationScreen } from './ModerationScreen'
 
 type Screen =
   | { name: 'home' }
   | { name: 'cases' }
-  | { name: 'report'; preset?: 'pothole' | 'bench'; photo?: string; key: number }
+  | { name: 'report'; preset?: 'pothole' | 'bench' | 'violation'; photo?: string; initial?: ReportDraft; key: number }
+  | { name: 'moderation'; draft: ReportDraft; analysis: Analysis }
   | { name: 'analyzing'; draft: ReportDraft }
   | { name: 'result'; draft: ReportDraft; analysis: Analysis; trace: TraceStep[]; caseId: string | null }
   | { name: 'case'; caseId: string }
@@ -82,17 +84,33 @@ export function ResidentApp() {
     case 'home':
       content = <HomeScreen onNotifications={() => tab('cases')} onOpenCase={openCase} />
       break
+    case 'moderation':
+      content = (
+        <ModerationScreen
+          draft={screen.draft}
+          analysis={screen.analysis}
+          onSendFixed={(fixed) => replace({ name: 'analyzing', draft: fixed })}
+          onEditMyself={() => replace({ name: 'report', initial: screen.draft, key: Date.now() })}
+          onBack={() => go('back', [{ name: 'home' }])}
+        />
+      )
+      break
     case 'cases':
       content = <MyCasesScreen onOpen={openCase} onVerify={() => setVerify('')} onReport={() => setCapture(true)} />
       break
     case 'report':
-      content = <ReportScreen key={screen.key} preset={screen.preset} initialPhoto={screen.photo} onBack={back} onSubmit={(draft) => replace({ name: 'analyzing', draft })} />
+      content = <ReportScreen key={screen.key} preset={screen.preset} initialPhoto={screen.photo} initial={screen.initial} onBack={back} onSubmit={(draft) => replace({ name: 'analyzing', draft })} />
       break
     case 'analyzing':
       content = (
         <AnalyzingScreen
           draft={screen.draft}
           onDone={(analysis, trace) => {
+            // AI znalazło rzeczy do poprawy (dane osobowe, obraźliwe słowa…): nie wysyłamy, pokazujemy co poprawić
+            if (analysis.moderation.violations.length && analysis.moderation.cleaned) {
+              replace({ name: 'moderation', draft: screen.draft, analysis })
+              return
+            }
             const caseId = analysis.spam
               ? null
               : submitReport({ description: screen.draft.description, photo: screen.draft.photo, location: screen.draft.location, place: screen.draft.place, analysis })

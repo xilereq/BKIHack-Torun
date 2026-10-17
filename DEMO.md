@@ -72,10 +72,22 @@ Co mówimy: „Weryfikacja przez mObywatel jest gotowa architektonicznie. Zapisu
 
 ---
 
+## Scenariusz 3a: zgłoszenie z błędem (AI wskazuje, co poprawić, ok. 30 s)
+
+1. Panel demo → **Z błędem** (zgłoszenie przy ul. Dziewulskiego).
+2. **Powiedz** → podyktowany tekst zawiera imię i nazwisko, numer telefonu, obraźliwe słowo i reklamę z linkiem.
+3. **Wyślij zgłoszenie** → „AI analizuje…”, etap **Sprawdzenie treści**: „Do poprawy: dane osobowe, obraźliwe słowa, reklama”.
+4. Ekran **Popraw zgłoszenie**: zaznaczone fragmenty w opisie, przy każdej uwadze krótkie wyjaśnienie (RODO, uprzejmość, brak reklam) i **Proponowana wersja**: „Ktoś z bloku przy Dziewulskiego znowu parkuje na trawniku i niszczy zieleń.”
+5. **Wyślij poprawioną wersję** → zgłoszenie przechodzi normalnie (porządek publiczny, Straż Miejska, „Sprawdzenie treści: bez uwag”). Albo **Popraw samodzielnie** → wraca do edycji z tym samym opisem i miejscem.
+
+Co mówimy: „AI nie tylko porządkuje zgłoszenia, ale też dba, żeby do urzędu nie trafiały dane innych osób ani obraźliwe treści. Pomaga to poprawić jednym kliknięciem.”
+
+---
+
 ## Scenariusz 4: podbij sprawę (opcjonalnie, 10 s)
 
 1. Mieszkaniec na mapie klika ikonkę cudzej sprawy, np. „Ciemne przejście przy szkole”, a potem kartę podglądu.
-2. **Podbij**. Bez weryfikacji otwiera się mObywatel, po weryfikacji podbicie od razu: „Twoje podbicie się liczy”, licznik rośnie.
+2. **Podbij**. Bez weryfikacji otwiera się mObywatel, po weryfikacji podbicie od razu: „Twoje podbicie się liczy”, licznik rośnie. **Cofnij** wycofuje podbicie.
 3. W panelu radnego sprawa ma etykietę „N podbić od zweryfikowanych” i wyższą pilność.
 
 ---

@@ -7,7 +7,7 @@ import { Carousel } from '../components/Carousel'
 import { caseMarkers, caseSlides, cityKnowledge } from '../components/shared'
 import { caseReports, caseStatus } from '../lib/domain'
 import { countLabel, plural, REPORT_FORMS } from '../lib/format'
-import { RUBINKOWO_CENTER } from '../lib/geo'
+import { distanceM, districtName, nearestDistrict, RUBINKOWO_CENTER } from '../lib/geo'
 
 export function HomeScreen({ onNotifications, onOpenCase }: { onNotifications: () => void; onOpenCase: (id: string) => void }) {
   const s = useDemo()
@@ -16,7 +16,8 @@ export function HomeScreen({ onNotifications, onOpenCase }: { onNotifications: (
   const unread = s.notifications.filter((n) => !n.read).length
   // okolica mieszkańca w demo: Rubinkowo i Na Skarpie (na mapie widać całe miasto)
   const nearby = s.cases.filter((c) => c.district === 'rubinkowo' || c.district === 'na-skarpie')
-  const openCount = nearby.filter((c) => caseStatus(c, s.documents) !== 'resolved').length
+  // nazwa pod logo: osiedle, które jest teraz na środku mapy (przy dużym oddaleniu — samo miasto)
+  const [areaLabel, setAreaLabel] = useState('Rubinkowo, Toruń')
   const sel = selected ? s.cases.find((c) => c.id === selected) : null
 
   return (
@@ -28,6 +29,13 @@ export function HomeScreen({ onNotifications, onOpenCase }: { onNotifications: (
         fitPadding={{ top: 130, bottom: 40, left: 30, right: 30 }}
         markers={markers}
         onMarkerClick={setSelected}
+        onViewChange={({ center, zoom }) => {
+          if (zoom < 12.6) return setAreaLabel('Toruń')
+          // osiedla spraw są sprawdzone w OSM, więc najpierw najbliższa sprawa (do 700 m), potem środek osiedla
+          const near = s.cases.map((c) => ({ c, d: distanceM(center, c.location) })).sort((x, y) => x.d - y.d)[0]
+          const id = near && near.d < 700 ? near.c.district : nearestDistrict(center)
+          setAreaLabel(`${districtName(id)}, Toruń`)
+        }}
         ariaLabel="Mapa zgłoszeń na Rubinkowie"
       />
 
@@ -37,7 +45,7 @@ export function HomeScreen({ onNotifications, onOpenCase }: { onNotifications: (
             <Logo size={36} />
             <div className="min-w-0 leading-tight">
               <div className="truncate text-[17px] font-bold">Głos Osiedla</div>
-              <div className="truncate text-[13px] text-ink-2">Rubinkowo, Toruń</div>
+              <div className="truncate text-[13px] text-ink-2" aria-live="polite">{areaLabel}</div>
             </div>
           </div>
           <button
@@ -55,9 +63,6 @@ export function HomeScreen({ onNotifications, onOpenCase }: { onNotifications: (
           </button>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <div className="rounded-full bg-surface/95 px-3.5 py-1.5 text-[14px] font-bold shadow-[0_2px_8px_rgba(22,25,29,0.12)]">
-            {openCount} {plural(openCount, ['otwarta sprawa', 'otwarte sprawy', 'otwartych spraw'])} w okolicy
-          </div>
           {s.verification && (
             <div className="inline-flex items-center gap-1.5 rounded-full bg-surface/95 px-3 py-1.5 text-[14px] font-bold shadow-[0_2px_8px_rgba(22,25,29,0.12)]">
               <IconShield size={16} className="text-st-done" strokeWidth={2.2} /> Zweryfikowany

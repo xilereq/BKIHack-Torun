@@ -40,7 +40,7 @@ Esc zamyka panel.
 W panelu:
 
 - przełączanie widoku: mieszkaniec / radny,
-- szybki start zgłoszenia: „Dziura” albo „Ławka”. Ustawia miejsce i tekst mikrofonu, a zdjęcie dołącza z `public/zdjecia/zgloszenie-*.jpg`, jeśli istnieje,
+- szybki start zgłoszenia: „Dziura”, „Ławka” albo „Z błędem” (AI wskazuje dane osobowe, obraźliwe słowa i reklamę oraz proponuje poprawioną wersję). Ustawia miejsce i tekst mikrofonu, a zdjęcie dołącza z `public/zdjecia/zgloszenie-*.jpg`, jeśli istnieje,
 - zdarzenia w sprawie: interpelacja, odpowiedź urzędu, remont zaplanowany, remont wykonany. Dotyczą ostatniej sprawy mieszkańca, a gdy jej nie ma, sprawy „Dziura przy Rubinkowo Centrum”,
 - „Pokaż tę sprawę u mieszkańca”, „Zweryfikuj od razu” (pomija kod QR),
 - **Reset demo**: kliknij dwa razy, wraca stan początkowy.
@@ -97,6 +97,14 @@ Każdy dostawca zwraca `{ pesel, address }`. Funkcja `toVerification()` zostawia
 - `IntegratorProvider`: certyfikowany integrator (Autopay, IDENTT, Authologic). Kod QR, mieszkaniec skanuje w mObywatelu, integrator zwraca podpisane dane. Ścieżka na pilotaż.
 - `LoginGovProvider`: login.gov.pl (Węzeł Krajowy, SAML 2.0). Gdy aplikację wdroży miasto.
 - `EudiWalletProvider`: mObywatel Europa / EUDI Wallet. Przekazuje tylko atrybut „mieszka w Toruniu”.
+
+## Lokalizacja zgłoszenia
+
+Aplikacja prosi o lokalizację telefonu. Gdy jej nie ma (brak zgody, brak GPS albo użytkownik poza Toruniem), pinezka staje na środku osiedla. Adres można wpisać ręcznie: najpierw szukamy w znanych miejscach (`places.json`), potem w OpenStreetMap (Nominatim, tylko w granicach Torunia). Kod: `src/lib/geocode.ts`.
+
+## Sprawdzenie treści (moderacja)
+
+`src/lib/moderation.ts` wykrywa dane osobowe (imię i nazwisko, telefon, e-mail, PESEL, numer rejestracyjny), obraźliwe słowa, groźby i reklamę. Zgłoszenie z uwagami nie jest wysyłane: mieszkaniec widzi zaznaczone fragmenty i proponowaną poprawioną wersję.
 
 ## Panel radnego: filtry
 

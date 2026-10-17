@@ -372,6 +372,16 @@ export function boostCase(caseId: string): boolean {
   return true
 }
 
+/** Cofnięcie podbicia przez tego samego mieszkańca */
+export function unboostCase(caseId: string) {
+  if (!state.boosts.includes(caseId)) return
+  setState((s) => ({
+    ...s,
+    boosts: s.boosts.filter((id) => id !== caseId),
+    cases: updateCase(s, caseId, (c) => ({ ...c, supporters: Math.max(0, (c.supporters ?? 0) - 1) })),
+  }))
+}
+
 export function markNotificationsRead(caseId?: string) {
   setState((s) => ({
     ...s,

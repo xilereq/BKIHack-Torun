@@ -27,9 +27,6 @@ export function TraceList({ steps }: { steps: TraceStep[] }) {
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
               <span className="text-[16px] font-bold leading-6">{st.title}</span>
-              {st.tech.map((t) => (
-                <TechChip key={t} id={t} small />
-              ))}
             </div>
             <p className="mt-0.5 text-[15px] leading-[22px] text-ink [overflow-wrap:anywhere]">{st.short}</p>
           </div>

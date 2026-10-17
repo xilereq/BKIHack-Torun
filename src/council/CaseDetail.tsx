@@ -4,7 +4,6 @@ import { caseDocuments, caseStatus, caseUrgency, DOC_KIND_LABEL, unitById } from
 import { formatDate, plural } from '../lib/format'
 import { Button, StatusBadge, Tag, TypeBadge, VerifiedBadge } from '../components/ui'
 import { IconExternal, IconFile, IconSparkle, IconX } from '../components/icons'
-import { TechChip } from '../components/AiTrace'
 import { caseSummary, urgencyBreakdown } from '../lib/aiTrace'
 import { CommitmentBadge, Photo, Timeline } from '../components/shared'
 
@@ -70,13 +69,13 @@ export function CaseDetail({
             <div className="flex flex-col gap-3">
               <div>
                 <div className="mb-1 flex flex-wrap items-center gap-1.5 text-[13px] font-bold text-ink-2">
-                  Podsumowanie zgłoszeń <TechChip id="llm" small />
+                  Podsumowanie zgłoszeń
                 </div>
                 <p className="text-[15px] leading-[22px]">{summary.text}</p>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-[14px]">
                 <span className="flex flex-wrap items-center gap-1.5 text-ink-2">
-                  Połączone duplikaty <TechChip id="emb" small /> <TechChip id="postgis" small />
+                  Połączone podobne zgłoszenia
                 </span>
                 <span className="font-bold tabular-nums">
                   {rs.length} w promieniu 150 m · podobieństwo {Math.round(summary.similarity * 100)}%
@@ -85,7 +84,7 @@ export function CaseDetail({
               <div>
                 <div className="mb-1.5 flex items-center justify-between gap-2 text-[13px] font-bold text-ink-2">
                   <span className="flex flex-wrap items-center gap-1.5">
-                    Skąd ta pilność <TechChip id="score" small /> <TechChip id="gtfs" small />
+                    Skąd ta pilność
                   </span>
                   <span className="text-[15px] text-ink">{u.score}/99</span>
                 </div>
