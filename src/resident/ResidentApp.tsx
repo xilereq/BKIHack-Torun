@@ -4,7 +4,7 @@ import type { TraceStep } from '../lib/aiTrace'
 import { submitReport, useDemo } from '../lib/store'
 import { useDemoCommand } from '../lib/hooks'
 import type { Notification } from '../lib/types'
-import { IconBell, IconX } from '../components/icons'
+import { IconX } from '../components/icons'
 import { Logo } from '../components/ui'
 import { HomeScreen } from './HomeScreen'
 import { ReportScreen, type ReportDraft } from './ReportScreen'
@@ -171,9 +171,7 @@ export function ResidentApp() {
       {toast && (
         <div className="absolute inset-x-2.5 top-[calc(var(--safe-top)+4px)] z-50 animate-slide-down" role="status" aria-live="polite">
           <div className="flex items-start gap-3 rounded-[22px] bg-surface/95 p-3 shadow-[0_8px_30px_rgba(22,25,29,0.25)] backdrop-blur">
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-[12px] bg-brand text-white">
-              <IconBell size={20} strokeWidth={2.2} />
-            </span>
+            <Logo size={40} />
             <button
               type="button"
               className="min-w-0 flex-1 text-left"
