@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { LngLat } from '../lib/types'
 import { MapView } from '../components/MapView'
 import { Button, Spinner } from '../components/ui'
-import { IconCamera, IconImage, IconMic, IconPin, IconSend } from '../components/icons'
+import { IconCamera, IconImage, IconLocate, IconMic, IconPin, IconSend } from '../components/icons'
 import { describeLocation } from '../lib/geo'
 import { useTypewriter } from '../lib/hooks'
 import { DEFAULT_TRANSCRIPT, downscale, photoExists, SCENARIOS } from './demoPhotos'
@@ -13,7 +13,7 @@ import { LocationHelp } from '../components/LocationHelp'
 const LOC_HINT: Record<LocSource, string> = {
   locating: 'Pobieramy lokalizację z telefonu.',
   gps: 'Twoja lokalizacja z telefonu. Przesuń pinezkę, jeśli trzeba.',
-  denied: 'Brak zgody na lokalizację, więc pinezka stoi na środku osiedla. Przesuń ją albo wpisz adres.',
+  denied: 'Lokalizacja jest wyłączona, więc pinezka stoi na środku osiedla. Przesuń ją albo wpisz adres.',
   unavailable: 'Nie udało się pobrać lokalizacji, więc pinezka stoi na środku osiedla. Przesuń ją albo wpisz adres.',
   outside: 'Jesteś poza Toruniem, więc pinezka stoi na środku osiedla. Przesuń ją albo wpisz adres.',
   manual: 'Ustawione ręcznie na mapie.',
@@ -64,8 +64,9 @@ export function ReportScreen({
   const typed = useTypewriter(transcript, { cps: 48 })
 
   // lokalizacja z telefonu; gdy brak (odmowa, brak GPS, poza Toruniem) — środek osiedla
-  const locate = async () => {
+  const locate = async (fromUser = false) => {
     setLocSource('locating')
+    setShowLocHelp(false)
     const r = await getGpsLocation()
     if (r.ok) {
       setLocation(r.location)
@@ -75,6 +76,7 @@ export function ReportScreen({
       setLocation(FALLBACK_LOCATION)
       setFlyTarget(FALLBACK_LOCATION)
       setLocSource(r.reason)
+      if (fromUser) setShowLocHelp(true)
     }
   }
   useEffect(() => {
@@ -286,16 +288,9 @@ export function ReportScreen({
                   </p>
                 )}
                 {locSource !== 'gps' && locSource !== 'locating' && (
-                  <div className="flex flex-wrap gap-x-4">
-                    <button type="button" onClick={locate} className="min-h-10 text-[15px] font-bold text-brand hover:underline">
-                      Użyj mojej lokalizacji
-                    </button>
-                    {locSource === 'denied' && (
-                      <button type="button" onClick={() => setShowLocHelp(true)} className="min-h-10 text-[15px] font-bold text-ink-2 underline underline-offset-2 hover:text-ink">
-                        Jak włączyć lokalizację?
-                      </button>
-                    )}
-                  </div>
+                  <button type="button" onClick={() => locate(true)} className="inline-flex min-h-11 items-center gap-2 self-start text-[16px] font-bold text-brand hover:underline">
+                    <IconLocate size={20} /> Włącz lokalizację
+                  </button>
                 )}
               </div>
             </div>
@@ -311,11 +306,8 @@ export function ReportScreen({
       </div>
       {showLocHelp && (
         <LocationHelp
-          problem="denied"
-          onRetry={() => {
-            setShowLocHelp(false)
-            locate()
-          }}
+          problem={locSource === 'outside' ? 'outside' : 'denied'}
+          onRetry={() => locate(true)}
           onClose={() => setShowLocHelp(false)}
         />
       )}

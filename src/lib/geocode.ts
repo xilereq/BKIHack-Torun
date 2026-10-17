@@ -18,30 +18,43 @@ export function inTorun(p: LngLat): boolean {
 
 export type GpsResult = { ok: true; location: LngLat } | { ok: false; reason: 'denied' | 'unavailable' | 'outside' }
 
-/** Pobiera lokalizację telefonu (maks. 6 s). Nigdy nie wisi: po czasie zwraca „unavailable”. */
-export function getGpsLocation(timeoutMs = 6000): Promise<GpsResult> {
+function askPosition(highAccuracy: boolean, timeoutMs: number): Promise<GeolocationPosition | GeolocationPositionError | null> {
   return new Promise((resolve) => {
-    if (!('geolocation' in navigator)) return resolve({ ok: false, reason: 'unavailable' })
     let done = false
-    const finish = (r: GpsResult) => {
-      if (done) return
-      done = true
-      resolve(r)
+    const finish = (r: GeolocationPosition | GeolocationPositionError | null) => {
+      if (!done) {
+        done = true
+        resolve(r)
+      }
     }
-    const timer = window.setTimeout(() => finish({ ok: false, reason: 'unavailable' }), timeoutMs)
+    // własny limit: dłuższy niż limit GPS, żeby zdążyć odpowiedzieć na pytanie przeglądarki o zgodę
+    const timer = window.setTimeout(() => finish(null), timeoutMs + 12000)
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         window.clearTimeout(timer)
-        const p = { lat: pos.coords.latitude, lng: pos.coords.longitude }
-        finish(inTorun(p) ? { ok: true, location: p } : { ok: false, reason: 'outside' })
+        finish(pos)
       },
       (err) => {
         window.clearTimeout(timer)
-        finish({ ok: false, reason: err.code === err.PERMISSION_DENIED ? 'denied' : 'unavailable' })
+        finish(err)
       },
-      { enableHighAccuracy: true, timeout: timeoutMs, maximumAge: 60000 },
+      { enableHighAccuracy: highAccuracy, timeout: timeoutMs, maximumAge: highAccuracy ? 0 : 120000 },
     )
   })
+}
+
+/**
+ * Pobiera lokalizację telefonu. Najpierw dokładną (GPS), a gdy nie odpowie — przybliżoną (Wi-Fi, sieć).
+ * Każde wywołanie pyta od nowa, więc po włączeniu lokalizacji w telefonie „Spróbuj ponownie” zadziała.
+ */
+export async function getGpsLocation(): Promise<GpsResult> {
+  if (!('geolocation' in navigator)) return { ok: false, reason: 'unavailable' }
+  let r = await askPosition(true, 8000)
+  if (!r || ('code' in r && r.code !== r.PERMISSION_DENIED)) r = await askPosition(false, 8000)
+  if (!r) return { ok: false, reason: 'unavailable' }
+  if ('code' in r) return { ok: false, reason: r.code === r.PERMISSION_DENIED ? 'denied' : 'unavailable' }
+  const p = { lat: r.coords.latitude, lng: r.coords.longitude }
+  return inTorun(p) ? { ok: true, location: p } : { ok: false, reason: 'outside' }
 }
 
 const norm = (s: string) =>
