@@ -491,5 +491,653 @@
       "lng": 18.67487
     },
     "verified": false
+  },
+  {
+    "id": "r-city-rynek-1",
+    "caseId": "c-city-rynek",
+    "description": "Wystające kostki, łatwo się potknąć.",
+    "photo": "/zdjecia/chodnik.jpg",
+    "createdAt": "2026-03-02",
+    "location": {
+      "lat": 53.0105,
+      "lng": 18.60377
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-rynek-2",
+    "caseId": "c-city-rynek",
+    "description": "Turystka przewróciła się na nierównym bruku.",
+    "photo": "/zdjecia/chodnik.jpg",
+    "createdAt": "2026-06-11",
+    "location": {
+      "lat": 53.01054,
+      "lng": 18.60373
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-rynek-3",
+    "caseId": "c-city-rynek",
+    "description": "Kostka brukowa rusza się przy ratuszu.",
+    "photo": "/zdjecia/chodnik.jpg",
+    "createdAt": "2026-09-20",
+    "location": {
+      "lat": 53.01058,
+      "lng": 18.60369
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-rapackiego-1",
+    "caseId": "c-city-rapackiego",
+    "description": "Przydałyby się ławki w cieniu drzew.",
+    "photo": "/zdjecia/lawka.jpg",
+    "createdAt": "2025-07-14",
+    "location": {
+      "lat": 53.00937,
+      "lng": 18.60083
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-rapackiego-2",
+    "caseId": "c-city-rapackiego",
+    "description": "Brakuje miejsc do odpoczynku dla starszych osób.",
+    "photo": "/zdjecia/lawka.jpg",
+    "createdAt": "2025-08-02",
+    "location": {
+      "lat": 53.00941,
+      "lng": 18.60079
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-rapackiego-3",
+    "caseId": "c-city-rapackiego",
+    "description": "Ławka przy fontannie byłaby świetna.",
+    "photo": "/zdjecia/lawka.jpg",
+    "createdAt": "2026-05-30",
+    "location": {
+      "lat": 53.00945,
+      "lng": 18.60075
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-rapackiego-4",
+    "caseId": "c-city-rapackiego",
+    "description": "Przydałyby się ławki w cieniu drzew.",
+    "photo": "/zdjecia/lawka.jpg",
+    "createdAt": "2026-06-21",
+    "location": {
+      "lat": 53.00937,
+      "lng": 18.60083
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-rapackiego-5",
+    "caseId": "c-city-rapackiego",
+    "description": "Brakuje miejsc do odpoczynku dla starszych osób.",
+    "photo": "/zdjecia/lawka.jpg",
+    "createdAt": "2026-07-08",
+    "location": {
+      "lat": 53.00941,
+      "lng": 18.60079
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-rapackiego-6",
+    "caseId": "c-city-rapackiego",
+    "description": "Ławka przy fontannie byłaby świetna.",
+    "photo": "/zdjecia/lawka.jpg",
+    "createdAt": "2026-08-15",
+    "location": {
+      "lat": 53.00945,
+      "lng": 18.60075
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-chelminska-1",
+    "caseId": "c-city-chelminska",
+    "description": "Asfalt zapadł się przy zatoce autobusowej.",
+    "photo": "/zdjecia/dziura.jpg",
+    "createdAt": "2026-02-17",
+    "location": {
+      "lat": 53.02385,
+      "lng": 18.59412
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-chelminska-2",
+    "caseId": "c-city-chelminska",
+    "description": "Koleiny przy przystanku, autobusy podskakują.",
+    "photo": "/zdjecia/dziura.jpg",
+    "createdAt": "2026-04-03",
+    "location": {
+      "lat": 53.02389,
+      "lng": 18.59408
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-chelminska-3",
+    "caseId": "c-city-chelminska",
+    "description": "Woda stoi w zagłębieniu po deszczu.",
+    "photo": "/zdjecia/dziura.jpg",
+    "createdAt": "2026-07-19",
+    "location": {
+      "lat": 53.02393,
+      "lng": 18.59404
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-chelminska-4",
+    "caseId": "c-city-chelminska",
+    "description": "Asfalt zapadł się przy zatoce autobusowej.",
+    "photo": "/zdjecia/dziura.jpg",
+    "createdAt": "2026-09-30",
+    "location": {
+      "lat": 53.02385,
+      "lng": 18.59412
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-lelewela-1",
+    "caseId": "c-city-lelewela",
+    "description": "Nie świecą lampy na alejce między blokami.",
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2026-09-12",
+    "location": {
+      "lat": 53.02436,
+      "lng": 18.60083
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-lelewela-2",
+    "caseId": "c-city-lelewela",
+    "description": "Wieczorem alejka jest zupełnie ciemna.",
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2026-10-05",
+    "location": {
+      "lat": 53.0244,
+      "lng": 18.60079
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-bydgoska-1",
+    "caseId": "c-city-bydgoska",
+    "description": "Płyty chodnika połamane, trudno przejechać wózkiem.",
+    "photo": "/zdjecia/chodnik.jpg",
+    "createdAt": "2025-09-01",
+    "location": {
+      "lat": 53.0102,
+      "lng": 18.58385
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-bydgoska-2",
+    "caseId": "c-city-bydgoska",
+    "description": "Chodnik pęka coraz bardziej.",
+    "photo": "/zdjecia/chodnik.jpg",
+    "createdAt": "2025-11-20",
+    "location": {
+      "lat": 53.01024,
+      "lng": 18.58381
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-bydgoska-3",
+    "caseId": "c-city-bydgoska",
+    "description": "Nierówny chodnik przy przystanku tramwajowym.",
+    "photo": "/zdjecia/chodnik.jpg",
+    "createdAt": "2026-06-07",
+    "location": {
+      "lat": 53.01028,
+      "lng": 18.58377
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-falata-1",
+    "caseId": "c-city-falata",
+    "description": "Kosze przepełnione po weekendzie.",
+    "photo": "/zdjecia/kosz.jpg",
+    "createdAt": "2026-06-03",
+    "location": {
+      "lat": 53.01522,
+      "lng": 18.57255
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-falata-2",
+    "caseId": "c-city-falata",
+    "description": "Śmieci wysypują się z koszy.",
+    "photo": "/zdjecia/kosz.jpg",
+    "createdAt": "2026-06-18",
+    "location": {
+      "lat": 53.01526,
+      "lng": 18.57251
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-okrezna-1",
+    "caseId": "c-city-okrezna",
+    "description": "Nie ma gdzie bezpiecznie zostawić roweru.",
+    "photo": "/zdjecia/stojak.jpg",
+    "createdAt": "2025-10-10",
+    "location": {
+      "lat": 53.01761,
+      "lng": 18.56363
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-okrezna-2",
+    "caseId": "c-city-okrezna",
+    "description": "Przydałyby się zadaszone stojaki.",
+    "photo": "/zdjecia/stojak.jpg",
+    "createdAt": "2026-03-14",
+    "location": {
+      "lat": 53.01765,
+      "lng": 18.56359
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-okrezna-3",
+    "caseId": "c-city-okrezna",
+    "description": "Studenci przypinają rowery do płotów.",
+    "photo": "/zdjecia/stojak.jpg",
+    "createdAt": "2026-04-02",
+    "location": {
+      "lat": 53.01769,
+      "lng": 18.56355
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-okrezna-4",
+    "caseId": "c-city-okrezna",
+    "description": "Nie ma gdzie bezpiecznie zostawić roweru.",
+    "photo": "/zdjecia/stojak.jpg",
+    "createdAt": "2026-04-29",
+    "location": {
+      "lat": 53.01761,
+      "lng": 18.56363
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-okrezna-5",
+    "caseId": "c-city-okrezna",
+    "description": "Przydałyby się zadaszone stojaki.",
+    "photo": "/zdjecia/stojak.jpg",
+    "createdAt": "2026-05-16",
+    "location": {
+      "lat": 53.01765,
+      "lng": 18.56359
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-okrezna-6",
+    "caseId": "c-city-okrezna",
+    "description": "Studenci przypinają rowery do płotów.",
+    "photo": "/zdjecia/stojak.jpg",
+    "createdAt": "2026-09-28",
+    "location": {
+      "lat": 53.01769,
+      "lng": 18.56355
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-okrezna-7",
+    "caseId": "c-city-okrezna",
+    "description": "Nie ma gdzie bezpiecznie zostawić roweru.",
+    "photo": "/zdjecia/stojak.jpg",
+    "createdAt": "2026-10-09",
+    "location": {
+      "lat": 53.01761,
+      "lng": 18.56363
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-gagarina-1",
+    "caseId": "c-city-gagarina",
+    "description": "Kierowcy nie zwalniają przed przejściem.",
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2025-11-05",
+    "location": {
+      "lat": 53.01847,
+      "lng": 18.57242
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-gagarina-2",
+    "caseId": "c-city-gagarina",
+    "description": "Przejście słabo widoczne po zmroku.",
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2026-01-21",
+    "location": {
+      "lat": 53.01851,
+      "lng": 18.57238
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-gagarina-3",
+    "caseId": "c-city-gagarina",
+    "description": "Przydałby się azyl dla pieszych.",
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2026-03-03",
+    "location": {
+      "lat": 53.01855,
+      "lng": 18.57234
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-gagarina-4",
+    "caseId": "c-city-gagarina",
+    "description": "Kierowcy nie zwalniają przed przejściem.",
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2026-05-12",
+    "location": {
+      "lat": 53.01847,
+      "lng": 18.57242
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-gagarina-5",
+    "caseId": "c-city-gagarina",
+    "description": "Przejście słabo widoczne po zmroku.",
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2026-10-01",
+    "location": {
+      "lat": 53.01851,
+      "lng": 18.57238
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-kosciuszki-1",
+    "caseId": "c-city-kosciuszki",
+    "description": "Głęboka dziura na pasie do skrętu.",
+    "photo": "/zdjecia/dziura.jpg",
+    "createdAt": "2026-09-29",
+    "location": {
+      "lat": 53.02386,
+      "lng": 18.62165
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-kosciuszki-2",
+    "caseId": "c-city-kosciuszki",
+    "description": "Dziura przy krawężniku, uszkodzona opona.",
+    "photo": "/zdjecia/dziura.jpg",
+    "createdAt": "2026-10-08",
+    "location": {
+      "lat": 53.0239,
+      "lng": 18.62161
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-kosciuszki-3",
+    "caseId": "c-city-kosciuszki",
+    "description": "Ubytek w asfalcie się powiększa.",
+    "photo": "/zdjecia/dziura.jpg",
+    "createdAt": "2026-10-14",
+    "location": {
+      "lat": 53.02394,
+      "lng": 18.62157
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-polna-1",
+    "caseId": "c-city-polna",
+    "description": "Dzieci z okolicy nie mają placu zabaw.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-04-11",
+    "location": {
+      "lat": 53.03539,
+      "lng": 18.62909
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-polna-2",
+    "caseId": "c-city-polna",
+    "description": "Przydałby się plac zabaw na pustym terenie.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-05-02",
+    "location": {
+      "lat": 53.03543,
+      "lng": 18.62905
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-polna-3",
+    "caseId": "c-city-polna",
+    "description": "Chętnie zagłosujemy w budżecie obywatelskim.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-05-27",
+    "location": {
+      "lat": 53.03547,
+      "lng": 18.62901
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-polna-4",
+    "caseId": "c-city-polna",
+    "description": "Dzieci z okolicy nie mają placu zabaw.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-06-14",
+    "location": {
+      "lat": 53.03539,
+      "lng": 18.62909
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-polna-5",
+    "caseId": "c-city-polna",
+    "description": "Przydałby się plac zabaw na pustym terenie.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-07-01",
+    "location": {
+      "lat": 53.03543,
+      "lng": 18.62905
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-polna-6",
+    "caseId": "c-city-polna",
+    "description": "Chętnie zagłosujemy w budżecie obywatelskim.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-08-09",
+    "location": {
+      "lat": 53.03547,
+      "lng": 18.62901
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-polna-7",
+    "caseId": "c-city-polna",
+    "description": "Dzieci z okolicy nie mają placu zabaw.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-08-30",
+    "location": {
+      "lat": 53.03539,
+      "lng": 18.62909
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-polna-8",
+    "caseId": "c-city-polna",
+    "description": "Przydałby się plac zabaw na pustym terenie.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-09-17",
+    "location": {
+      "lat": 53.03543,
+      "lng": 18.62905
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-polna-9",
+    "caseId": "c-city-polna",
+    "description": "Chętnie zagłosujemy w budżecie obywatelskim.",
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-10-06",
+    "location": {
+      "lat": 53.03547,
+      "lng": 18.62901
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-podgorska-1",
+    "caseId": "c-city-podgorska",
+    "description": "Po każdej ulewie woda stoi na całej szerokości ulicy.",
+    "photo": "/zdjecia/studzienka.jpg",
+    "createdAt": "2026-05-22",
+    "location": {
+      "lat": 53.00307,
+      "lng": 18.63401
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-podgorska-2",
+    "caseId": "c-city-podgorska",
+    "description": "Studzienki nie nadążają z odbiorem wody.",
+    "photo": "/zdjecia/studzienka.jpg",
+    "createdAt": "2026-07-03",
+    "location": {
+      "lat": 53.00311,
+      "lng": 18.63397
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-podgorska-3",
+    "caseId": "c-city-podgorska",
+    "description": "Samochody chlapią na przechodniów.",
+    "photo": "/zdjecia/studzienka.jpg",
+    "createdAt": "2026-08-18",
+    "location": {
+      "lat": 53.00315,
+      "lng": 18.63393
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-podgorska-4",
+    "caseId": "c-city-podgorska",
+    "description": "Po każdej ulewie woda stoi na całej szerokości ulicy.",
+    "photo": "/zdjecia/studzienka.jpg",
+    "createdAt": "2026-09-09",
+    "location": {
+      "lat": 53.00307,
+      "lng": 18.63401
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-wrzosy-1",
+    "caseId": "c-city-wrzosy",
+    "description": "Ekrany akustyczne pomalowane sprayem.",
+    "photo": "/zdjecia/graffiti.jpg",
+    "createdAt": "2026-08-21",
+    "location": {
+      "lat": 53.0468,
+      "lng": 18.58553
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-wrzosy-2",
+    "caseId": "c-city-wrzosy",
+    "description": "Nowe napisy na ekranach.",
+    "photo": "/zdjecia/graffiti.jpg",
+    "createdAt": "2026-09-26",
+    "location": {
+      "lat": 53.04684,
+      "lng": 18.58549
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-jakubskie-1",
+    "caseId": "c-city-jakubskie",
+    "description": "Przejście dla pieszych jest nieoświetlone.",
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2026-03-15",
+    "location": {
+      "lat": 53.01974,
+      "lng": 18.63473
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-jakubskie-2",
+    "caseId": "c-city-jakubskie",
+    "description": "Po zmroku pieszych nie widać.",
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2026-04-20",
+    "location": {
+      "lat": 53.01978,
+      "lng": 18.63469
+    },
+    "verified": false
+  },
+  {
+    "id": "r-city-koniuchy-1",
+    "caseId": "c-city-koniuchy",
+    "description": "Kosz przy przystanku przepełniony.",
+    "photo": "/zdjecia/kosz.jpg",
+    "createdAt": "2026-10-02",
+    "location": {
+      "lat": 53.03377,
+      "lng": 18.59957
+    },
+    "verified": true
+  },
+  {
+    "id": "r-city-koniuchy-2",
+    "caseId": "c-city-koniuchy",
+    "description": "Śmieci leżą obok kosza.",
+    "photo": "/zdjecia/kosz.jpg",
+    "createdAt": "2026-10-12",
+    "location": {
+      "lat": 53.03381,
+      "lng": 18.59953
+    },
+    "verified": false
   }
 ]

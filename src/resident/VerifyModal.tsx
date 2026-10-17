@@ -69,7 +69,7 @@ export function VerifyModal({ onClose, reason }: { onClose: () => void; reason?:
 
   return (
     <div className="absolute inset-0 z-40 flex items-end bg-ink/45 " role="dialog" aria-modal="true" aria-labelledby="verify-title">
-      <div className="w-full rounded-t-[28px] bg-surface px-5 pt-2.5 pb-7 animate-slide-up">
+      <div className="w-full rounded-t-[28px] bg-surface px-5 pt-2.5 pb-[calc(var(--safe-bottom)+20px)] animate-slide-up">
         <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-line-strong" aria-hidden="true" />
         <div className="mb-3 flex items-center justify-between">
           <h2 id="verify-title" className="flex items-center gap-2 text-h2 font-bold">

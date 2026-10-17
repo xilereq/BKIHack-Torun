@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
 import type { CaseStatus, CaseType } from '../lib/types'
 import { STATUS_LABEL, type UrgencyTag } from '../lib/domain'
-import { IconAlert, IconBulb, IconCalendar, IconCheck, IconCircle, IconLogo, IconShield, IconWrench } from './icons'
+import { IconBulb, IconCalendar, IconCheck, IconCircle, IconClock, IconLogo, IconShield, IconWrench } from './icons'
 
 type Variant = 'primary' | 'secondary' | 'ghost'
 type Size = 'lg' | 'md' | 'sm'
@@ -38,13 +38,13 @@ export function Button({
 const STATUS_STYLE: Record<CaseStatus, string> = {
   new: 'bg-st-new-bg text-st-new',
   planned: 'bg-st-planned-bg text-st-planned',
-  overdue: 'bg-st-overdue-bg text-st-overdue',
+  overdue: 'bg-st-wait-bg text-st-wait',
   done: 'bg-st-planned-bg text-st-planned',
   resolved: 'bg-st-done-bg text-st-done',
 }
 
 function StatusIcon({ status, size }: { status: CaseStatus; size: number }) {
-  if (status === 'overdue') return <IconAlert size={size} strokeWidth={2.4} />
+  if (status === 'overdue') return <IconClock size={size} strokeWidth={2.2} />
   if (status === 'planned') return <IconCalendar size={size} strokeWidth={2.2} />
   if (status === 'done') return <IconWrench size={size} strokeWidth={2.2} />
   if (status === 'resolved') return <IconCheck size={size} strokeWidth={2.6} />
@@ -70,7 +70,7 @@ export function TypeBadge({ type, small = false }: { type: CaseType; small?: boo
       Pomysł
     </span>
   ) : (
-    <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand-tint font-bold text-st-overdue ${cls}`}>Problem</span>
+    <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full bg-st-new-bg font-bold text-st-new ${cls}`}>Problem</span>
   )
 }
 
@@ -87,7 +87,7 @@ export function VerifiedBadge({ small = false }: { small?: boolean }) {
 
 const TAG_STYLE: Record<UrgencyTag['tone'], string> = {
   neutral: 'bg-st-new-bg text-st-new',
-  danger: 'bg-st-overdue-bg text-st-overdue',
+  wait: 'bg-st-wait-bg text-st-wait',
   info: 'bg-st-planned-bg text-st-planned',
   success: 'bg-st-done-bg text-st-done',
 }
@@ -95,7 +95,7 @@ const TAG_STYLE: Record<UrgencyTag['tone'], string> = {
 export function Tag({ tag }: { tag: UrgencyTag }) {
   return (
     <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[14px] font-bold leading-5 ${TAG_STYLE[tag.tone]}`}>
-      {tag.tone === 'danger' && <IconAlert size={14} strokeWidth={2.4} />}
+      {tag.tone === 'wait' && <IconClock size={14} strokeWidth={2.2} />}
       {tag.label}
     </span>
   )

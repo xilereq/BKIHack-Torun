@@ -56,19 +56,21 @@ export function caseStatus(c: Case, docs: CityDocument[], now = new Date()): Cas
 export const STATUS_LABEL: Record<CaseStatus, string> = {
   new: 'Nowe',
   planned: 'Zaplanowane',
-  overdue: 'Przeterminowane',
+  overdue: 'Czeka na nowy termin',
   done: 'Remont wykonany',
   resolved: 'Rozwiązane',
 }
 
 export interface UrgencyTag {
   label: string
-  tone: 'neutral' | 'danger' | 'info' | 'success'
+  tone: 'neutral' | 'wait' | 'info' | 'success'
 }
 
 export interface Urgency {
   score: number
   tags: UrgencyTag[]
+  /** składniki wyniku — sumują się do score (przed przycięciem do 1–99) */
+  factors: { label: string; points: number }[]
 }
 
 /** Pilność z uzasadnieniem. Skala 0–99. */
@@ -77,49 +79,61 @@ export function caseUrgency(c: Case, reports: Report[], docs: CityDocument[], no
   const n = rs.length
   const status = caseStatus(c, docs, now)
   const tags: UrgencyTag[] = []
-  let score = c.factors.severity
+  const factors: { label: string; points: number }[] = [{ label: 'Waga problemu (zdjęcie, kategoria)', points: c.factors.severity }]
+  const finish = () => {
+    let score = factors.reduce((s, f) => s + f.points, 0)
+    if (c.type === 'problem' && (status === 'resolved' || status === 'done')) {
+      const cap = Math.min(score, 20)
+      if (cap < score) factors.push({ label: 'Sprawa wykonana — niższy priorytet', points: cap - score })
+      score = cap
+    }
+    return { score: Math.max(1, Math.min(99, score)), tags, factors }
+  }
 
   if (c.type === 'idea') {
     tags.push({ label: `${n} ${plural(n, ['osoba prosi', 'osoby proszą', 'osób prosi'])} o to samo`, tone: 'neutral' })
+    factors.push({ label: `Liczba próśb (${n})`, points: n * 4 })
     const v = rs.filter((r) => r.verified).length
     if (v) tags.push({ label: `${v} ${plural(v, ['zweryfikowana', 'zweryfikowane', 'zweryfikowanych'])}`, tone: 'success' })
-    if (c.supporters) tags.push({ label: boostLabel(c.supporters), tone: 'success' })
+    if (c.supporters) {
+      tags.push({ label: boostLabel(c.supporters), tone: 'success' })
+      factors.push({ label: `Podbicia zweryfikowanych (${c.supporters})`, points: c.supporters * 2 })
+    }
     if (c.bigIdea) tags.push({ label: 'pasuje do budżetu obywatelskiego', tone: 'info' })
-    return { score: Math.min(99, score + n * 4 + (c.supporters ?? 0) * 2), tags }
+    return finish()
   }
 
   tags.push({ label: countLabel(n, REPORT_FORMS), tone: 'neutral' })
-  score += Math.min(20, n * 3)
+  factors.push({ label: `Liczba zgłoszeń (${n})`, points: Math.min(20, n * 3) })
   if (c.supporters) {
     tags.push({ label: boostLabel(c.supporters), tone: 'success' })
-    score += Math.min(10, c.supporters)
+    factors.push({ label: `Podbicia zweryfikowanych (${c.supporters})`, points: Math.min(10, c.supporters) })
   }
 
   const lc = latestCommitment(c, docs)
   if (lc && status === 'overdue') {
     const m = monthsOverdue(lc.commitment.deadline, now)
-    tags.unshift({ label: `obietnica przeterminowana o ${m} mies.`, tone: 'danger' })
-    score += Math.min(18, 6 + m * 2)
+    tags.unshift({ label: `plan ${romanMonth(lc.commitment.deadline)} · czeka na aktualny termin`, tone: 'wait' })
+    factors.push({ label: `Plan miasta czeka na aktualny termin (${romanMonth(lc.commitment.deadline)})`, points: Math.min(18, 6 + m * 2) })
   } else if (lc && status === 'planned') {
     tags.push({ label: `zaplanowane na ${romanMonth(lc.commitment.deadline)}`, tone: 'info' })
-    score -= 6
+    factors.push({ label: `Naprawa już zaplanowana (${romanMonth(lc.commitment.deadline)})`, points: -6 })
   }
   if (c.factors.transit) {
     tags.push({ label: `${c.factors.transit.trips} kursów ${c.factors.transit.mode} dziennie`, tone: 'neutral' })
-    score += Math.min(12, Math.round(c.factors.transit.trips / 20))
+    factors.push({ label: `Ruch: ${c.factors.transit.trips} kursów dziennie (GTFS)`, points: Math.min(12, Math.round(c.factors.transit.trips / 20)) })
   }
   if (c.factors.nearby) {
     tags.push({ label: `w pobliżu: ${c.factors.nearby}`, tone: 'neutral' })
-    score += 8
+    factors.push({ label: `W pobliżu: ${c.factors.nearby}`, points: 8 })
   }
   const first = rs[0]?.createdAt ?? c.createdAt
   const ageMonths = Math.max(0, Math.round((now.getTime() - new Date(first).getTime()) / (30.4 * 86400000)))
   if (ageMonths >= 3) {
     tags.push({ label: `czeka od ${ageMonths} mies.`, tone: 'neutral' })
-    score += Math.min(8, Math.round(ageMonths / 2))
+    factors.push({ label: `Czas oczekiwania (${ageMonths} mies.)`, points: Math.min(8, Math.round(ageMonths / 2)) })
   }
-  if (status === 'resolved' || status === 'done') score = Math.min(score, 20)
-  return { score: Math.max(1, Math.min(99, score)), tags }
+  return finish()
 }
 
 /** „9 podbić od zweryfikowanych” */

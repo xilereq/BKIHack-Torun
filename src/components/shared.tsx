@@ -4,7 +4,7 @@ import type { MapMarker } from './MapView'
 import { caseReports, caseStatus, DOC_KIND_LABEL, isOverdue, latestCommitment, visibleDocs } from '../lib/domain'
 import { countLabel, formatDate, lowerFirst, REPORT_FORMS, romanMonth } from '../lib/format'
 import {
-  IconAlert,
+  IconClock,
   IconBuilding,
   IconCalendar,
   IconCheck,
@@ -33,6 +33,7 @@ export function caseMarkers(s: DemoState, opts: { selectedId?: string | null; pr
         label: st === 'resolved' || n < 2 ? undefined : n,
         title: `${c.title}, ${c.place}: ${countLabel(n, REPORT_FORMS)}`,
         selected: opts.selectedId === c.id,
+        icon: c.category,
       } satisfies MapMarker
     })
 }
@@ -49,7 +50,7 @@ export function documentMarkers(s: DemoState, opts: { docs?: boolean; commitment
         id: d.id,
         location: d.location,
         kind: over ? 'overdue' : 'planned',
-        title: `${over ? 'Obietnica przeterminowana' : 'Zobowiązanie miasta'}: ${d.commitment!.text}, termin ${romanMonth(d.commitment!.deadline)}`,
+        title: `${over ? 'Plan miasta czeka na aktualny termin' : 'Zobowiązanie miasta'}: ${d.commitment!.text}, termin ${romanMonth(d.commitment!.deadline)}`,
         selected: opts.selectedId === d.id,
       })
     } else if (docs) {
@@ -101,8 +102,8 @@ export function commitmentState(d: CityDocument, s: DemoState): CommitmentState 
   return isOverdue(d.commitment) ? 'overdue' : 'pending'
 }
 
-export const COMMITMENT_LABEL: Record<Exclude<CommitmentState, 'none'>, { label: (deadline: string) => string; tone: 'danger' | 'info' | 'neutral' | 'success' }> = {
-  overdue: { label: (dl) => `Termin ${romanMonth(dl)} minął`, tone: 'danger' },
+export const COMMITMENT_LABEL: Record<Exclude<CommitmentState, 'none'>, { label: (deadline: string) => string; tone: 'wait' | 'info' | 'neutral' | 'success' }> = {
+  overdue: { label: (dl) => `Plan ${romanMonth(dl)} · do aktualizacji`, tone: 'wait' },
   pending: { label: (dl) => `Termin ${romanMonth(dl)}`, tone: 'info' },
   rescheduled: { label: (dl) => `Pierwotny termin ${romanMonth(dl)}, zmieniony`, tone: 'neutral' },
   fulfilled: { label: () => 'Zrealizowano', tone: 'success' },
@@ -113,12 +114,12 @@ export function CommitmentBadge({ d, s }: { d: CityDocument; s: DemoState }) {
   if (cs === 'none' || !d.commitment) return null
   const { label, tone } = COMMITMENT_LABEL[cs]
   const cls = {
-    danger: 'bg-st-overdue-bg text-st-overdue',
+    wait: 'bg-st-wait-bg text-st-wait',
     info: 'bg-st-planned-bg text-st-planned',
     neutral: 'bg-st-new-bg text-st-new',
     success: 'bg-st-done-bg text-st-done',
   }[tone]
-  const Icon = tone === 'danger' ? IconAlert : tone === 'success' ? IconCheck : IconCalendar
+  const Icon = tone === 'wait' ? IconClock : tone === 'success' ? IconCheck : IconCalendar
   return (
     <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[14px] font-bold leading-5 ${cls}`}>
       <Icon size={14} strokeWidth={2.4} />
@@ -136,7 +137,7 @@ const EVENT_STYLE: Record<EventType, { cls: string; Icon: typeof IconCheck }> = 
   planned: { cls: 'bg-st-planned-bg text-st-planned', Icon: IconCalendar },
   done: { cls: 'bg-st-planned-bg text-st-planned', Icon: IconWrench },
   resolved: { cls: 'bg-st-done-bg text-st-done', Icon: IconCheck },
-  reopened: { cls: 'bg-brand-tint text-st-overdue', Icon: IconRefresh },
+  reopened: { cls: 'bg-st-wait-bg text-st-wait', Icon: IconRefresh },
 }
 
 export function Timeline({ events, documents, newestFirst = true, highlightId }: { events: CaseEvent[]; documents: CityDocument[]; newestFirst?: boolean; highlightId?: string }) {
@@ -193,7 +194,7 @@ export function cityKnowledge(c: Case, s: DemoState): { status: ReturnType<typeo
     return { status: st, text: 'Remont wykonano, ale mieszkaniec zgłosił, że problem wrócił. Utworzono powiązane zgłoszenie z sygnałem o gwarancji.', doc: lastDoc }
   if (st === 'done') return { status: st, text: 'Remont został wykonany. Czekamy na potwierdzenie mieszkańców, że problem zniknął.', doc: lastDoc }
   if (lc && st === 'overdue')
-    return { status: st, text: `Miasto zapowiedziało: ${lowerFirst(lc.commitment.text)} do ${romanMonth(lc.commitment.deadline)}. Termin minął.`, doc: lc.doc }
+    return { status: st, text: `Miasto planowało: ${lowerFirst(lc.commitment.text)} do ${romanMonth(lc.commitment.deadline)}. Prace jeszcze się nie odbyły, czekamy na aktualny termin.`, doc: lc.doc }
   if (lc) return { status: st, text: `Zaplanowano: ${lowerFirst(lc.commitment.text)}, termin ${romanMonth(lc.commitment.deadline)}.`, doc: lc.doc }
   if (lastDoc) return { status: st, text: `${DOC_KIND_LABEL[lastDoc.kind]} z ${formatDate(lastDoc.date)}: ${lastDoc.summary}`, doc: lastDoc }
   return { status: st, text: 'Nie znaleźliśmy planów miasta dla tego miejsca. Sprawa trafiła do właściwej jednostki i radnych okręgu.' }
@@ -201,8 +202,8 @@ export function cityKnowledge(c: Case, s: DemoState): { status: ReturnType<typeo
 
 export function OverdueNote({ text }: { text: string }) {
   return (
-    <div className="flex items-start gap-2 text-[15px] font-bold leading-[22px] text-st-overdue">
-      <IconAlert size={18} className="mt-0.5 shrink-0" strokeWidth={2.4} />
+    <div className="flex items-start gap-2 text-[15px] font-bold leading-[22px] text-st-wait">
+      <IconClock size={18} className="mt-0.5 shrink-0" strokeWidth={2.2} />
       {text}
     </div>
   )

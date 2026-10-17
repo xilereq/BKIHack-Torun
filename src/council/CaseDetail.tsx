@@ -1,10 +1,12 @@
 import type { Report } from '../lib/types'
 import type { DemoState } from '../lib/store'
-import { caseDocuments, caseStatus, caseUrgency, DOC_KIND_LABEL, monthsOverdue, unitById } from '../lib/domain'
+import { caseDocuments, caseStatus, caseUrgency, DOC_KIND_LABEL, unitById } from '../lib/domain'
 import { formatDate, plural } from '../lib/format'
 import { Button, StatusBadge, Tag, TypeBadge, VerifiedBadge } from '../components/ui'
-import { IconExternal, IconFile, IconX } from '../components/icons'
-import { CommitmentBadge, commitmentState, Photo, Timeline } from '../components/shared'
+import { IconExternal, IconFile, IconSparkle, IconX } from '../components/icons'
+import { TechChip } from '../components/AiTrace'
+import { caseSummary, urgencyBreakdown } from '../lib/aiTrace'
+import { CommitmentBadge, Photo, Timeline } from '../components/shared'
 
 export function CaseDetail({
   s,
@@ -27,6 +29,8 @@ export function CaseDetail({
   const docs = caseDocuments(c, s.documents).slice().reverse()
   const unit = unitById(c.unitId)
   const verifiedCount = rs.filter((r) => r.verified).length
+  const summary = caseSummary(c, s)
+  const breakdown = urgencyBreakdown(c, s)
 
   return (
     <aside className="flex h-full flex-col bg-surface" aria-label={`Historia miejsca: ${c.title}`}>
@@ -57,6 +61,47 @@ export function CaseDetail({
             <Button variant="primary" onClick={onDraft} className="self-start">
               <IconFile size={22} strokeWidth={2.2} /> Przygotuj interpelację
             </Button>
+          </section>
+
+          <section aria-labelledby="sec-ai" className="rounded-card border border-line bg-[#fafbfc] p-4">
+            <h3 id="sec-ai" className="mb-2 flex items-center gap-2 text-[17px] font-bold">
+              <IconSparkle size={18} className="text-brand" /> Analiza AI
+            </h3>
+            <div className="flex flex-col gap-3">
+              <div>
+                <div className="mb-1 flex items-center gap-1.5 text-[13px] font-bold text-ink-2">
+                  Podsumowanie zgłoszeń <TechChip id="llm" small />
+                </div>
+                <p className="text-[15px] leading-[22px]">{summary.text}</p>
+              </div>
+              <div className="flex items-center justify-between gap-3 text-[14px]">
+                <span className="flex items-center gap-1.5 text-ink-2">
+                  Połączone duplikaty <TechChip id="emb" small /> <TechChip id="postgis" small />
+                </span>
+                <span className="font-bold tabular-nums">
+                  {rs.length} w promieniu 150 m · podobieństwo {Math.round(summary.similarity * 100)}%
+                </span>
+              </div>
+              <div>
+                <div className="mb-1.5 flex items-center justify-between text-[13px] font-bold text-ink-2">
+                  <span className="flex items-center gap-1.5">
+                    Skąd ta pilność <TechChip id="score" small /> <TechChip id="gtfs" small />
+                  </span>
+                  <span className="text-[15px] text-ink">{u.score}/99</span>
+                </div>
+                <ul className="flex flex-col gap-1.5">
+                  {breakdown.map((f) => (
+                    <li key={f.label} className="grid grid-cols-[1fr_auto] items-center gap-x-3 gap-y-1 text-[14px]">
+                      <span className="min-w-0 truncate">{f.label}</span>
+                      <span className="font-bold tabular-nums">{f.points >= 0 ? `+${f.points}` : `−${-f.points}`}</span>
+                      <span className="col-span-2 block h-1.5 overflow-hidden rounded-full bg-line" aria-hidden="true">
+                        <span className="block h-full rounded-full bg-ink" style={{ width: `${Math.max(0, Math.min(100, (f.points / 40) * 100))}%` }} />
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </section>
 
           <section aria-labelledby="sec-reports">
@@ -95,9 +140,8 @@ export function CaseDetail({
             ) : (
               <ul className="flex flex-col gap-2.5">
                 {docs.map((d) => {
-                  const over = commitmentState(d, s) === 'overdue'
                   return (
-                    <li key={d.id} className={`rounded-card px-4 py-3 ${over ? 'border-2 border-brand' : 'border border-line'}`}>
+                    <li key={d.id} className="rounded-card border border-line px-4 py-3">
                       <div className="flex flex-wrap items-center gap-2 text-[14px] font-bold text-ink-2">
                         {DOC_KIND_LABEL[d.kind]} · {formatDate(d.date)}
                       </div>
@@ -106,7 +150,7 @@ export function CaseDetail({
                       {d.commitment && (
                         <div className="mt-2">
                           <CommitmentBadge d={d} s={s} />
-                          {over && <span className="ml-2 text-[14px] text-st-overdue">{monthsOverdue(d.commitment.deadline)} mies. temu</span>}
+                          
                         </div>
                       )}
                       <div>

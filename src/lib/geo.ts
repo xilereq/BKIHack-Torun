@@ -1,5 +1,20 @@
 import type { LngLat, Place } from './types'
 import placesData from '../data/demo/places.json'
+import districtsData from '../data/demo/districts.json'
+import type { District } from './types'
+
+export const districts = districtsData as District[]
+
+/** Najbliższe osiedle (uproszczenie demo: po środkach osiedli) */
+export function nearestDistrict(p: LngLat): string {
+  let best = districts[0]
+  for (const d of districts) if (distanceM(p, d.center) < distanceM(p, best.center)) best = d
+  return best.id
+}
+
+export function districtName(id: string): string {
+  return districts.find((d) => d.id === id)?.name ?? id
+}
 
 const places = placesData as Place[]
 

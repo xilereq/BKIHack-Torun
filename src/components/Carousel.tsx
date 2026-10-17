@@ -60,7 +60,7 @@ export function Carousel({ slides, height = 180, rounded = '' }: { slides: Slide
           >
             <IconChevron size={18} strokeWidth={2.4} />
           </button>
-          <div className="absolute top-2 right-2 rounded-full bg-ink/70 px-2 text-[12px] font-bold leading-5 text-white">
+          <div className="absolute right-2 bottom-2 rounded-full bg-ink/70 px-2 text-[12px] font-bold leading-5 text-white">
             {index + 1}/{slides.length}
           </div>
           <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-1.5" aria-hidden="true">

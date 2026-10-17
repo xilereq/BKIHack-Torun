@@ -5,6 +5,7 @@ import reportsSeed from '../data/demo/reports.json'
 import documentsSeed from '../data/demo/documents.json'
 import { lowerFirst, nowIso, plural, uid } from './format'
 import { unitById } from './domain'
+import { nearestDistrict } from './geo'
 import type { Analysis } from './ai'
 
 /**
@@ -25,7 +26,7 @@ export interface DemoState {
 }
 
 const STORAGE_KEY = 'glos-osiedla-demo-v1'
-const VERSION = 2
+const VERSION = 3
 export const MAIN_CASE_ID = 'c-rubinkowo-centrum'
 
 function seed(): DemoState {
@@ -164,6 +165,7 @@ export function submitReport(input: SubmitInput): string {
         unitId: a.unitId,
         unitReason: a.unitReason,
         place: input.place,
+        district: nearestDistrict(input.location),
         location: input.location,
         photo: input.photo,
         createdAt: date,

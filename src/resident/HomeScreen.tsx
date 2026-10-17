@@ -14,7 +14,9 @@ export function HomeScreen({ onNotifications, onOpenCase }: { onNotifications: (
   const [selected, setSelected] = useState<string | null>(null)
   const markers = useMemo(() => caseMarkers(s, { selectedId: selected }), [s, selected])
   const unread = s.notifications.filter((n) => !n.read).length
-  const openCount = s.cases.filter((c) => caseStatus(c, s.documents) !== 'resolved').length
+  // okolica mieszkańca w demo: Rubinkowo i Na Skarpie (na mapie widać całe miasto)
+  const nearby = s.cases.filter((c) => c.district === 'rubinkowo' || c.district === 'na-skarpie')
+  const openCount = nearby.filter((c) => caseStatus(c, s.documents) !== 'resolved').length
   const sel = selected ? s.cases.find((c) => c.id === selected) : null
 
   return (
@@ -22,14 +24,14 @@ export function HomeScreen({ onNotifications, onOpenCase }: { onNotifications: (
       <MapView
         center={RUBINKOWO_CENTER}
         zoom={14.6}
-        fitPoints={s.cases.map((c) => c.location)}
+        fitPoints={nearby.map((c) => c.location)}
         fitPadding={{ top: 130, bottom: 40, left: 30, right: 30 }}
         markers={markers}
         onMarkerClick={setSelected}
         ariaLabel="Mapa zgłoszeń na Rubinkowie"
       />
 
-      <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-col gap-2 px-3 pt-3">
+      <div className="pointer-events-none absolute inset-x-0 top-0 flex flex-col gap-2 px-3 pt-[calc(var(--safe-top)+6px)]">
         <div className="pointer-events-auto flex items-center gap-2">
           <div className="flex min-w-0 flex-1 items-center gap-2.5 rounded-full bg-surface/95 py-1.5 pr-4 pl-1.5 shadow-[0_2px_12px_rgba(22,25,29,0.14)] backdrop-blur">
             <Logo size={36} />
@@ -67,12 +69,12 @@ export function HomeScreen({ onNotifications, onOpenCase }: { onNotifications: (
       {sel && (
         <div className="absolute inset-x-3 bottom-3 z-10 overflow-hidden rounded-[22px] bg-surface shadow-[0_8px_28px_rgba(22,25,29,0.22)] animate-slide-up">
           <div className="relative">
-            <Carousel slides={caseSlides(sel, s)} height={120} />
+            <Carousel slides={caseSlides(sel, s)} height={150} />
             <button
               type="button"
               aria-label="Zamknij podgląd"
               onClick={() => setSelected(null)}
-              className="absolute top-2 left-2 flex size-9 items-center justify-center rounded-full bg-surface/95 shadow"
+              className="absolute top-2 right-2 flex size-10 items-center justify-center rounded-full bg-surface/95 shadow"
             >
               <IconX size={18} strokeWidth={2.4} />
             </button>

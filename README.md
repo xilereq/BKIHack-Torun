@@ -74,7 +74,8 @@ Wszystkie dane są **przykładowe** i trzymane w osobnych plikach JSON w `src/da
 
   Format JPG, poziomo, ok. 1200 px szerokości. Bez twarzy i tablic rejestracyjnych.
 - **Podbijanie spraw:** pole `supporters` w `cases.json` to liczba podbić od zweryfikowanych mieszkańców. Podbicie zwiększa pilność i pojawia się jako etykieta w panelu radnego.
-- Status sprawy (przeterminowana, zaplanowana) liczy się sam z terminów w `documents.json` i bieżącej daty.
+- Status sprawy (czeka na nowy termin, zaplanowana) liczy się sam z terminów w `documents.json` i bieżącej daty.
+- **Całe miasto:** `districts.json` to osiedla Torunia (środki z OSM/Nominatim). Każda sprawa ma pole `district`. Okręg zainteresowań radnej (domyślny filtr) ustawia `MY_AREA` w `src/council/CouncilApp.tsx`.
 
 Po zmianie plików JSON kliknij **Reset demo**, bo przeglądarka trzyma poprzedni stan.
 
@@ -83,7 +84,8 @@ Po zmianie plików JSON kliknij **Reset demo**, bo przeglądarka trzyma poprzedn
 | Element | Plik | Co robi |
 |---|---|---|
 | „AI” zgłoszeń | `src/lib/ai.ts` | Reguły słów kluczowych → problem albo pomysł, kategoria, adresat. Łączy ze sprawą tej samej kategorii w promieniu 150 m. Odpowiedź buduje z dokumentów sprawy. Odsiewa spam. |
-| Pilność | `src/lib/domain.ts` | Wynik 0–99 z etykietami: liczba zgłoszeń, przeterminowanie, kursy komunikacji, bliskość szkoły i przychodni, czas oczekiwania |
+| Pilność | `src/lib/domain.ts` | Wynik 0–99 z etykietami: liczba zgłoszeń, podbicia, plan czekający na termin, kursy komunikacji, bliskość szkoły i przychodni, czas oczekiwania |
+| Ślad AI | `src/lib/aiTrace.ts` | Etapy potoku (mowa→tekst, model wizyjny, LLM, embeddingi + PostGIS, RAG BIP, scoring) z technologią, wynikiem i czasem. Liczby w demo symulowane deterministycznie. Pokazywany na ekranie „AI analizuje”, w „Jak AI to oceniło”, w „Analiza AI” u radnego i w oknie „Jak działa AI” |
 | Szkic interpelacji | `src/lib/interpelacja.ts` | Szablon z przypisami do zgłoszeń i dokumentów |
 | Weryfikacja mObywatel | `src/lib/verification.ts` | Interfejs `VerificationProvider` + `MockProvider` (symulowany kod QR) |
 | Stan i zdarzenia | `src/lib/store.ts` | Stan demo, zgłoszenia, zdarzenia, powiadomienia, reset |
@@ -95,6 +97,14 @@ Każdy dostawca zwraca `{ pesel, address }`. Funkcja `toVerification()` zostawia
 - `IntegratorProvider`: certyfikowany integrator (Autopay, IDENTT, Authologic). Kod QR, mieszkaniec skanuje w mObywatelu, integrator zwraca podpisane dane. Ścieżka na pilotaż.
 - `LoginGovProvider`: login.gov.pl (Węzeł Krajowy, SAML 2.0). Gdy aplikację wdroży miasto.
 - `EudiWalletProvider`: mObywatel Europa / EUDI Wallet. Przekazuje tylko atrybut „mieszka w Toruniu”.
+
+## Panel radnego: filtry
+
+- **Obszar:** Mój okręg (Rubinkowo + Na Skarpie), Całe miasto albo pojedyncze osiedle. Mapa sama dopasowuje widok.
+- **Status:** Wszystkie, Do działania (nowe i czekające na termin), Zaplanowane, Wykonane.
+- **Zgłoszone:** cały okres, 7/30/90/365 dni albo własny zakres dat.
+- **Sortuj według:** pilność, najnowsze, najdłużej czekające, najwięcej zgłoszeń, najwięcej podbić.
+- **Jak działa AI:** przycisk w nagłówku otwiera schemat potoku i tabelę technologii. Kolumnę „Stan w demo” (działa / symulacja / plan) wyłącza stała `SHOW_DEMO_STATUS` w `src/council/AiArchitectureModal.tsx`.
 
 ## Technologia
 

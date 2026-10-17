@@ -72,7 +72,7 @@ export function CaseScreen({
       <ScreenHeader title={mine ? 'Twoja sprawa' : 'Sprawa w okolicy'} onBack={onBack} />
       <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto">
         <Carousel slides={caseSlides(c, s)} height={180} />
-        <div className="flex flex-col gap-3 px-4 py-4">
+        <div className="flex flex-col gap-3 px-4 pt-4 pb-[calc(var(--safe-bottom)+16px)]">
           <div className="flex flex-wrap gap-1.5">
             <TypeBadge type={c.type} small />
             <StatusBadge status={knowledge.status} small />
@@ -137,10 +137,10 @@ export function CaseScreen({
             </button>
           )}
 
-          <div className={`flex flex-col gap-2 rounded-card bg-surface p-4 ${knowledge.status === 'overdue' ? 'border-2 border-brand' : 'border border-line'}`}>
+          <div className={`flex flex-col gap-2 rounded-card bg-surface p-4 border border-line`}>
             <div className="flex items-center justify-between gap-2">
               <span className="text-[15px] font-bold text-ink-2">Co miasto wie o tym miejscu</span>
-              {knowledge.status === 'overdue' && <StatusBadge status="overdue" small label="Termin minął" />}
+              {knowledge.status === 'overdue' && <StatusBadge status="overdue" small label="Czeka na termin" />}
             </div>
             <p className="text-[17px] leading-[26px]">{knowledge.text}</p>
             {knowledge.doc && <DocLink doc={knowledge.doc} />}

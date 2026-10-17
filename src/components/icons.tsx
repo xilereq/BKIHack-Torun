@@ -184,7 +184,13 @@ export const IconList = (p: IconProps) => (
     <path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01" />
   </svg>
 )
-export const IconArrowUp = (p: IconProps) => (
+export const IconClock = (p: IconProps) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M12 7.5V12l3 2" />
+  </svg>
+)
+export const IconArrowUp =(p: IconProps) => (
   <svg {...base(p)}>
     <path d="M12 19V5M5.5 11.5L12 5l6.5 6.5" />
   </svg>

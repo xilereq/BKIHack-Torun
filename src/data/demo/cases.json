@@ -54,7 +54,8 @@
         "title": "Połączono 6 zgłoszeń w jedną sprawę"
       }
     ],
-    "supporters": 9
+    "supporters": 9,
+    "district": "rubinkowo"
   },
   {
     "id": "c-lawka-manhattan",
@@ -106,7 +107,8 @@
         "title": "Pogrupowano 11 próśb sąsiadów"
       }
     ],
-    "supporters": 5
+    "supporters": 5,
+    "district": "rubinkowo"
   },
   {
     "id": "c-latarnia-skarpa",
@@ -145,7 +147,8 @@
         "title": "Przekazano do MZD i radnych okręgu"
       }
     ],
-    "supporters": 3
+    "supporters": 3,
+    "district": "na-skarpie"
   },
   {
     "id": "c-chodnik-przychodnia",
@@ -183,7 +186,8 @@
         "docId": "d-plan-chodniki-2026"
       }
     ],
-    "supporters": 2
+    "supporters": 2,
+    "district": "na-skarpie"
   },
   {
     "id": "c-przejscie-sp16",
@@ -229,7 +233,8 @@
         "docId": "d-odp-sp16-2025"
       }
     ],
-    "supporters": 6
+    "supporters": 6,
+    "district": "rubinkowo"
   },
   {
     "id": "c-schody-skarpa",
@@ -275,7 +280,8 @@
         "docId": "d-odp-schody-2025"
       }
     ],
-    "supporters": 4
+    "supporters": 4,
+    "district": "na-skarpie"
   },
   {
     "id": "c-graffiti-jamontta",
@@ -312,7 +318,8 @@
         "date": "2026-10-06",
         "title": "Przekazano do MZD"
       }
-    ]
+    ],
+    "district": "rubinkowo"
   },
   {
     "id": "c-kosze-plac",
@@ -352,7 +359,8 @@
         "date": "2026-10-08",
         "title": "Sąsiad zgłosił to samo miejsce"
       }
-    ]
+    ],
+    "district": "rubinkowo"
   },
   {
     "id": "c-studzienka-przybylow",
@@ -385,7 +393,8 @@
         "date": "2026-10-11",
         "title": "Przekazano do Toruńskich Wodociągów"
       }
-    ]
+    ],
+    "district": "rubinkowo"
   },
   {
     "id": "c-stojak-centrum",
@@ -418,7 +427,8 @@
         "date": "2026-06-04",
         "title": "Przekazano do MZD jako prośbę"
       }
-    ]
+    ],
+    "district": "rubinkowo"
   },
   {
     "id": "c-silownia-niesiolowskiego",
@@ -456,7 +466,8 @@
         "docId": "d-bo-2027"
       }
     ],
-    "supporters": 8
+    "supporters": 8,
+    "district": "rubinkowo"
   },
   {
     "id": "c-lawka-sybirakow",
@@ -505,7 +516,8 @@
         "date": "2026-08-24",
         "title": "Mieszkańcy potwierdzili: rozwiązane"
       }
-    ]
+    ],
+    "district": "rubinkowo"
   },
   {
     "id": "c-chodnik-slaskiego",
@@ -537,6 +549,631 @@
         "type": "forwarded",
         "date": "2026-10-13",
         "title": "Przekazano do MZD"
+      }
+    ],
+    "district": "na-skarpie"
+  },
+  {
+    "id": "c-city-rynek",
+    "type": "problem",
+    "title": "Wystające kostki brukowe",
+    "category": "Chodnik",
+    "unitId": "mzd",
+    "unitReason": "Chodnik leży w pasie drogi miejskiej, więc odpowiada Miejski Zarząd Dróg.",
+    "place": "Rynek Staromiejski",
+    "district": "stare-miasto",
+    "location": {
+      "lat": 53.01054,
+      "lng": 18.60373
+    },
+    "photo": "/zdjecia/chodnik.jpg",
+    "createdAt": "2026-03-02",
+    "documentIds": [
+      "d-plan-rynek-2027"
+    ],
+    "factors": {
+      "severity": 18
+    },
+    "supporters": 3,
+    "events": [
+      {
+        "id": "e-rynek-1",
+        "type": "reported",
+        "date": "2026-03-02",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-rynek-2",
+        "type": "forwarded",
+        "date": "2026-03-02",
+        "title": "Przekazano do: MZD"
+      },
+      {
+        "id": "e-rynek-3",
+        "type": "merged",
+        "date": "2026-09-20",
+        "title": "Połączono zgłoszenia w jedną sprawę (3)"
+      }
+    ]
+  },
+  {
+    "id": "c-city-rapackiego",
+    "type": "idea",
+    "title": "Więcej ławek w cieniu",
+    "category": "Mała architektura",
+    "unitId": "wgk",
+    "unitReason": "Ławki w przestrzeni publicznej zamawia Wydział Gospodarki Komunalnej Urzędu Miasta.",
+    "place": "Plac Rapackiego",
+    "district": "stare-miasto",
+    "location": {
+      "lat": 53.00941,
+      "lng": 18.60079
+    },
+    "photo": "/zdjecia/lawka.jpg",
+    "createdAt": "2025-07-14",
+    "documentIds": [],
+    "factors": {
+      "severity": 8
+    },
+    "supporters": 4,
+    "events": [
+      {
+        "id": "e-rapackiego-1",
+        "type": "reported",
+        "date": "2025-07-14",
+        "title": "Pierwsza prośba mieszkańca"
+      },
+      {
+        "id": "e-rapackiego-2",
+        "type": "forwarded",
+        "date": "2025-07-14",
+        "title": "Przekazano do: WGK"
+      },
+      {
+        "id": "e-rapackiego-3",
+        "type": "merged",
+        "date": "2026-08-15",
+        "title": "Połączono zgłoszenia w jedną sprawę (6)"
+      }
+    ]
+  },
+  {
+    "id": "c-city-chelminska",
+    "type": "problem",
+    "title": "Zapadnięty asfalt przy przystanku",
+    "category": "Nawierzchnia jezdni",
+    "unitId": "mzd",
+    "unitReason": "To droga miejska, więc za nawierzchnię odpowiada Miejski Zarząd Dróg.",
+    "place": "Szosa Chełmińska, przystanek",
+    "district": "chelminskie",
+    "location": {
+      "lat": 53.02389,
+      "lng": 18.59408
+    },
+    "photo": "/zdjecia/dziura.jpg",
+    "createdAt": "2026-02-17",
+    "documentIds": [
+      "d-plan-chelminska-2026"
+    ],
+    "factors": {
+      "severity": 30,
+      "transit": {
+        "trips": 248,
+        "mode": "autobusów"
+      }
+    },
+    "supporters": 5,
+    "events": [
+      {
+        "id": "e-chelminska-1",
+        "type": "reported",
+        "date": "2026-02-17",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-chelminska-2",
+        "type": "forwarded",
+        "date": "2026-02-17",
+        "title": "Przekazano do: MZD"
+      },
+      {
+        "id": "e-chelminska-3",
+        "type": "merged",
+        "date": "2026-09-30",
+        "title": "Połączono zgłoszenia w jedną sprawę (4)"
+      }
+    ]
+  },
+  {
+    "id": "c-city-lelewela",
+    "type": "problem",
+    "title": "Ciemna alejka między blokami",
+    "category": "Oświetlenie",
+    "unitId": "mzd",
+    "unitReason": "Oświetlenie ulic i przejść należy do Miejskiego Zarządu Dróg.",
+    "place": "Osiedle Lelewela",
+    "district": "chelminskie",
+    "location": {
+      "lat": 53.0244,
+      "lng": 18.60079
+    },
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2026-09-12",
+    "documentIds": [],
+    "factors": {
+      "severity": 22
+    },
+    "events": [
+      {
+        "id": "e-lelewela-1",
+        "type": "reported",
+        "date": "2026-09-12",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-lelewela-2",
+        "type": "forwarded",
+        "date": "2026-09-12",
+        "title": "Przekazano do: MZD"
+      },
+      {
+        "id": "e-lelewela-3",
+        "type": "merged",
+        "date": "2026-10-05",
+        "title": "Połączono zgłoszenia w jedną sprawę (2)"
+      }
+    ]
+  },
+  {
+    "id": "c-city-bydgoska",
+    "type": "problem",
+    "title": "Połamane płyty chodnika",
+    "category": "Chodnik",
+    "unitId": "mzd",
+    "unitReason": "Chodnik leży w pasie drogi miejskiej, więc odpowiada Miejski Zarząd Dróg.",
+    "place": "ul. Bydgoska",
+    "district": "bydgoskie",
+    "location": {
+      "lat": 53.01024,
+      "lng": 18.58381
+    },
+    "photo": "/zdjecia/chodnik.jpg",
+    "createdAt": "2025-09-01",
+    "documentIds": [
+      "d-odp-bydgoska-2025"
+    ],
+    "factors": {
+      "severity": 20,
+      "transit": {
+        "trips": 170,
+        "mode": "tramwajów"
+      },
+      "nearby": "Park Miejski (150 m)"
+    },
+    "events": [
+      {
+        "id": "e-bydgoska-1",
+        "type": "reported",
+        "date": "2025-09-01",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-bydgoska-2",
+        "type": "forwarded",
+        "date": "2025-09-01",
+        "title": "Przekazano do: MZD"
+      },
+      {
+        "id": "e-bydgoska-3",
+        "type": "merged",
+        "date": "2026-06-07",
+        "title": "Połączono zgłoszenia w jedną sprawę (3)"
+      }
+    ]
+  },
+  {
+    "id": "c-city-falata",
+    "type": "problem",
+    "title": "Przepełnione kosze",
+    "category": "Czystość",
+    "unitId": "mpo",
+    "unitReason": "Opróżnianie miejskich koszy zleca się Miejskiemu Przedsiębiorstwu Oczyszczania.",
+    "place": "ul. Fałata",
+    "district": "bydgoskie",
+    "location": {
+      "lat": 53.01526,
+      "lng": 18.57251
+    },
+    "photo": "/zdjecia/kosz.jpg",
+    "createdAt": "2026-06-03",
+    "documentIds": [
+      "d-prot-falata-2026"
+    ],
+    "factors": {
+      "severity": 10
+    },
+    "statusOverride": "resolved",
+    "events": [
+      {
+        "id": "e-falata-1",
+        "type": "reported",
+        "date": "2026-06-03",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-falata-2",
+        "type": "forwarded",
+        "date": "2026-06-03",
+        "title": "Przekazano do: MPO"
+      },
+      {
+        "id": "e-falata-3",
+        "type": "merged",
+        "date": "2026-06-18",
+        "title": "Połączono zgłoszenia w jedną sprawę (2)"
+      },
+      {
+        "id": "e-falata-4",
+        "type": "done",
+        "date": "2026-07-01",
+        "title": "Prace wykonane",
+        "docId": "d-prot-falata-2026"
+      },
+      {
+        "id": "e-falata-5",
+        "type": "resolved",
+        "date": "2026-07-04",
+        "title": "Mieszkańcy potwierdzili: rozwiązane"
+      }
+    ]
+  },
+  {
+    "id": "c-city-okrezna",
+    "type": "idea",
+    "title": "Stojaki rowerowe przy akademikach",
+    "category": "Infrastruktura rowerowa",
+    "unitId": "mzd",
+    "unitReason": "Stojaki rowerowe w pasie drogowym ustawia Miejski Zarząd Dróg.",
+    "place": "Szosa Okrężna",
+    "district": "bielany",
+    "location": {
+      "lat": 53.01765,
+      "lng": 18.56359
+    },
+    "photo": "/zdjecia/stojak.jpg",
+    "createdAt": "2025-10-10",
+    "documentIds": [],
+    "factors": {
+      "severity": 6
+    },
+    "supporters": 11,
+    "events": [
+      {
+        "id": "e-okrezna-1",
+        "type": "reported",
+        "date": "2025-10-10",
+        "title": "Pierwsza prośba mieszkańca"
+      },
+      {
+        "id": "e-okrezna-2",
+        "type": "forwarded",
+        "date": "2025-10-10",
+        "title": "Przekazano do: MZD"
+      },
+      {
+        "id": "e-okrezna-3",
+        "type": "merged",
+        "date": "2026-10-09",
+        "title": "Połączono zgłoszenia w jedną sprawę (7)"
+      }
+    ]
+  },
+  {
+    "id": "c-city-gagarina",
+    "type": "problem",
+    "title": "Niebezpieczne przejście przy Auli UMK",
+    "category": "Bezpieczeństwo ruchu",
+    "unitId": "mzd",
+    "unitReason": "Oznakowanie i oświetlenie przejść należy do Miejskiego Zarządu Dróg.",
+    "place": "ul. Gagarina, przy Auli UMK",
+    "district": "bielany",
+    "location": {
+      "lat": 53.01851,
+      "lng": 18.57238
+    },
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2025-11-05",
+    "documentIds": [
+      "d-int-gagarina-2026"
+    ],
+    "factors": {
+      "severity": 32,
+      "nearby": "Aula UMK i akademiki"
+    },
+    "supporters": 7,
+    "events": [
+      {
+        "id": "e-gagarina-1",
+        "type": "reported",
+        "date": "2025-11-05",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-gagarina-2",
+        "type": "forwarded",
+        "date": "2025-11-05",
+        "title": "Przekazano do: MZD"
+      },
+      {
+        "id": "e-gagarina-3",
+        "type": "merged",
+        "date": "2026-10-01",
+        "title": "Połączono zgłoszenia w jedną sprawę (5)"
+      }
+    ]
+  },
+  {
+    "id": "c-city-kosciuszki",
+    "type": "problem",
+    "title": "Dziura w jezdni",
+    "category": "Nawierzchnia jezdni",
+    "unitId": "mzd",
+    "unitReason": "To droga miejska, więc za nawierzchnię odpowiada Miejski Zarząd Dróg.",
+    "place": "ul. Kościuszki",
+    "district": "mokre",
+    "location": {
+      "lat": 53.0239,
+      "lng": 18.62161
+    },
+    "photo": "/zdjecia/dziura.jpg",
+    "createdAt": "2026-09-29",
+    "documentIds": [],
+    "factors": {
+      "severity": 30,
+      "transit": {
+        "trips": 196,
+        "mode": "autobusów"
+      }
+    },
+    "events": [
+      {
+        "id": "e-kosciuszki-1",
+        "type": "reported",
+        "date": "2026-09-29",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-kosciuszki-2",
+        "type": "forwarded",
+        "date": "2026-09-29",
+        "title": "Przekazano do: MZD"
+      },
+      {
+        "id": "e-kosciuszki-3",
+        "type": "merged",
+        "date": "2026-10-14",
+        "title": "Połączono zgłoszenia w jedną sprawę (3)"
+      }
+    ]
+  },
+  {
+    "id": "c-city-polna",
+    "type": "idea",
+    "title": "Plac zabaw przy Polnej",
+    "category": "Rekreacja",
+    "unitId": "wgk",
+    "unitReason": "Większe inwestycje osiedlowe realizuje Wydział Gospodarki Komunalnej, także z budżetu obywatelskiego.",
+    "place": "ul. Polna",
+    "district": "mokre",
+    "location": {
+      "lat": 53.03543,
+      "lng": 18.62905
+    },
+    "photo": "/zdjecia/trawnik.jpg",
+    "createdAt": "2026-04-11",
+    "documentIds": [
+      "d-bo-2027"
+    ],
+    "factors": {
+      "severity": 6
+    },
+    "supporters": 14,
+    "bigIdea": true,
+    "events": [
+      {
+        "id": "e-polna-1",
+        "type": "reported",
+        "date": "2026-04-11",
+        "title": "Pierwsza prośba mieszkańca"
+      },
+      {
+        "id": "e-polna-2",
+        "type": "forwarded",
+        "date": "2026-04-11",
+        "title": "Przekazano do: WGK"
+      },
+      {
+        "id": "e-polna-3",
+        "type": "merged",
+        "date": "2026-10-06",
+        "title": "Połączono zgłoszenia w jedną sprawę (9)"
+      }
+    ]
+  },
+  {
+    "id": "c-city-podgorska",
+    "type": "problem",
+    "title": "Zalewana ulica po deszczu",
+    "category": "Kanalizacja",
+    "unitId": "wod",
+    "unitReason": "Kanalizacja deszczowa i studzienki należą do Toruńskich Wodociągów.",
+    "place": "ul. Podgórska, Stawki",
+    "district": "podgorz",
+    "location": {
+      "lat": 53.00311,
+      "lng": 18.63397
+    },
+    "photo": "/zdjecia/studzienka.jpg",
+    "createdAt": "2026-05-22",
+    "documentIds": [],
+    "factors": {
+      "severity": 26
+    },
+    "supporters": 2,
+    "events": [
+      {
+        "id": "e-podgorska-1",
+        "type": "reported",
+        "date": "2026-05-22",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-podgorska-2",
+        "type": "forwarded",
+        "date": "2026-05-22",
+        "title": "Przekazano do: Toruńskie Wodociągi"
+      },
+      {
+        "id": "e-podgorska-3",
+        "type": "merged",
+        "date": "2026-09-09",
+        "title": "Połączono zgłoszenia w jedną sprawę (4)"
+      }
+    ]
+  },
+  {
+    "id": "c-city-wrzosy",
+    "type": "problem",
+    "title": "Graffiti na ekranach akustycznych",
+    "category": "Graffiti i dewastacja",
+    "unitId": "mzd",
+    "unitReason": "Ekrany akustyczne i wiaty utrzymuje Miejski Zarząd Dróg.",
+    "place": "Wrzosy, ekrany przy trasie",
+    "district": "wrzosy",
+    "location": {
+      "lat": 53.04684,
+      "lng": 18.58549
+    },
+    "photo": "/zdjecia/graffiti.jpg",
+    "createdAt": "2026-08-21",
+    "documentIds": [],
+    "factors": {
+      "severity": 8
+    },
+    "events": [
+      {
+        "id": "e-wrzosy-1",
+        "type": "reported",
+        "date": "2026-08-21",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-wrzosy-2",
+        "type": "forwarded",
+        "date": "2026-08-21",
+        "title": "Przekazano do: MZD"
+      },
+      {
+        "id": "e-wrzosy-3",
+        "type": "merged",
+        "date": "2026-09-26",
+        "title": "Połączono zgłoszenia w jedną sprawę (2)"
+      }
+    ]
+  },
+  {
+    "id": "c-city-jakubskie",
+    "type": "problem",
+    "title": "Brak oświetlenia przejścia",
+    "category": "Oświetlenie",
+    "unitId": "mzd",
+    "unitReason": "Oświetlenie ulic i przejść należy do Miejskiego Zarządu Dróg.",
+    "place": "Jakubskie Przedmieście",
+    "district": "jakubskie",
+    "location": {
+      "lat": 53.01978,
+      "lng": 18.63469
+    },
+    "photo": "/zdjecia/latarnia.jpg",
+    "createdAt": "2026-03-15",
+    "documentIds": [
+      "d-prot-jakubskie-2026"
+    ],
+    "factors": {
+      "severity": 24
+    },
+    "statusOverride": "resolved",
+    "events": [
+      {
+        "id": "e-jakubskie-1",
+        "type": "reported",
+        "date": "2026-03-15",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-jakubskie-2",
+        "type": "forwarded",
+        "date": "2026-03-15",
+        "title": "Przekazano do: MZD"
+      },
+      {
+        "id": "e-jakubskie-3",
+        "type": "merged",
+        "date": "2026-04-20",
+        "title": "Połączono zgłoszenia w jedną sprawę (2)"
+      },
+      {
+        "id": "e-jakubskie-4",
+        "type": "done",
+        "date": "2026-07-01",
+        "title": "Prace wykonane",
+        "docId": "d-prot-jakubskie-2026"
+      },
+      {
+        "id": "e-jakubskie-5",
+        "type": "resolved",
+        "date": "2026-07-04",
+        "title": "Mieszkańcy potwierdzili: rozwiązane"
+      }
+    ]
+  },
+  {
+    "id": "c-city-koniuchy",
+    "type": "problem",
+    "title": "Przepełnione kosze przy przystanku",
+    "category": "Czystość",
+    "unitId": "mpo",
+    "unitReason": "Opróżnianie miejskich koszy zleca się Miejskiemu Przedsiębiorstwu Oczyszczania.",
+    "place": "Koniuchy, przystanek",
+    "district": "koniuchy",
+    "location": {
+      "lat": 53.03381,
+      "lng": 18.59953
+    },
+    "photo": "/zdjecia/kosz.jpg",
+    "createdAt": "2026-10-02",
+    "documentIds": [],
+    "factors": {
+      "severity": 10
+    },
+    "events": [
+      {
+        "id": "e-koniuchy-1",
+        "type": "reported",
+        "date": "2026-10-02",
+        "title": "Pierwsze zgłoszenie mieszkańca"
+      },
+      {
+        "id": "e-koniuchy-2",
+        "type": "forwarded",
+        "date": "2026-10-02",
+        "title": "Przekazano do: MPO"
+      },
+      {
+        "id": "e-koniuchy-3",
+        "type": "merged",
+        "date": "2026-10-12",
+        "title": "Połączono zgłoszenia w jedną sprawę (2)"
       }
     ]
   }

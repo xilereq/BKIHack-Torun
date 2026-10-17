@@ -4,35 +4,73 @@ import { caseStatus, caseUrgency, unitById } from '../lib/domain'
 import { StatusBadge, Tag } from '../components/ui'
 import { IconBulb } from '../components/icons'
 import { plural } from '../lib/format'
+import { districtName } from '../lib/geo'
 
 export interface ListItem {
   c: Case
   score: number
   count: number
   fresh: boolean
+  last: string
 }
 
-export function buildList(s: DemoState, reports: Report[], type: 'problem' | 'idea', verifiedOnly: boolean): ListItem[] {
+export type StatusFilter = 'all' | 'attention' | 'planned' | 'done'
+export type SortKey = 'urgency' | 'newest' | 'oldest' | 'reports' | 'supporters'
+export interface Filters {
+  /** id osiedli w obszarze; null = całe miasto */
+  districts: string[] | null
+  status: StatusFilter
+  /** zgłoszenia od–do (RRRR-MM-DD), null = bez ograniczenia */
+  from: string | null
+  to: string | null
+  sort: SortKey
+  verifiedOnly: boolean
+}
+
+export function matchesStatus(c: Case, s: DemoState, f: StatusFilter): boolean {
+  if (f === 'all') return true
+  const st = caseStatus(c, s.documents)
+  if (f === 'attention') return st === 'new' || st === 'overdue'
+  if (f === 'planned') return st === 'planned'
+  return st === 'done' || st === 'resolved'
+}
+
+/** Lista spraw po filtrach (obszar, status, okres zgłoszeń, zweryfikowani) i sortowaniu */
+export function buildList(s: DemoState, reports: Report[], type: 'problem' | 'idea', f: Filters): ListItem[] {
   const now = Date.now()
-  return s.cases
+  const inRange = (iso: string) => (!f.from || iso.slice(0, 10) >= f.from) && (!f.to || iso.slice(0, 10) <= f.to)
+  const items = s.cases
     .filter((c) => c.type === type)
+    .filter((c) => !f.districts || f.districts.includes(c.district))
+    .filter((c) => matchesStatus(c, s, f.status))
     .map((c) => {
       const rs = reports.filter((r) => r.caseId === c.id)
       const u = caseUrgency(c, reports, s.documents)
       const fresh = rs.some((r) => now - new Date(r.createdAt).getTime() < 30 * 60000)
-      return { c, score: u.score, count: rs.length, fresh }
+      const last = rs.reduce((m, r) => (r.createdAt > m ? r.createdAt : m), c.createdAt)
+      return { c, score: u.score, count: rs.length, fresh, last, rs }
     })
-    .filter((it) => !verifiedOnly || it.count > 0)
+    .filter((it) => !f.verifiedOnly || it.count > 0)
+    .filter((it) => (!f.from && !f.to) || it.rs.some((r) => inRange(r.createdAt)))
+  const by: Record<SortKey, (a: (typeof items)[number], b: (typeof items)[number]) => number> = {
+    urgency: (a, b) => (type === 'idea' ? b.count - a.count : b.score - a.score),
+    newest: (a, b) => b.last.localeCompare(a.last),
+    oldest: (a, b) => a.c.createdAt.localeCompare(b.c.createdAt),
+    reports: (a, b) => b.count - a.count,
+    supporters: (a, b) => (b.c.supporters ?? 0) - (a.c.supporters ?? 0),
+  }
+  return items
     .sort((a, b) => {
-      const ra = caseStatus(a.c, s.documents) === 'resolved' ? 1 : 0
-      const rb = caseStatus(b.c, s.documents) === 'resolved' ? 1 : 0
-      if (ra !== rb) return ra - rb
-      return type === 'idea' ? b.count - a.count : b.score - a.score
+      // rozwiązane na końcu, chyba że filtrujemy właśnie wykonane
+      const ra = f.status !== 'done' && caseStatus(a.c, s.documents) === 'resolved' ? 1 : 0
+      const rb = f.status !== 'done' && caseStatus(b.c, s.documents) === 'resolved' ? 1 : 0
+      return ra - rb || by[f.sort](a, b)
     })
+    .map(({ c, score, count, fresh, last }) => ({ c, score, count, fresh, last }))
 }
 
 function ScoreBadge({ score }: { score: number }) {
-  const cls = score >= 80 ? 'bg-brand text-white' : score >= 55 ? 'bg-brand-tint text-st-overdue' : 'bg-st-new-bg text-st-new'
+  const cls = score >= 80 ? 'bg-ink text-white' : score >= 55 ? 'bg-st-new-bg text-ink' : 'bg-canvas text-st-new'
   return (
     <div className={`flex w-14 shrink-0 flex-col items-center rounded-[10px] px-2 py-1.5 ${cls}`} aria-label={`Pilność ${score} na 99`}>
       <span className="text-[20px] font-bold leading-[22px]">{score}</span>
@@ -89,7 +127,7 @@ export function CaseList({
                     )}
                   </div>
                   <div className="text-small text-ink-2">
-                    {c.place} · {unitById(c.unitId).short}
+                    {c.place} · {districtName(c.district)} · {unitById(c.unitId).short}
                   </div>
                 </div>
                 {!isIdea && <ScoreBadge score={score} />}

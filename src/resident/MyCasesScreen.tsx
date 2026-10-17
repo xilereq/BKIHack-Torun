@@ -16,7 +16,7 @@ export function MyCasesScreen({ onOpen, onVerify, onReport }: { onOpen: (id: str
   return (
     <div className="flex h-full flex-col">
       <div className="min-h-0 flex-1 overflow-y-auto">
-        <div className="flex flex-col gap-3 px-4 pt-4 pb-6">
+        <div className="flex flex-col gap-3 px-4 pt-[calc(var(--safe-top)+12px)] pb-6">
           <h1 className="px-1 pt-2 text-[32px] font-bold leading-10 tracking-[-0.01em]">Moje sprawy</h1>
           {s.verification ? (
             <div className="flex flex-wrap items-center gap-2">

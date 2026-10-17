@@ -1,15 +1,18 @@
 import type { Analysis } from '../lib/ai'
+import { useState } from 'react'
 import { useDemo } from '../lib/store'
+import type { TraceStep } from '../lib/aiTrace'
+import { TechChip, TraceList } from '../components/AiTrace'
 import { Button, StatusBadge, TypeBadge } from '../components/ui'
-import { IconAlert, IconBuilding, IconCalendar, IconCheckCircle, IconShield, IconUsers } from '../components/icons'
+import { IconClock, IconChevron, IconSparkle, IconBuilding, IconCalendar, IconCheckCircle, IconShield, IconUsers } from '../components/icons'
 import { DocLink, Photo } from '../components/shared'
 import { caseReports } from '../lib/domain'
 import { plural } from '../lib/format'
 import { ScreenHeader } from './ScreenHeader'
 import type { ReportDraft } from './ReportScreen'
 
-const TONE_BADGE: Record<Analysis['answer']['tone'], { label: string; cls: string; Icon: typeof IconAlert } | null> = {
-  overdue: { label: 'Termin minął', cls: 'bg-st-overdue-bg text-st-overdue', Icon: IconAlert },
+const TONE_BADGE: Record<Analysis['answer']['tone'], { label: string; cls: string; Icon: typeof IconClock } | null> = {
+  overdue: { label: 'Czeka na nowy termin', cls: 'bg-st-wait-bg text-st-wait', Icon: IconClock },
   planned: { label: 'Zaplanowane', cls: 'bg-st-planned-bg text-st-planned', Icon: IconCalendar },
   interpellation: { label: 'Radny już pyta', cls: 'bg-st-new-bg text-st-new', Icon: IconUsers },
   idea: null,
@@ -20,6 +23,7 @@ const TONE_BADGE: Record<Analysis['answer']['tone'], { label: string; cls: strin
 export function ResultScreen({
   draft,
   analysis,
+  trace,
   caseId,
   onFollow,
   onVerify,
@@ -28,6 +32,7 @@ export function ResultScreen({
 }: {
   draft: ReportDraft
   analysis: Analysis
+  trace: TraceStep[]
   caseId: string | null
   onFollow: () => void
   onVerify: () => void
@@ -35,6 +40,7 @@ export function ResultScreen({
   onFix: () => void
 }) {
   const s = useDemo()
+  const [showAi, setShowAi] = useState(false)
 
   if (analysis.spam || !caseId) {
     return (
@@ -129,9 +135,30 @@ export function ResultScreen({
             </div>
           </div>
 
+          <div className="rounded-card border border-line bg-surface px-4 animate-fade-up [animation-delay:320ms]">
+            <button type="button" onClick={() => setShowAi((v) => !v)} aria-expanded={showAi} className="flex w-full items-center gap-3 py-3.5 text-left">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-tint text-brand">
+                <IconSparkle size={20} />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-[17px] font-bold leading-6">Jak AI to oceniło</span>
+                <span className="mt-0.5 flex flex-wrap gap-1">
+                  {[...new Set(trace.flatMap((st) => st.tech))].map((id) => (
+                    <TechChip key={id} id={id} small />
+                  ))}
+                </span>
+              </span>
+              <IconChevron size={20} className={`shrink-0 text-ink-2 transition-transform ${showAi ? 'rotate-90' : ''}`} />
+            </button>
+            {showAi && (
+              <div className="pb-3">
+                <TraceList steps={trace} dense />
+              </div>
+            )}
+          </div>
         </div>
       </div>
-      <div className="flex shrink-0 flex-col gap-2.5 bg-canvas px-4 pt-3 pb-5">
+      <div className="flex shrink-0 flex-col gap-2.5 bg-canvas px-4 pt-3 pb-[calc(var(--safe-bottom)+12px)]">
         <Button variant="primary" size="lg" className="rounded-full" onClick={onFollow}>
           Śledź sprawę
         </Button>

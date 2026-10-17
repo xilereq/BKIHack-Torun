@@ -22,8 +22,12 @@
   --color-st-new-bg: #eef0f3;
   --color-st-planned: #1d4f9e;
   --color-st-planned-bg: #e8f0fc;
-  --color-st-overdue: #a1121f;
+  --color-st-overdue: #a1121f; /* tylko błędy formularzy */
   --color-st-overdue-bg: #fdecee;
+  /* „czeka na nowy termin” — ciepły, spokojny bursztyn zamiast czerwieni */
+  --color-st-wait: #8a5300;
+  --color-st-wait-bg: #fdf3e1;
+  --color-st-wait-pin: #c27c0e;
   --color-st-done: #1c6b3c;
   --color-st-done-bg: #e5f4ea;
   --color-st-idea: #5b3a9e;
@@ -96,6 +100,11 @@
 html, body, #root {
   height: 100%;
 }
+/* marginesy bezpieczne: systemowe na telefonie, w ramce na komputerze nadpisywane (54/28 px) */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
 body {
   margin: 0;
   background: var(--color-canvas);
@@ -151,7 +160,7 @@ button { cursor: pointer; }
 .gm-pin--idea { background: var(--color-idea-pin); color: #fff; }
 .gm-pin--resolved { background: var(--color-st-done); color: #fff; }
 .gm-pin--doc { background: #fff; color: var(--color-ink); border: 1.5px solid var(--color-line-strong); }
-.gm-pin--overdue { background: #fff; color: var(--color-brand); border: 2.5px solid var(--color-brand); }
+.gm-pin--overdue { background: #fff; color: var(--color-st-wait-pin); border: 2.5px solid var(--color-st-wait-pin); }
 .gm-pin--planned { background: #fff; color: var(--color-st-planned); border: 2px solid var(--color-st-planned); }
 .gm-pin--me { background: var(--color-ink); box-shadow: 0 0 0 6px rgba(22,25,29,.15); }
 .gm-pin--selected { transform: scale(1.15); animation: pulse-ring 1.4s ease-out infinite; }

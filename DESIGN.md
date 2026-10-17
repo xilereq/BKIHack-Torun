@@ -6,6 +6,8 @@
 
 ## Charakter
 
+**Narzędzie współpracy, nie miejsce krytyki.** Aplikacja ma pomagać mieszkańcom i radnym wspólnie rozwiązywać sprawy, a nie podgrzewać emocji. Dlatego żadnych czerwonych wykrzykników ani słów „przeterminowane”, „nie dotrzymano”. Gdy plan miasta się opóźnia, piszemy „czeka na nowy termin” i proponujemy wspólny następny krok.
+
 Czerwono-biały, uniwersalny, spokojny. Dużo bieli, płaskie karty, cienkie ramki, bez gradientów i ozdobników.
 Ma wyglądać jak usługa publiczna, z której bez trudu skorzysta senior.
 
@@ -15,7 +17,7 @@ Ma wyglądać jak usługa publiczna, z której bez trudu skorzysta senior.
 |---|---|---|
 | `brand` | `#C8102E` | Marka i **główna akcja**. Jeden czerwony przycisk na ekran. |
 | `brand-dark` | `#9E0B23` | Najechanie i wciśnięcie czerwonego przycisku, obrys znaczników |
-| `brand-tint` | `#FDECEE` | Tło wyróżnień i etykiety „przeterminowane” |
+| `brand-tint` | `#FDECEE` | Delikatne tło wyróżnień marki |
 | `surface` | `#FFFFFF` | Karty, paski, panele |
 | `canvas` | `#F5F6F8` | Tło ekranu |
 | `line` | `#E2E5E9` | Ramki kart, podziały |
@@ -29,7 +31,7 @@ Ma wyglądać jak usługa publiczna, z której bez trudu skorzysta senior.
 |---|---|---|
 | Nowe | `#3F4652` | `#EEF0F3` |
 | Zaplanowane | `#1D4F9E` | `#E8F0FC` |
-| Przeterminowane | `#A1121F` | `#FDECEE` |
+| Czeka na nowy termin | `#8A5300` | `#FDF3E1` (ciepły bursztyn, ikona zegara) |
 | Rozwiązane | `#1C6B3C` | `#E5F4EA` |
 | Pomysł | `#5B3A9E` | `#F0EBFA` |
 | Zweryfikowany mieszkaniec | ikona tarczy `#1C6B3C`, biała etykieta z ramką | |
@@ -40,21 +42,22 @@ Wszystkie znaczniki to **okrągłe plakietki z minimalistyczną ikoną liniową*
 
 | Znacznik | Wygląd |
 |---|---|
-| Problem | czerwone kółko 34 px, biały wykrzyknik |
+| Problem | czerwone kółko 34 px, biała ikonka kategorii (droga, chodnik, latarnia, kosz, kropla…), bez wykrzyknika |
 | Pomysł | fioletowe kółko `#6A45B8`, biała żarówka |
 | Rozwiązane | zielone kółko `#1C6B3C`, biały ptaszek |
 | Dokument miasta | białe kółko 28 px, szara ramka, ikona dokumentu `ink` |
-| Obietnica przeterminowana | białe kółko, czerwona ramka, czerwony zegar |
+| Plan miasta czekający na aktualny termin | białe kółko, bursztynowa ramka `#C27C0E`, zegar |
 | Zobowiązanie w terminie | białe kółko, niebieska ramka, niebieski kalendarz |
 
 Zasada techniczna: element pozycjonowany przez MapLibre nie dostaje żadnych `transform`/`transition` ani nadpisania `className` (tylko `classList.add`), a wygląd jest w elemencie wewnętrznym. Inaczej punkty się rozjeżdżają.
 
 ### Zobowiązania miasta: etykiety
 
-- „Termin VI 2026 minął” (czerwona) tylko, gdy sprawa nie jest wykonana ani rozwiązana.
+- „Plan VI 2026 · do aktualizacji” (bursztynowa, zegar), gdy termin upłynął, a prac nie wykonano.
 - „Termin VI 2027” (niebieska), gdy termin jeszcze nie minął.
 - „Pierwotny termin …, zmieniony” (szara), gdy miasto podało nowy termin.
-- „Zrealizowano” (zielona) po wykonaniu remontu, bez straszenia przeterminowaniem.
+- „Zrealizowano” (zielona) po wykonaniu remontu.
+- Interpelacja pyta o aktualny harmonogram i o to, jak można pomóc, a nie o winnych.
 
 ## Typografia
 
@@ -83,14 +86,18 @@ Nic poniżej 15 px (wyjątek: liczby w znacznikach mapy, min. 12 px). Wersaliki 
 - **Link:** czerwony, pogrubiony, podkreślenie przy najechaniu.
 - **Pole tekstowe:** etykieta nad polem (18 px, pogrubiona), wys. 56 px, aktywne pole w ramce 2 px `ink`.
 - **Karta „Co miasto wie o tym miejscu”:** ramka 2 px `brand`, etykieta statusu, zdanie odpowiedzi, link do źródła.
-- **Etykieta uzasadnienia pilności:** szare tło `#EEF0F3`, tekst `#3F4652`; „przeterminowane” w kolorach statusu.
+- **Etykieta uzasadnienia pilności:** szare tło `#EEF0F3`, tekst `#3F4652`; „czeka na aktualny termin” w kolorach bursztynowych.
+- **Wynik pilności:** ciemna plakietka (`ink`) dla 80+, szara dla niższych. Bez czerwieni.
+- **Ślad AI:** każdy etap z chipem technologii (szare, kwadratowe: „LLM”, „Model wizyjny”, „Embeddingi”, „PostGIS”, „RAG · BIP”), krótkim wynikiem i rozwinięciem z paskami pewności i fragmentem zapytania.
+- **Filtry panelu radnego:** listy rozwijane (Obszar, Sortuj według, Zgłoszone) i przełącznik statusu (Wszystkie, Do działania, Zaplanowane, Wykonane).
 - **Karuzela zdjęć:** przesuwanie palcem (scroll-snap) i strzałki w białych kółkach, licznik „1/3” i kropki. Data zdjęcia w ciemnej plakietce.
 - **Dymek na mapie (panel radnego):** biała karta 320 px nad punktem, zaokrąglenie 16 px; karuzela, statusy, tytuł, jedna etykieta, ciemny przycisk „Historia miejsca”.
 - **Podbij sprawę:** przycisk w obrysie czerwonym, pigułka z ikoną strzałki w górę. Po podbiciu zielona pigułka „Podbite”. Bez weryfikacji przycisk otwiera weryfikację mObywatel.
 
 ## Wygląd aplikacji mobilnej (widok mieszkańca)
 
-- **Ramka telefonu** (tylko na komputerze): zaokrąglenie 54 px, ramka `ink` 12 px, pasek statusu (godzina, zasięg, Wi-Fi, bateria) z wyspą na środku, wskaźnik ekranu domowego na dole. Na prawdziwym telefonie aplikacja jest pełnoekranowa, bez sztucznego paska.
+- **Ramka telefonu** (tylko na komputerze): ekran w prawdziwych wymiarach smartfona **393×852 pt**, ramka 12 px, zaokrąglenie 60/48 px, boczne przyciski, wyspa 124×36 px, pasek statusu 54 px nad treścią i wskaźnik domowy nad treścią. Całość skaluje się proporcjonalnie do wysokości okna (bez zgniatania). Na prawdziwym telefonie aplikacja jest pełnoekranowa, a marginesy biorą się z `env(safe-area-inset-*)`.
+- **Marginesy bezpieczne:** każdy ekran używa `var(--safe-top)` i `var(--safe-bottom)` (w ramce 54/28 px).
 - **Ekran startowy:** mapa na cały ekran; pływający nagłówek w pigułce (logo, nazwa, osiedle) i okrągły przycisk powiadomień. Żadnych stałych nakładek na mapie.
 - **Dolny pasek:** Mapa · przycisk aparatu · Moje sprawy. Przycisk aparatu to czerwone kółko 68 px wystające ponad pasek; otwiera arkusz „Coś jest nie tak albo czegoś brakuje?” z opcjami: Zrób zdjęcie, Wybierz z galerii, Opisz bez zdjęcia.
 - **Arkusz (bottom sheet):** zaokrąglenie 28 px u góry, uchwyt 40×6 px, przyciemnione tło.

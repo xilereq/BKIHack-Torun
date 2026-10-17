@@ -14,6 +14,8 @@ export interface ReportDraft {
   description: string
   location: LngLat
   place: string
+  /** opis podyktowany (do pokazania etapu mowa → tekst) */
+  usedMic: boolean
 }
 
 type LocSource = 'locating' | 'gps' | 'manual'
@@ -89,6 +91,7 @@ export function ReportScreen({
       description: description.trim(),
       location,
       place: describeLocation(location),
+      usedMic: transcript !== null,
     })
   }
 
@@ -197,7 +200,7 @@ export function ReportScreen({
         </div>
       </div>
 
-      <div className="shrink-0 border-t border-line bg-surface px-4 pt-3 pb-4">
+      <div className="shrink-0 border-t border-line bg-surface px-4 pt-3 pb-[calc(var(--safe-bottom)+10px)]">
         <Button variant="primary" size="lg" className="w-full rounded-full" onClick={submit}>
           <IconSend size={22} strokeWidth={2.2} /> Wyślij zgłoszenie
         </Button>

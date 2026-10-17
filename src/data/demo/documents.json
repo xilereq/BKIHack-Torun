@@ -7,7 +7,10 @@
     "author": "Radna Anna Przykładowa (postać fikcyjna, dane demo)",
     "summary": "Radna wskazuje na głębokie ubytki w jezdni i zatoce autobusowej przy przystanku Rubinkowo Centrum oraz pyta o termin remontu.",
     "place": "przystanek Rubinkowo Centrum",
-    "location": { "lat": 53.02846, "lng": 18.65782 },
+    "location": {
+      "lat": 53.02846,
+      "lng": 18.65782
+    },
     "url": "https://bip.torun.pl/interpelacje/29500"
   },
   {
@@ -18,9 +21,15 @@
     "author": "Urząd Miasta Torunia (dane demo)",
     "summary": "Urząd informuje, że remont nawierzchni jezdni i zatoki autobusowej zostanie wykonany do czerwca 2026 r. w ramach programu remontów cząstkowych MZD.",
     "place": "przystanek Rubinkowo Centrum",
-    "location": { "lat": 53.0286, "lng": 18.65815 },
+    "location": {
+      "lat": 53.0286,
+      "lng": 18.65815
+    },
     "url": "https://bip.torun.pl/interpelacje/29500",
-    "commitment": { "text": "Remont jezdni i zatoki autobusowej przy przystanku Rubinkowo Centrum", "deadline": "2026-06" }
+    "commitment": {
+      "text": "Remont jezdni i zatoki autobusowej przy przystanku Rubinkowo Centrum",
+      "deadline": "2026-06"
+    }
   },
   {
     "id": "d-int-sp16-2025",
@@ -30,7 +39,10 @@
     "author": "Radny Piotr Testowy (postać fikcyjna, dane demo)",
     "summary": "Radny zwraca uwagę na słabo oświetlone przejście dla pieszych, z którego codziennie korzystają uczniowie SP nr 16.",
     "place": "Szkoła Podstawowa nr 16",
-    "location": { "lat": 53.02872, "lng": 18.66962 },
+    "location": {
+      "lat": 53.02872,
+      "lng": 18.66962
+    },
     "url": "https://bip.torun.pl/interpelacje/29500"
   },
   {
@@ -41,9 +53,15 @@
     "author": "Urząd Miasta Torunia (dane demo)",
     "summary": "Urząd zapowiada montaż dedykowanego oświetlenia przejścia dla pieszych do końca grudnia 2025 r.",
     "place": "Szkoła Podstawowa nr 16",
-    "location": { "lat": 53.02894, "lng": 18.66944 },
+    "location": {
+      "lat": 53.02894,
+      "lng": 18.66944
+    },
     "url": "https://bip.torun.pl/interpelacje/29500",
-    "commitment": { "text": "Doświetlenie przejścia dla pieszych przy SP nr 16", "deadline": "2025-12" }
+    "commitment": {
+      "text": "Doświetlenie przejścia dla pieszych przy SP nr 16",
+      "deadline": "2025-12"
+    }
   },
   {
     "id": "d-int-schody-2025",
@@ -53,7 +71,10 @@
     "author": "Radna Anna Przykładowa (postać fikcyjna, dane demo)",
     "summary": "Radna informuje o pękniętych stopniach i braku poręczy na schodach prowadzących do przystanku Przy Skarpie.",
     "place": "ul. Przy Skarpie, schody terenowe",
-    "location": { "lat": 53.02288, "lng": 18.66925 },
+    "location": {
+      "lat": 53.02288,
+      "lng": 18.66925
+    },
     "url": "https://bip.torun.pl/interpelacje/29500"
   },
   {
@@ -64,9 +85,15 @@
     "author": "Urząd Miasta Torunia (dane demo)",
     "summary": "Urząd zapowiada remont schodów terenowych wraz z montażem poręczy do września 2025 r.",
     "place": "ul. Przy Skarpie, schody terenowe",
-    "location": { "lat": 53.02312, "lng": 18.66975 },
+    "location": {
+      "lat": 53.02312,
+      "lng": 18.66975
+    },
     "url": "https://bip.torun.pl/interpelacje/29500",
-    "commitment": { "text": "Remont schodów terenowych z poręczą przy ul. Przy Skarpie", "deadline": "2025-09" }
+    "commitment": {
+      "text": "Remont schodów terenowych z poręczą przy ul. Przy Skarpie",
+      "deadline": "2025-09"
+    }
   },
   {
     "id": "d-plan-chodniki-2026",
@@ -76,9 +103,15 @@
     "author": "Miejski Zarząd Dróg w Toruniu (dane demo)",
     "summary": "Plan obejmuje wymianę płyt chodnikowych przy Przychodni Rodzinnej na Skarpie w IV kwartale 2026 r.",
     "place": "Przychodnia Rodzinna na Skarpie",
-    "location": { "lat": 53.02438, "lng": 18.67186 },
+    "location": {
+      "lat": 53.02438,
+      "lng": 18.67186
+    },
     "url": "https://bip.torun.pl/interpelacje/29500",
-    "commitment": { "text": "Wymiana płyt chodnika przy Przychodni Rodzinnej na Skarpie", "deadline": "2026-12" }
+    "commitment": {
+      "text": "Wymiana płyt chodnika przy Przychodni Rodzinnej na Skarpie",
+      "deadline": "2026-12"
+    }
   },
   {
     "id": "d-kom-lubicka-2026",
@@ -88,9 +121,15 @@
     "author": "Miejski Zarząd Dróg w Toruniu (dane demo)",
     "summary": "MZD wymieni oprawy oświetleniowe na LED na odcinku Szosy Lubickiej przy Rubinkowie do listopada 2026 r.",
     "place": "ul. Szosa Lubicka",
-    "location": { "lat": 53.02666, "lng": 18.68031 },
+    "location": {
+      "lat": 53.02666,
+      "lng": 18.68031
+    },
     "url": "https://bip.torun.pl/interpelacje/29500",
-    "commitment": { "text": "Wymiana opraw oświetlenia na Szosie Lubickiej", "deadline": "2026-11" }
+    "commitment": {
+      "text": "Wymiana opraw oświetlenia na Szosie Lubickiej",
+      "deadline": "2026-11"
+    }
   },
   {
     "id": "d-int-lawki-2024",
@@ -100,7 +139,10 @@
     "author": "Radny Piotr Testowy (postać fikcyjna, dane demo)",
     "summary": "Radny przekazuje prośby seniorów o ławki na trasie między przystankiem Manhattan a przychodnią.",
     "place": "przystanek Manhattan",
-    "location": { "lat": 53.0275, "lng": 18.66445 },
+    "location": {
+      "lat": 53.0275,
+      "lng": 18.66445
+    },
     "url": "https://bip.torun.pl/interpelacje/29500"
   },
   {
@@ -111,7 +153,10 @@
     "author": "Urząd Miasta Torunia (dane demo)",
     "summary": "Wydział rozważy ustawienie ławek przy najbliższym przeglądzie małej architektury. Brak wskazanego terminu.",
     "place": "przystanek Manhattan",
-    "location": { "lat": 53.0272, "lng": 18.66395 },
+    "location": {
+      "lat": 53.0272,
+      "lng": 18.66395
+    },
     "url": "https://bip.torun.pl/interpelacje/29500"
   },
   {
@@ -122,7 +167,10 @@
     "author": "Wydział Gospodarki Komunalnej UMT (dane demo)",
     "summary": "Odebrano prace polegające na wymianie trzech zniszczonych ławek na Placu Sybiraków.",
     "place": "Plac Sybiraków",
-    "location": { "lat": 53.02462, "lng": 18.66805 },
+    "location": {
+      "lat": 53.02462,
+      "lng": 18.66805
+    },
     "url": "https://bip.torun.pl/interpelacje/29500"
   },
   {
@@ -133,7 +181,10 @@
     "author": "Urząd Miasta Torunia (dane demo)",
     "summary": "Mieszkańcy mogą zgłaszać projekty osiedlowe, np. place zabaw i siłownie plenerowe. Nabór trwa do 30 listopada 2026 r.",
     "place": "Rubinkowo",
-    "location": { "lat": 53.03035, "lng": 18.67465 },
+    "location": {
+      "lat": 53.03035,
+      "lng": 18.67465
+    },
     "url": "https://bip.torun.pl/interpelacje/29500"
   },
   {
@@ -144,7 +195,10 @@
     "author": "Urząd Miasta Torunia (dane demo)",
     "summary": "Urząd wyjaśnia, że remont przesunięto z powodu przetargu bez ofert. Do czasu remontu MZD zabezpieczy ubytki masą na zimno.",
     "place": "przystanek Rubinkowo Centrum",
-    "location": { "lat": 53.0283, "lng": 18.65745 },
+    "location": {
+      "lat": 53.0283,
+      "lng": 18.65745
+    },
     "url": "https://bip.torun.pl/interpelacje/29500",
     "hidden": true
   },
@@ -156,9 +210,15 @@
     "author": "Miejski Zarząd Dróg w Toruniu (dane demo)",
     "summary": "Remont jezdni i zatoki autobusowej przy przystanku Rubinkowo Centrum ujęto w planie na II kwartał 2027 r.",
     "place": "przystanek Rubinkowo Centrum",
-    "location": { "lat": 53.02868, "lng": 18.6575 },
+    "location": {
+      "lat": 53.02868,
+      "lng": 18.6575
+    },
     "url": "https://bip.torun.pl/interpelacje/29500",
-    "commitment": { "text": "Remont jezdni i zatoki autobusowej przy przystanku Rubinkowo Centrum", "deadline": "2027-06" },
+    "commitment": {
+      "text": "Remont jezdni i zatoki autobusowej przy przystanku Rubinkowo Centrum",
+      "deadline": "2027-06"
+    },
     "hidden": true
   },
   {
@@ -169,8 +229,107 @@
     "author": "Miejski Zarząd Dróg w Toruniu (dane demo)",
     "summary": "Odebrano remont nawierzchni jezdni i zatoki autobusowej. Gwarancja wykonawcy: 5 lat.",
     "place": "przystanek Rubinkowo Centrum",
-    "location": { "lat": 53.02822, "lng": 18.6579 },
+    "location": {
+      "lat": 53.02822,
+      "lng": 18.6579
+    },
     "url": "https://bip.torun.pl/interpelacje/29500",
     "hidden": true
+  },
+  {
+    "id": "d-plan-rynek-2027",
+    "kind": "plan",
+    "title": "Plan remontów nawierzchni Starego Miasta na 2027 r.",
+    "date": "2026-05-20",
+    "author": "Miejski Zarząd Dróg w Toruniu (dane demo)",
+    "summary": "Przełożenie kostki brukowej w północnej części Rynku Staromiejskiego zaplanowano na wiosnę 2027 r.",
+    "place": "Rynek Staromiejski",
+    "location": {
+      "lat": 53.01068,
+      "lng": 18.60401
+    },
+    "url": "https://bip.torun.pl/interpelacje/29500",
+    "commitment": {
+      "text": "Przełożenie kostki brukowej na Rynku Staromiejskim",
+      "deadline": "2027-04"
+    }
+  },
+  {
+    "id": "d-plan-chelminska-2026",
+    "kind": "plan",
+    "title": "Plan remontów cząstkowych MZD: Szosa Chełmińska",
+    "date": "2026-04-15",
+    "author": "Miejski Zarząd Dróg w Toruniu (dane demo)",
+    "summary": "Naprawa nawierzchni zatoki autobusowej przy Szosie Chełmińskiej do końca listopada 2026 r.",
+    "place": "Szosa Chełmińska",
+    "location": {
+      "lat": 53.02402,
+      "lng": 18.59436
+    },
+    "url": "https://bip.torun.pl/interpelacje/29500",
+    "commitment": {
+      "text": "Naprawa nawierzchni zatoki autobusowej na Szosie Chełmińskiej",
+      "deadline": "2026-11"
+    }
+  },
+  {
+    "id": "d-odp-bydgoska-2025",
+    "kind": "odpowiedz",
+    "title": "Odpowiedź na interpelację: chodnik przy ul. Bydgoskiej",
+    "date": "2025-10-14",
+    "author": "Urząd Miasta Torunia (dane demo)",
+    "summary": "Urząd zapowiedział wymianę płyt chodnika na odcinku przy Parku Miejskim do maja 2026 r.",
+    "place": "ul. Bydgoska",
+    "location": {
+      "lat": 53.01037,
+      "lng": 18.58409
+    },
+    "url": "https://bip.torun.pl/interpelacje/29500",
+    "commitment": {
+      "text": "Wymiana płyt chodnika przy ul. Bydgoskiej",
+      "deadline": "2026-05"
+    }
+  },
+  {
+    "id": "d-int-gagarina-2026",
+    "kind": "interpelacja",
+    "title": "Interpelacja w sprawie bezpieczeństwa przejścia przy Auli UMK",
+    "date": "2026-03-10",
+    "author": "Radny Piotr Testowy (postać fikcyjna, dane demo)",
+    "summary": "Radny prosi o analizę doświetlenia przejścia i budowy azylu dla pieszych przy ul. Gagarina.",
+    "place": "ul. Gagarina",
+    "location": {
+      "lat": 53.01866,
+      "lng": 18.57265
+    },
+    "url": "https://bip.torun.pl/interpelacje/29500"
+  },
+  {
+    "id": "d-prot-falata-2026",
+    "kind": "protokol",
+    "title": "Częstsze opróżnianie koszy: ul. Fałata",
+    "date": "2026-07-01",
+    "author": "Miejskie Przedsiębiorstwo Oczyszczania (dane demo)",
+    "summary": "Kosze przy ul. Fałata są opróżniane codziennie, także w weekendy.",
+    "place": "ul. Fałata",
+    "location": {
+      "lat": 53.01538,
+      "lng": 18.57279
+    },
+    "url": "https://bip.torun.pl/interpelacje/29500"
+  },
+  {
+    "id": "d-prot-jakubskie-2026",
+    "kind": "protokol",
+    "title": "Protokół odbioru: oświetlenie przejścia na Jakubskim Przedmieściu",
+    "date": "2026-07-01",
+    "author": "Miejski Zarząd Dróg w Toruniu (dane demo)",
+    "summary": "Zamontowano oświetlenie dedykowane przejścia dla pieszych.",
+    "place": "Jakubskie Przedmieście",
+    "location": {
+      "lat": 53.01991,
+      "lng": 18.63497
+    },
+    "url": "https://bip.torun.pl/interpelacje/29500"
   }
 ]

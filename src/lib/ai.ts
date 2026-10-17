@@ -145,7 +145,7 @@ function composeAnswer(
     if (lc && st === 'overdue') {
       return {
         tone: 'overdue',
-        text: `Miasto zapowiedziało tu: ${lowerFirst(lc.commitment.text)} do ${romanMonth(lc.commitment.deadline)}. Termin minął, więc sprawa trafia do radnych okręgu.`,
+        text: `Miasto planowało tu: ${lowerFirst(lc.commitment.text)} do ${romanMonth(lc.commitment.deadline)}. Prace jeszcze się nie odbyły, więc przekazujemy sprawę radnym okręgu, którzy zapytają o aktualny termin.`,
         docId: lc.doc.id,
       }
     }
@@ -176,7 +176,7 @@ function composeAnswer(
     return {
       tone: over ? 'overdue' : 'planned',
       text: over
-        ? `Niedaleko miasto zapowiedziało: ${lowerFirst(near.commitment.text)} do ${romanMonth(near.commitment.deadline)}. Termin minął. ${forward}`
+        ? `Niedaleko miasto planowało: ${lowerFirst(near.commitment.text)} do ${romanMonth(near.commitment.deadline)}. Zapytamy o aktualny termin. ${forward}`
         : `Niedaleko trwają przygotowania: ${lowerFirst(near.commitment.text)}, termin ${romanMonth(near.commitment.deadline)}. ${forward}`,
       docId: near.id,
     }

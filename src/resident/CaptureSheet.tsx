@@ -13,7 +13,7 @@ export function CaptureSheet({ onPhoto, onNoPhoto, onClose }: { onPhoto: (src: s
   return (
     <div className="absolute inset-0 z-40 flex items-end" role="dialog" aria-modal="true" aria-labelledby="capture-title">
       <button type="button" aria-label="Zamknij" onClick={onClose} className="absolute inset-0 cursor-default bg-ink/40" />
-      <div className="relative w-full rounded-t-[28px] bg-surface px-5 pt-2.5 pb-6 shadow-2xl animate-slide-up">
+      <div className="relative w-full rounded-t-[28px] bg-surface px-5 pt-2.5 pb-[calc(var(--safe-bottom)+20px)] shadow-2xl animate-slide-up">
         <div className="mx-auto mb-4 h-1.5 w-10 rounded-full bg-line-strong" aria-hidden="true" />
         <h2 id="capture-title" className="text-[24px] font-bold leading-[30px] tracking-[-0.01em]">
           Coś jest nie tak albo czegoś brakuje?

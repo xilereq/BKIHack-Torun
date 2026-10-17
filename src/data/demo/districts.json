@@ -1,0 +1,90 @@
+[
+  {
+    "id": "rubinkowo",
+    "name": "Rubinkowo",
+    "center": {
+      "lat": 53.02711,
+      "lng": 18.66275
+    }
+  },
+  {
+    "id": "na-skarpie",
+    "name": "Na Skarpie",
+    "center": {
+      "lat": 53.02331,
+      "lng": 18.6961
+    }
+  },
+  {
+    "id": "stare-miasto",
+    "name": "Stare Miasto",
+    "center": {
+      "lat": 53.01163,
+      "lng": 18.60932
+    }
+  },
+  {
+    "id": "chelminskie",
+    "name": "Chełmińskie Przedmieście",
+    "center": {
+      "lat": 53.02278,
+      "lng": 18.59464
+    }
+  },
+  {
+    "id": "bydgoskie",
+    "name": "Bydgoskie Przedmieście",
+    "center": {
+      "lat": 53.01017,
+      "lng": 18.57644
+    }
+  },
+  {
+    "id": "bielany",
+    "name": "Bielany",
+    "center": {
+      "lat": 53.02536,
+      "lng": 18.56867
+    }
+  },
+  {
+    "id": "mokre",
+    "name": "Mokre",
+    "center": {
+      "lat": 53.02897,
+      "lng": 18.62194
+    }
+  },
+  {
+    "id": "jakubskie",
+    "name": "Jakubskie Przedmieście",
+    "center": {
+      "lat": 53.01978,
+      "lng": 18.63469
+    }
+  },
+  {
+    "id": "podgorz",
+    "name": "Podgórz i Stawki",
+    "center": {
+      "lat": 52.998,
+      "lng": 18.61
+    }
+  },
+  {
+    "id": "wrzosy",
+    "name": "Wrzosy",
+    "center": {
+      "lat": 53.04684,
+      "lng": 18.58549
+    }
+  },
+  {
+    "id": "koniuchy",
+    "name": "Koniuchy",
+    "center": {
+      "lat": 53.03381,
+      "lng": 18.59953
+    }
+  }
+]

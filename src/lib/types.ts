@@ -49,6 +49,8 @@ export interface Case {
   unitId: string
   unitReason: string
   place: string
+  /** Osiedle (id z districts.json) */
+  district: string
   location: LngLat
   photo: string
   createdAt: string
@@ -117,4 +119,10 @@ export interface Verification {
   pseudonym: string
   torun: boolean
   verifiedAt: string
+}
+
+export interface District {
+  id: string
+  name: string
+  center: LngLat
 }

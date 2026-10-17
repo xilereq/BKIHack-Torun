@@ -16,7 +16,7 @@ export function TabBar({
 }) {
   const tab = (on: boolean) => `flex min-h-14 flex-1 flex-col items-center justify-center gap-0.5 text-[13px] font-bold ${on ? 'text-brand' : 'text-ink-2'}`
   return (
-    <nav className="relative z-20 flex shrink-0 items-end border-t border-line/70 bg-surface/95 px-4 pb-1 backdrop-blur" aria-label="Nawigacja">
+    <nav className="relative z-20 flex shrink-0 items-end border-t border-line/70 bg-surface/95 px-4 pb-[calc(var(--safe-bottom)+2px)] backdrop-blur" aria-label="Nawigacja">
       <button type="button" onClick={onMap} className={tab(active === 'map')} aria-current={active === 'map' ? 'page' : undefined}>
         <IconPin size={26} strokeWidth={active === 'map' ? 2.4 : 2} />
         Mapa

@@ -82,7 +82,7 @@ export function draftInterpellation(c: Case, reports: Report[], docs: CityDocume
     }
     if (status === 'overdue') {
       const m = monthsOverdue(lc.commitment.deadline, now)
-      sentence += ` Termin minął ${m} ${plural(m, ['miesiąc', 'miesiące', 'miesięcy'])} temu, a prace nie zostały wykonane.`
+      sentence += ` Planowany termin upłynął ${m} ${plural(m, ['miesiąc', 'miesiące', 'miesięcy'])} temu. Mieszkańcy pytają o aktualny harmonogram, a ja chciałabym przekazać im rzetelną informację.`
     }
     lines.push('')
     lines.push(sentence)
@@ -97,9 +97,9 @@ export function draftInterpellation(c: Case, reports: Report[], docs: CityDocume
   lines.push('')
   lines.push('W związku z powyższym proszę o odpowiedź na pytania:')
   if (status === 'overdue') {
-    lines.push('1. Z jakiego powodu nie dotrzymano zapowiedzianego terminu?')
-    lines.push('2. W jakim terminie prace zostaną wykonane i czy zabezpieczono na nie środki?')
-    lines.push('3. Jakie działania doraźne zostaną podjęte do czasu naprawy?')
+    lines.push('1. Jaki jest aktualny harmonogram prac w tym miejscu?')
+    lines.push('2. Czy prace mają zabezpieczone finansowanie i czy możemy w tym pomóc?')
+    lines.push('3. Czy do czasu remontu możliwe jest doraźne zabezpieczenie miejsca?')
   } else if (isIdea) {
     lines.push(`1. Czy ${unit.name} może zrealizować tę prośbę i w jakim terminie?`)
     lines.push('2. Jaki byłby szacunkowy koszt realizacji?')

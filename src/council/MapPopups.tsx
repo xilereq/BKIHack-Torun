@@ -13,7 +13,7 @@ function CloseBtn({ onClose }: { onClose: () => void }) {
       type="button"
       aria-label="Zamknij dymek"
       onClick={onClose}
-      className="absolute top-2 left-2 z-10 flex size-9 items-center justify-center rounded-full bg-surface/95 text-ink shadow hover:bg-surface"
+      className="absolute top-2 right-2 z-10 flex size-9 items-center justify-center rounded-full bg-surface/95 text-ink shadow hover:bg-surface"
     >
       <IconX size={18} strokeWidth={2.4} />
     </button>

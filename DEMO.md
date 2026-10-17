@@ -28,9 +28,13 @@ Do nagrania filmu (2 min) i demo na żywo (4 min). Panel demo otwiera **Ctrl+Shi
 |---|---|---|---|
 | 4 | Przycisk **Powiedz** (mikrofon) | „Słucham…”, potem tekst pisze się sam | „Jedno zdanie, mówione.” |
 | 5 | **Wyślij zgłoszenie** | „AI analizuje…”, 5 kroków odhaczanych po kolei (~3 s) | |
-| 6 | (automatycznie) | Wynik: **Termin minął**, „Miasto zapowiedziało tu remont… do VI 2026”, link do BIP, MZD, „Połączono z 6 podobnymi zgłoszeniami” | „Od razu wie, że miasto to obiecało i termin minął.” |
-| 7 | Panel demo → **Radny** | Panel radnego: sprawa na górze listy z pilnością 99 i etykietami „obietnica przeterminowana o 4 mies.”, „214 kursów autobusów dziennie”, „w pobliżu: Zespół Szkół nr 8” | „Radna widzi sprawy według pilności, z uzasadnieniem.” |
-| 8 | Klik w sprawę na liście (albo w znacznik na mapie → dymek ze zdjęciami → **Historia miejsca**) | Historia miejsca: zdjęcia, zgłoszenia, dokumenty, przeterminowane zobowiązanie, podbicia od zweryfikowanych | |
+| 5a | (w trakcie) | „AI analizuje…”: kolejne etapy z technologiami i wynikami (mowa→tekst, model wizyjny, LLM, embeddingi + PostGIS, RAG · BIP, pilność) | „Tu pracuje AI: każdy krok widać.” |
+| 6 | (automatycznie) | Wynik: **Czeka na nowy termin**, „Miasto planowało tu remont… do VI 2026. Przekazujemy sprawę radnym, którzy zapytają o aktualny termin”, link do BIP, MZD, „Połączono z 6 podobnymi zgłoszeniami” | „Mieszkanka od razu wie, co miasto planowało, i że sprawa trafia do radnych.” |
+| 6a | **Jak AI to oceniło** (rozwiń) | Ślad analizy: pewność rozpoznania, podobieństwo do innych zgłoszeń, znalezione dokumenty, rozbicie pilności | Na pytania jury o AI |
+| 7 | Panel demo → **Radny** | Panel radnego (domyślnie „Mój okręg”): sprawa na górze listy z pilnością i etykietami „plan VI 2026 · czeka na aktualny termin”, „214 kursów autobusów dziennie”, „w pobliżu: Zespół Szkół nr 8” | „Radna widzi sprawy według pilności, z uzasadnieniem.” |
+| 7a | Filtr **Obszar → Całe miasto**, potem **Status → Wykonane** | Mapa całego Torunia, a potem sprawy już rozwiązane | „Działa dla całego miasta, każdy radny ustawia swój okręg.” |
+| 8 | Klik w sprawę na liście (albo w znacznik na mapie → dymek ze zdjęciami → **Historia miejsca**) | Historia miejsca: **Analiza AI** (podsumowanie zgłoszeń, duplikaty, skąd ta pilność), zdjęcia, zgłoszenia, dokumenty i plany miasta | |
+| 8a | (opcjonalnie) **Jak działa AI** w nagłówku | Schemat potoku AI i tabela technologii | Na pytania jury |
 | 9 | **Przygotuj interpelację** | Tekst pisze się na oczach widza, z przypisami [1]–[4] i listą źródeł | „Jedno kliknięcie, szkic ze źródłami. Radna poprawia i wysyła sama.” |
 | 10 | **Wyślij** | „Wysłano do Biura Rady Miasta (symulacja)” | |
 | 11 | **Zamknij**, panel demo → **Mieszkaniec** | Powiadomienie u góry telefonu: „Interpelacja w Twojej sprawie” | „Mieszkanka dostaje informację.” |
